@@ -1,37 +1,34 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { Clock, Calendar } from 'lucide-react';
-import SectionHeader from '@/components/shared/SectionHeader';
+import RevealOnScroll from '@/components/shared/RevealOnScroll';
+import BlogCard from '@/components/blog/BlogCard';
 import { client } from '@/lib/sanity/client';
 import { postsQuery } from '@/lib/sanity/queries';
-import { formatDate } from '@/lib/utils';
 
 interface Post {
   _id: string;
   title: string;
   slug: { current: string };
-  coverImage: any;
+  coverImage?: any;
   category: string;
-  excerpt: string;
+  excerpt?: string;
   publishedAt: string;
   readTime: number;
 }
+
+const CATEGORIES = [
+  { value: 'all', label: 'All Posts' },
+  { value: 'buying-tips', label: 'Buying Tips' },
+  { value: 'import-process', label: 'Import Process' },
+  { value: 'car-maintenance', label: 'Car Maintenance' },
+];
 
 export default function BlogPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [loading, setLoading] = useState(true);
-
-  const categories = [
-    { value: 'all', label: 'All Posts' },
-    { value: 'buying-tips', label: 'Buying Tips' },
-    { value: 'import-process', label: 'Import Process' },
-    { value: 'car-maintenance', label: 'Car Maintenance' },
-  ];
 
   useEffect(() => {
     async function fetchPosts() {
@@ -49,87 +46,74 @@ export default function BlogPage() {
   }, []);
 
   useEffect(() => {
-    if (selectedCategory === 'all') {
-      setFilteredPosts(posts);
-    } else {
-      setFilteredPosts(posts.filter(post => post.category === selectedCategory));
-    }
+    setFilteredPosts(
+      selectedCategory === 'all' ? posts : posts.filter(p => p.category === selectedCategory)
+    );
   }, [selectedCategory, posts]);
 
   return (
-    <main className="min-h-screen pt-96 pb-64">
-      <div className="max-w-7xl mx-auto px-16">
-        <SectionHeader 
-          title="Car Buying Tips & Guides" 
-          subtitle="Expert advice on importing and maintaining Japanese cars in Kenya"
-        />
+    <main className="bg-white min-h-screen">
 
-        <div className="flex flex-wrap gap-12 justify-center mb-48">
-          {categories.map((cat) => (
-            <button
-              key={cat.value}
-              onClick={() => setSelectedCategory(cat.value)}
-              className={`px-24 py-12 rounded-full transition-colors ${
-                selectedCategory === cat.value
-                  ? 'bg-gold text-midnight'
-                  : 'bg-cloud/5 text-cloud border border-gold/20 hover:border-gold'
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
+      {/* Hero */}
+      <section className="pt-32 pb-12 bg-gradient-to-br from-grey-soft to-blue-tint border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <RevealOnScroll>
+            <div>
+              <p className="text-sm text-mid-grey mb-2">
+                <a href="/" className="hover:text-red-brand">Home</a>
+                {' '}<span className="text-gray-300">›</span>{' '}
+                <span className="text-red-brand">Blog</span>
+              </p>
+              <h1 className="text-4xl md:text-5xl font-display text-navy-brand mb-2">
+                Car Tips & Guides
+              </h1>
+              <p className="text-mid-grey text-lg">
+                Expert advice on importing and maintaining Japanese cars in Kenya
+              </p>
+            </div>
+          </RevealOnScroll>
         </div>
+      </section>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        {/* Category Filter Tabs */}
+        <RevealOnScroll>
+          <div className="flex flex-wrap gap-2 mb-10">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat.value}
+                onClick={() => setSelectedCategory(cat.value)}
+                className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-colors ${
+                  selectedCategory === cat.value
+                    ? 'bg-red-brand text-white'
+                    : 'bg-grey-soft text-navy-brand border border-gray-200 hover:border-navy-brand'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+        </RevealOnScroll>
 
         {loading ? (
-          <div className="text-center text-steel py-64">
-            <div className="animate-spin w-48 h-48 border-4 border-gold border-t-transparent rounded-full mx-auto mb-16" />
-            <p>Loading posts...</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div key={i} className="bg-grey-soft rounded-2xl h-64 animate-pulse" />
+            ))}
           </div>
         ) : filteredPosts.length === 0 ? (
-          <div className="text-center py-64">
-            <p className="text-2xl text-steel">No posts found</p>
+          <div className="text-center py-24">
+            <p className="text-4xl mb-4">📝</p>
+            <p className="text-2xl font-bold text-navy-brand mb-2">No posts found</p>
+            <p className="text-mid-grey">Check back soon for new content!</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-32">
-            {filteredPosts.map((post, index) => (
-              <motion.article
-                key={post._id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Link href={`/blog/${post.slug.current}`}>
-                  <div className="bg-cloud/5 border border-gold/20 rounded-lg overflow-hidden hover:border-gold transition-colors group">
-                    <div className="relative h-64 bg-steel/20">
-                      {/* Image placeholder - integrate with Sanity CDN */}
-                      <div className="absolute inset-0 flex items-center justify-center text-steel">
-                        Cover Image
-                      </div>
-                    </div>
-                    <div className="p-24">
-                      <div className="text-xs text-gold uppercase mb-8 font-medium">
-                        {post.category.replace('-', ' ')}
-                      </div>
-                      <h3 className="text-xl font-semibold text-cloud mb-12 group-hover:text-gold transition-colors">
-                        {post.title}
-                      </h3>
-                      {post.excerpt && (
-                        <p className="text-steel text-sm mb-16 line-clamp-2">{post.excerpt}</p>
-                      )}
-                      <div className="flex items-center gap-16 text-xs text-steel">
-                        <div className="flex items-center gap-4">
-                          <Calendar size={14} />
-                          {formatDate(post.publishedAt)}
-                        </div>
-                        <div className="flex items-center gap-4">
-                          <Clock size={14} />
-                          {post.readTime} min read
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              </motion.article>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredPosts.map((post, i) => (
+              <RevealOnScroll key={post._id} delay={(i % 3) * 0.07}>
+                <BlogCard post={post} />
+              </RevealOnScroll>
             ))}
           </div>
         )}

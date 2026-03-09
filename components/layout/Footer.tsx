@@ -4,19 +4,16 @@ import { SiTiktok } from 'react-icons/si';
 
 export default function Footer() {
   return (
-    <footer className="bg-navy-brand mt-64">
-      {/* Top red accent line */}
-      <div className="h-1 bg-gradient-to-r from-transparent via-red-brand to-transparent" />
-
-      <div className="max-w-7xl mx-auto px-16 py-48">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-32">
+    <footer className="bg-gradient-to-br from-navy-brand to-navy-dark">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
           {/* Brand */}
           <div>
-            <h3 className="text-2xl font-display font-bold mb-8">
+            <h3 className="text-2xl font-bold mb-4">
               <span className="text-red-brand">HIVE</span>
               <span className="text-white"> MOTORS</span>
             </h3>
-            <p className="text-white/50 text-sm leading-relaxed mb-12">
+            <p className="text-white/70 text-sm leading-relaxed mb-4">
               Premium Japanese import cars in Nairobi, Kenya.
             </p>
             <p className="text-red-brand text-sm font-semibold italic">
@@ -26,20 +23,20 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-white font-semibold mb-16 text-sm tracking-widest uppercase">
+            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">
               Quick Links
             </h4>
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-2">
               {[
                 { href: '/cars', label: 'Inventory' },
                 { href: '/on-transit', label: 'On Transit' },
                 { href: '/financing', label: 'Financing' },
-                { href: '/blog', label: 'Blog' },
+                { href: '/about', label: 'About' },
               ].map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-white/55 hover:text-red-brand transition-colors text-sm"
+                  className="text-white/70 hover:text-red-brand transition-colors text-sm"
                 >
                   {link.label}
                 </Link>
@@ -49,12 +46,11 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="text-white font-semibold mb-16 text-sm tracking-widest uppercase">
+            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">
               Company
             </h4>
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-2">
               {[
-                { href: '/about', label: 'About Us' },
                 { href: '/testimonials', label: 'Testimonials' },
                 { href: '/notify', label: 'Notify Me' },
                 { href: '/contact', label: 'Contact' },
@@ -62,7 +58,7 @@ export default function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-white/55 hover:text-red-brand transition-colors text-sm"
+                  className="text-white/70 hover:text-red-brand transition-colors text-sm"
                 >
                   {link.label}
                 </Link>
@@ -70,50 +66,47 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Contact + Social */}
+          {/* Contact */}
           <div>
-            <h4 className="text-white font-semibold mb-16 text-sm tracking-widest uppercase">
+            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">
               Contact
             </h4>
-            <div className="flex flex-col gap-8 text-white/55 text-sm mb-24">
+            <div className="flex flex-col gap-2 text-white/70 text-sm mb-6">
               <p>📞 +254 XXX XXX XXX</p>
               <p>✉️ hivemotorsltd@gmail.com</p>
               <p>📍 Ridgeways, Kiambu Road, Nairobi</p>
             </div>
-            <div className="flex gap-16">
+            <div className="flex gap-3">
               <a
                 href="https://www.instagram.com/hivemotors"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="w-9 h-9 bg-white/10 hover:bg-red-brand rounded-lg flex items-center justify-center text-white/60 hover:text-white transition-all"
+                className="w-10 h-10 bg-white/10 hover:bg-red-brand rounded-lg flex items-center justify-center text-white transition-colors"
               >
-                <Instagram size={16} />
+                <Instagram size={18} />
               </a>
               <a
                 href="https://www.facebook.com/share/1NEPJ6VvYC"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Facebook"
-                className="w-9 h-9 bg-white/10 hover:bg-red-brand rounded-lg flex items-center justify-center text-white/60 hover:text-white transition-all"
+                className="w-10 h-10 bg-white/10 hover:bg-red-brand rounded-lg flex items-center justify-center text-white transition-colors"
               >
-                <Facebook size={16} />
+                <Facebook size={18} />
               </a>
               <a
                 href="https://www.tiktok.com/@hivemotors"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="TikTok"
-                className="w-9 h-9 bg-white/10 hover:bg-red-brand rounded-lg flex items-center justify-center text-white/60 hover:text-white transition-all"
+                className="w-10 h-10 bg-white/10 hover:bg-red-brand rounded-lg flex items-center justify-center text-white transition-colors"
               >
-                <SiTiktok size={14} />
+                <SiTiktok size={16} />
               </a>
             </div>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/10 mt-32 pt-24 flex flex-col sm:flex-row items-center justify-between gap-8 text-white/35 text-xs">
+        <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-white/60 text-sm">
           <p>&copy; {new Date().getFullYear()} Hive Motors Ltd. All rights reserved.</p>
           <p>Japanese Import Cars · Nairobi, Kenya</p>
         </div>

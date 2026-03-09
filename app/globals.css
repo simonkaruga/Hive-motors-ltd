@@ -1,6 +1,18 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-red-brand: #DA1D17;
+  --color-red-dark: #B31510;
+  --color-navy-brand: #0A3E66;
+  --color-navy-dark: #062A47;
+  --color-grey-soft: #F7F8FA;
+  --color-blue-tint: #EEF3F8;
+  --color-charcoal: #1A1A2A;
+  --color-mid-grey: #6B7280;
+  
+  --font-family-display: "DM Serif Display", serif;
+  --font-family-mono: "JetBrains Mono", monospace;
+}
 
 body {
   background-color: #ffffff;

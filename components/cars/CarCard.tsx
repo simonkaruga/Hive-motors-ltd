@@ -2,7 +2,9 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { MessageCircle, Eye } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { MessageCircle, Eye, Gauge, Fuel, Settings } from 'lucide-react';
+import { urlFor } from '@/lib/sanity/client';
 
 interface CarCardProps {
   car: {
@@ -16,98 +18,128 @@ interface CarCardProps {
     transmission: string;
     fuelType: string;
     status: string;
+    expectedArrival?: string;
   };
 }
 
 export default function CarCard({ car }: CarCardProps) {
   const whatsappNumber = '254XXXXXXXXX';
-  const message = `Hi, I'm interested in the ${car.title}`;
+  const message = `Hi, I'm interested in the ${car.title}. Please share more details.`;
+
+  const imageUrl = car.images?.[0]
+    ? (car.images[0].asset?.url || urlFor(car.images[0]).width(600).height(400).auto('format').url())
+    : null;
+
+  const statusConfig = {
+    available: { label: 'Available', bg: 'bg-green-100', text: 'text-green-700', dot: 'bg-green-500' },
+    'on-transit': { label: 'On Transit', bg: 'bg-amber-100', text: 'text-amber-700', dot: 'bg-amber-500' },
+    sold: { label: 'Sold', bg: 'bg-red-50', text: 'text-red-brand', dot: 'bg-red-brand' },
+  };
+  const status = statusConfig[car.status as keyof typeof statusConfig] || statusConfig.available;
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
+    <motion.div
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.25, ease: 'easeOut' }}
+      className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl hover:shadow-navy-brand/10 transition-shadow duration-300 group"
+    >
       {/* Image */}
-      <div className="relative h-48 bg-gray-100">
-        {car.images?.[0] ? (
+      <div className="relative h-48 bg-grey-soft overflow-hidden">
+        {imageUrl ? (
           <Image
-            src={car.images[0]}
+            src={imageUrl}
             alt={car.title}
             fill
-            className="object-cover"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-            <p>No Image</p>
+          <div className="absolute inset-0 flex items-center justify-center text-mid-grey">
+            <p className="text-sm">No Image</p>
           </div>
         )}
 
-        {/* Status Badge */}
-        {car.status === 'sold' && (
-          <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-            <span className="bg-red-600 text-white px-4 py-2 rounded-md font-bold">SOLD</span>
-          </div>
-        )}
-        {car.status === 'on-transit' && (
-          <div className="absolute top-2 left-2">
-            <span className="bg-blue-600 text-white text-xs px-3 py-1 rounded-md font-semibold">
-              🚢 In Transit
-            </span>
-          </div>
-        )}
+        {/* Status Badge top-left */}
+        <div className="absolute top-3 left-3">
+          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${status.bg} ${status.text}`}>
+            <span className={`w-1.5 h-1.5 rounded-full ${status.dot}`} />
+            {status.label}
+          </span>
+        </div>
 
-        {/* Year Badge */}
-        <div className="absolute top-2 right-2">
-          <span className="bg-gray-900 text-white text-xs px-3 py-1 rounded-md font-bold">
+        {/* Year Badge top-right */}
+        <div className="absolute top-3 right-3">
+          <span className="bg-navy-brand text-white text-xs font-bold px-2.5 py-1 rounded-full">
             {car.year}
           </span>
         </div>
+
+        {/* Sold overlay */}
+        {car.status === 'sold' && (
+          <div className="absolute inset-0 bg-white/60 flex items-center justify-center">
+            <span className="bg-red-brand text-white font-black text-2xl px-6 py-2 -rotate-12 rounded-md tracking-widest">SOLD</span>
+          </div>
+        )}
+
+        {/* Bottom gradient overlay */}
+        <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-navy-brand/20 to-transparent" />
       </div>
 
       {/* Content */}
-      <div className="p-4">
-        <h3 className="font-semibold text-lg text-gray-900 mb-2 line-clamp-2">
+      <div className="p-6">
+        <h3 className="font-bold text-lg text-navy-brand mb-2 line-clamp-1 leading-tight">
           {car.title}
         </h3>
 
-        {/* Specs */}
-        <div className="flex items-center gap-3 text-sm text-gray-600 mb-3">
-          <span>{car.mileage?.toLocaleString()} km</span>
-          <span>•</span>
-          <span className="capitalize">{car.transmission}</span>
-          <span>•</span>
-          <span className="capitalize">{car.fuelType}</span>
+        {/* Specs row */}
+        <div className="flex items-center gap-3 text-xs text-mid-grey font-mono mb-4">
+          <span className="flex items-center gap-1">
+            <Gauge size={11} />
+            {car.mileage?.toLocaleString()} km
+          </span>
+          <span className="text-gray-200">|</span>
+          <span className="flex items-center gap-1 capitalize">
+            <Settings size={11} />
+            {car.transmission}
+          </span>
+          <span className="text-gray-200">|</span>
+          <span className="flex items-center gap-1 capitalize">
+            <Fuel size={11} />
+            {car.fuelType}
+          </span>
         </div>
 
-        {/* Price */}
-        <div className="flex items-center justify-between pt-3 border-t border-gray-200">
-          <div>
-            <p className="text-2xl font-bold text-red-600">
-              KSh {car.price?.toLocaleString()}
-            </p>
-          </div>
+        {/* Price + Actions */}
+        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+          <p className="text-xl font-bold text-red-brand font-mono leading-none">
+            KSh {car.price?.toLocaleString()}
+          </p>
 
-          {/* Action Buttons */}
           <div className="flex gap-2">
             <Link href={`/cars/${car.slug.current}`}>
-              <button
-                className="p-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-2 bg-grey-soft text-navy-brand rounded-lg hover:bg-blue-tint transition-colors"
                 title="View Details"
               >
-                <Eye size={18} />
-              </button>
+                <Eye size={16} />
+              </motion.button>
             </Link>
 
-            <a
+            <motion.a
               href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="p-2 bg-[#25D366] text-white rounded-lg hover:bg-[#1ebe5b] transition-colors"
               title="WhatsApp"
             >
-              <MessageCircle size={18} />
-            </a>
+              <MessageCircle size={16} />
+            </motion.a>
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

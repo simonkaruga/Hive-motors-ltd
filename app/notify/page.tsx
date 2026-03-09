@@ -2,155 +2,213 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Bell, CheckCircle } from 'lucide-react';
-import SectionHeader from '@/components/shared/SectionHeader';
-import Button from '@/components/ui/Button';
+import { Bell, CheckCircle, Search, Users, Clock } from 'lucide-react';
+import RevealOnScroll from '@/components/shared/RevealOnScroll';
+
+const MAKES = ['Toyota', 'Nissan', 'Honda', 'Subaru', 'Mazda', 'Mitsubishi', 'BMW', 'Mercedes', 'Other'];
+const BODY_TYPES = ['SUV', 'Sedan', 'Hatchback', 'Pickup', 'Van', 'Coupe'];
+const BUDGETS = ['Under KSh 500K', 'KSh 500K – 1M', 'KSh 1M – 2M', 'KSh 2M – 3M', 'KSh 3M – 4M', 'KSh 4M+'];
 
 export default function NotifyPage() {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     email: '',
-    carType: '',
+    make: '',
+    bodyType: '',
     budget: '',
     notes: '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Notify form submitted:', formData);
+    setLoading(true);
+    await new Promise(r => setTimeout(r, 800));
     setSubmitted(true);
+    setLoading(false);
   };
 
   if (submitted) {
     return (
-      <main className="min-h-screen pt-96 pb-64 flex items-center justify-center">
+      <main className="bg-white min-h-screen pt-32 pb-24 flex items-center justify-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="text-center max-w-2xl px-16"
+          className="text-center max-w-lg px-6"
         >
-          <CheckCircle className="mx-auto mb-24 text-gold" size={80} />
-          <h1 className="text-4xl font-display text-gold mb-16">Request Received!</h1>
-          <p className="text-cloud text-lg mb-32">
-            Thank you for your interest. We'll notify you as soon as we find a car matching your preferences.
-            Our team will also reach out to you within 24 hours.
+          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle size={40} className="text-green-600" />
+          </div>
+          <h1 className="text-3xl font-display text-navy-brand mb-3">Request Received!</h1>
+          <p className="text-mid-grey text-lg mb-8 leading-relaxed">
+            Thank you! We'll reach out within 24 hours when we find a car that matches your preferences.
           </p>
-          <Button variant="primary" onClick={() => setSubmitted(false)}>
-            Submit Another Request
-          </Button>
+          <div className="flex flex-wrap justify-center gap-4 mb-8 text-sm text-mid-grey">
+            <span className="flex items-center gap-1.5"><Users size={14} className="text-navy-brand" /> 500+ Customers Helped</span>
+            <span className="flex items-center gap-1.5"><Clock size={14} className="text-navy-brand" /> Responds Within 24hrs</span>
+            <span className="flex items-center gap-1.5"><CheckCircle size={14} className="text-green-600" /> No Obligation</span>
+          </div>
+          <button
+            onClick={() => setSubmitted(false)}
+            className="text-mid-grey hover:text-navy-brand text-sm transition-colors"
+          >
+            Submit another request
+          </button>
         </motion.div>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen pt-96 pb-64">
-      <div className="max-w-3xl mx-auto px-16">
-        <SectionHeader 
-          title="Can't Find What You're Looking For?" 
-          subtitle="Tell us what you need and we'll find it for you in Japan"
-        />
+    <main className="bg-white min-h-screen">
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-br from-gold/10 to-gold/5 border border-gold/20 rounded-lg p-32 mb-48 text-center"
-        >
-          <Bell className="mx-auto mb-16 text-gold" size={48} />
-          <h3 className="text-2xl font-display text-gold mb-12">
-            We Source Directly from Japan
-          </h3>
-          <p className="text-cloud">
-            Can't find your dream car in our current inventory? No problem! We have direct access to 
-            Japanese auctions and dealers. Tell us what you're looking for and we'll find it for you.
-          </p>
-        </motion.div>
+      {/* Hero */}
+      <section className="pt-32 pb-16 bg-gradient-to-br from-grey-soft to-blue-tint border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <RevealOnScroll>
+            <div className="text-center max-w-2xl mx-auto">
+              <div className="w-14 h-14 bg-red-brand/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Search size={28} className="text-red-brand" />
+              </div>
+              <h1 className="text-4xl md:text-5xl font-display text-navy-brand mb-4">
+                Can't Find Your Dream Car?
+              </h1>
+              <div className="w-16 h-1 bg-red-brand mx-auto mb-4 rounded-full" />
+              <p className="text-charcoal text-lg leading-relaxed">
+                Tell us exactly what you want and we'll source it directly from Japan for you.
+                No obligation — just your dream car.
+              </p>
+            </div>
+          </RevealOnScroll>
+        </div>
+      </section>
 
-        <form onSubmit={handleSubmit} className="space-y-24">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-24">
-            <div>
-              <label className="block text-cloud mb-8">Full Name *</label>
-              <input
-                type="text"
-                required
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-16 py-12 bg-midnight border border-gold/20 rounded-lg text-cloud focus:border-gold outline-none"
-                placeholder="John Doe"
-              />
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+        {/* Trust Strip */}
+        <RevealOnScroll>
+          <div className="flex flex-wrap justify-center gap-6 text-sm text-mid-grey mb-10">
+            <span className="flex items-center gap-1.5"><Users size={14} className="text-navy-brand" /> 500+ Customers Helped</span>
+            <span className="flex items-center gap-1.5"><Clock size={14} className="text-navy-brand" /> Responds Within 24hrs</span>
+            <span className="flex items-center gap-1.5"><CheckCircle size={14} className="text-green-600" /> No Obligation</span>
+          </div>
+        </RevealOnScroll>
+
+        {/* Form */}
+        <RevealOnScroll delay={0.05}>
+          <form onSubmit={handleSubmit} className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm space-y-5">
+            <h2 className="text-xl font-display text-navy-brand mb-2">Your Details</h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-navy-brand mb-1.5">Full Name *</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl text-charcoal focus:border-red-brand focus:ring-1 focus:ring-red-brand outline-none"
+                  placeholder="John Kamau"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-navy-brand mb-1.5">Phone Number *</label>
+                <input
+                  type="tel"
+                  required
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl text-charcoal focus:border-red-brand focus:ring-1 focus:ring-red-brand outline-none"
+                  placeholder="+254 XXX XXX XXX"
+                />
+              </div>
             </div>
 
             <div>
-              <label className="block text-cloud mb-8">Phone Number *</label>
+              <label className="block text-sm font-medium text-navy-brand mb-1.5">Email Address *</label>
               <input
-                type="tel"
+                type="email"
                 required
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full px-16 py-12 bg-midnight border border-gold/20 rounded-lg text-cloud focus:border-gold outline-none"
-                placeholder="+254 XXX XXX XXX"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl text-charcoal focus:border-red-brand focus:ring-1 focus:ring-red-brand outline-none"
+                placeholder="your@email.com"
               />
             </div>
-          </div>
 
-          <div>
-            <label className="block text-cloud mb-8">Email Address *</label>
-            <input
-              type="email"
-              required
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full px-16 py-12 bg-midnight border border-gold/20 rounded-lg text-cloud focus:border-gold outline-none"
-              placeholder="your@email.com"
-            />
-          </div>
+            <div className="border-t border-gray-100 pt-5">
+              <h2 className="text-lg font-semibold text-navy-brand mb-4">Your Preferred Car</h2>
 
-          <div>
-            <label className="block text-cloud mb-8">Car Type / Model *</label>
-            <input
-              type="text"
-              required
-              value={formData.carType}
-              onChange={(e) => setFormData({ ...formData, carType: e.target.value })}
-              className="w-full px-16 py-12 bg-midnight border border-gold/20 rounded-lg text-cloud focus:border-gold outline-none"
-              placeholder="e.g., Toyota Land Cruiser, Nissan X-Trail, Honda CR-V"
-            />
-          </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-medium text-navy-brand mb-1.5">Preferred Make</label>
+                  <select
+                    value={formData.make}
+                    onChange={(e) => setFormData({ ...formData, make: e.target.value })}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-charcoal focus:border-red-brand focus:ring-1 focus:ring-red-brand outline-none bg-white"
+                  >
+                    <option value="">Any Make</option>
+                    {MAKES.map(m => <option key={m} value={m}>{m}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-navy-brand mb-1.5">Body Type</label>
+                  <div className="flex flex-wrap gap-1.5">
+                    {BODY_TYPES.map((type) => (
+                      <button
+                        type="button"
+                        key={type}
+                        onClick={() => setFormData({ ...formData, bodyType: formData.bodyType === type ? '' : type })}
+                        className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
+                          formData.bodyType === type
+                            ? 'bg-red-brand text-white border-red-brand'
+                            : 'border-gray-200 text-navy-brand hover:border-navy-brand'
+                        }`}
+                      >
+                        {type}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
 
-          <div>
-            <label className="block text-cloud mb-8">Budget Range (KSh) *</label>
-            <select
-              required
-              value={formData.budget}
-              onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-              className="w-full px-16 py-12 bg-midnight border border-gold/20 rounded-lg text-cloud focus:border-gold outline-none"
+              <div>
+                <label className="block text-sm font-medium text-navy-brand mb-1.5">Budget Range *</label>
+                <select
+                  required
+                  value={formData.budget}
+                  onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl text-charcoal focus:border-red-brand focus:ring-1 focus:ring-red-brand outline-none bg-white"
+                >
+                  <option value="">Select your budget</option>
+                  {BUDGETS.map(b => <option key={b} value={b}>{b}</option>)}
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-navy-brand mb-1.5">Additional Notes</label>
+              <textarea
+                rows={4}
+                value={formData.notes}
+                onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl text-charcoal focus:border-red-brand focus:ring-1 focus:ring-red-brand outline-none resize-none"
+                placeholder="Specific year, colour, features, mileage range..."
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full flex items-center justify-center gap-2 bg-red-brand text-white py-4 rounded-xl font-bold text-lg hover:bg-red-dark transition-colors disabled:opacity-70"
             >
-              <option value="">Select budget range</option>
-              <option value="500k-1m">500K - 1M</option>
-              <option value="1m-2m">1M - 2M</option>
-              <option value="2m-3m">2M - 3M</option>
-              <option value="3m-4m">3M - 4M</option>
-              <option value="4m+">4M+</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-cloud mb-8">Additional Notes</label>
-            <textarea
-              rows={4}
-              value={formData.notes}
-              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-              className="w-full px-16 py-12 bg-midnight border border-gold/20 rounded-lg text-cloud focus:border-gold outline-none resize-none"
-              placeholder="Any specific requirements? Year, color, features, etc."
-            />
-          </div>
-
-          <Button type="submit" variant="primary" className="w-full">
-            Submit Request
-          </Button>
-        </form>
+              <Bell size={20} />
+              {loading ? 'Sending...' : 'Send My Request'}
+            </button>
+          </form>
+        </RevealOnScroll>
       </div>
     </main>
   );
