@@ -275,7 +275,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wa.me/254XXXXXXXXX"
+              href="https://wa.me/254722800436"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-white text-red-brand px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-100 transition-colors"

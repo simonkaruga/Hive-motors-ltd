@@ -21,7 +21,7 @@ export default function ContactPage() {
     setLoading(false);
   };
 
-  const whatsappNumber = '254XXXXXXXXX';
+  const whatsappNumber = '254722800436';
 
   const contactCards = [
     {
@@ -29,7 +29,7 @@ export default function ContactPage() {
       title: 'Phone',
       primary: '+254 XXX XXX XXX',
       secondary: 'Click to call directly',
-      href: 'tel:+254XXXXXXXXX',
+      href: 'tel:+254722800436',
       color: 'bg-blue-tint',
     },
     {

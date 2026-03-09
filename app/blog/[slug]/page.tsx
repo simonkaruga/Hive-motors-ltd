@@ -142,7 +142,7 @@ export default async function BlogPostPage({ params }: Props) {
           </Link>
 
           <a
-            href="https://wa.me/254XXXXXXXXX?text=Hi%20Hive%20Motors!%20I%20have%20a%20question%20about%20a%20car."
+            href="https://wa.me/254722800436?text=Hi%20Hive%20Motors!%20I%20have%20a%20question%20about%20a%20car."
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm text-mid-grey hover:text-navy-brand transition-colors"

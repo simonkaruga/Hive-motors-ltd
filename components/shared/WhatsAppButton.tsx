@@ -4,7 +4,7 @@ import { MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function WhatsAppButton() {
-  const whatsappNumber = '254XXXXXXXXX';
+  const whatsappNumber = '254722800436';
   const message = 'Hi Hive Motors! I am interested in your cars.';
 
   return (

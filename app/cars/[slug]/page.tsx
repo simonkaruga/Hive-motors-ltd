@@ -29,7 +29,7 @@ export default async function CarDetailPage({ params }: Props) {
 
   if (!car) notFound();
 
-  const whatsappNumber = '254XXXXXXXXX';
+  const whatsappNumber = '254722800436';
   const whatsappMessage = `Hi Hive Motors! I'm interested in the ${car.title} (${car.year}). Could you share more details?`;
 
   const specs = [
@@ -174,7 +174,7 @@ export default async function CarDetailPage({ params }: Props) {
                     </a>
 
                     <a
-                      href="tel:+254XXXXXXXXX"
+                      href="tel:+254722800436"
                       className="flex items-center justify-center gap-2 w-full border-2 border-navy-brand text-navy-brand py-3.5 rounded-xl font-bold hover:bg-navy-brand hover:text-white transition-colors"
                     >
                       <Phone size={20} />

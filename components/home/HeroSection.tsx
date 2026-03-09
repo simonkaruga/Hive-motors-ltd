@@ -34,7 +34,7 @@ export default function HeroSection() {
               Browse Inventory
             </Link>
             <a
-              href="https://wa.me/254XXXXXXXXX"
+              href="https://wa.me/254722800436"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center bg-white text-navy-brand border-2 border-navy-brand px-8 py-4 rounded-md font-semibold text-lg hover:bg-navy-brand hover:text-white transition-colors"

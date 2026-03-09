@@ -79,7 +79,7 @@ export default function PradoPage() {
     ]
   };
 
-  const whatsappNumber = '254XXXXXXXXX';
+  const whatsappNumber = '254722800436';
   const message = `Hi, I'm interested in the ${car.title}. Please share more details.`;
 
   const similarCars = [
@@ -251,7 +251,7 @@ export default function PradoPage() {
                 WhatsApp Inquiry
               </a>
               <a
-                href="tel:+254XXXXXXXXX"
+                href="tel:+254722800436"
                 className="w-full bg-navy-brand text-white px-6 py-4 rounded-lg font-semibold text-center hover:bg-navy-dark transition-colors flex items-center justify-center gap-2"
               >
                 <Phone size={20} />

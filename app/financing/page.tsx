@@ -193,7 +193,7 @@ export default function FinancingPage() {
 
               {/* CTA */}
               <a
-                href={`https://wa.me/254XXXXXXXXX?text=${encodeURIComponent(whatsappMessage)}`}
+                href={`https://wa.me/254722800436?text=${encodeURIComponent(whatsappMessage)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full bg-[#25D366] text-white py-4 rounded-xl font-bold hover:bg-[#1ebe5b] transition-colors"

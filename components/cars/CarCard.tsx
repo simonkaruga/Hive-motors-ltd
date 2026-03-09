@@ -23,7 +23,7 @@ interface CarCardProps {
 }
 
 export default function CarCard({ car }: CarCardProps) {
-  const whatsappNumber = '254XXXXXXXXX';
+  const whatsappNumber = '254722800436';
   const message = `Hi, I'm interested in the ${car.title}. Please share more details.`;
 
   const imageUrl = car.images?.[0]
