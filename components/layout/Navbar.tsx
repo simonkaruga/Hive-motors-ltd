@@ -32,16 +32,16 @@ export default function Navbar() {
       transition={{ duration: 0.5, ease: 'easeOut' }}
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-navy-brand shadow-[0_4px_24px_rgba(10,62,102,0.3)]'
-          : 'bg-navy-brand/95 backdrop-blur-md'
+          ? 'bg-white shadow-[0_2px_24px_rgba(10,62,102,0.1)] border-b border-navy-brand/8'
+          : 'bg-white/95 backdrop-blur-md'
       }`}
     >
       <div className="max-w-7xl mx-auto px-16 py-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
+        <Link href="/" className="flex items-center">
           <span className="text-2xl font-display font-bold">
             <span className="text-red-brand">HIVE</span>
-            <span className="text-white"> MOTORS</span>
+            <span className="text-navy-brand"> MOTORS</span>
           </span>
         </Link>
 
@@ -51,17 +51,15 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-white/80 hover:text-white text-sm font-medium transition-colors relative group"
+              className="text-charcoal/70 hover:text-navy-brand text-sm font-medium transition-colors relative group"
             >
               {link.label}
               <span className="absolute -bottom-2 left-0 right-0 h-[2px] bg-red-brand scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
             </Link>
           ))}
-
-          {/* CTA button in nav */}
           <Link
             href="/cars"
-            className="bg-red-brand hover:bg-red-dark text-white text-sm font-semibold px-20 py-8 rounded-lg transition-colors"
+            className="bg-red-brand hover:bg-red-dark text-white text-sm font-semibold px-20 py-8 rounded-lg transition-colors shadow-sm"
           >
             Browse Cars
           </Link>
@@ -70,7 +68,7 @@ export default function Navbar() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-white p-4"
+          className="md:hidden text-navy-brand p-4"
           aria-label="Toggle menu"
         >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
@@ -84,14 +82,14 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-navy-brand border-t border-white/10 overflow-hidden"
+            className="md:hidden bg-white border-t border-navy-brand/8 overflow-hidden"
           >
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="block px-16 py-12 text-white/80 hover:text-white hover:bg-navy-light transition-colors border-b border-white/5 text-sm"
+                className="block px-16 py-12 text-charcoal/70 hover:text-navy-brand hover:bg-grey-soft transition-colors border-b border-navy-brand/5 text-sm"
               >
                 {link.label}
               </Link>

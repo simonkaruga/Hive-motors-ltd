@@ -36,16 +36,14 @@ export default function Home() {
   }, []);
 
   return (
-    <main>
+    <main className="bg-white">
       <HeroSection />
 
-      {/* ── Stats bar — navy background ───────────────────────────── */}
-      <section className="relative py-48 bg-navy-brand overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.03),transparent)]" />
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-brand/60 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-
-        <div className="relative max-w-7xl mx-auto px-16">
+      {/* ── Stats bar — very light grey ───────────────────────────── */}
+      <section className="relative py-48 bg-grey-soft overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-px bg-navy-brand/8" />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-navy-brand/8" />
+        <div className="max-w-7xl mx-auto px-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-48">
             <StatCounter end={500} label="Cars Sold" suffix="+" />
             <StatCounter end={450} label="Happy Clients" suffix="+" />
@@ -55,13 +53,13 @@ export default function Home() {
       </section>
 
       {/* ── On Transit teaser strip ───────────────────────────────── */}
-      <section className="py-32 bg-grey-soft">
+      <section className="py-32 bg-white border-b border-navy-brand/6">
         <div className="max-w-7xl mx-auto px-16">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="flex flex-col sm:flex-row items-center justify-between gap-16 bg-white border border-navy-brand/10 rounded-xl px-32 py-24 shadow-sm"
+            className="flex flex-col sm:flex-row items-center justify-between gap-16 bg-navy-brand/4 border border-navy-brand/10 rounded-xl px-32 py-24"
           >
             <div className="flex items-center gap-16">
               <div className="w-12 h-12 bg-navy-brand/8 rounded-full flex items-center justify-center flex-shrink-0">
@@ -72,7 +70,7 @@ export default function Home() {
                   🚢 Cars Arriving from Japan
                 </p>
                 <p className="text-charcoal/50 text-sm mt-2">
-                  New stock on the way — see what's in transit right now
+                  New stock on the way — see what&apos;s in transit right now
                 </p>
               </div>
             </div>
@@ -88,30 +86,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Featured Cars — light grey background ─────────────────── */}
-      <section className="py-96 bg-grey-soft">
+      {/* ── Featured Cars — white ─────────────────────────────────── */}
+      <section className="py-96 bg-white">
         <div className="max-w-7xl mx-auto px-16">
-          <SectionHeader
-            title="Featured Cars"
-            subtitle="Handpicked premium vehicles from Japan"
-            light
-          />
+          <SectionHeader title="Featured Cars" subtitle="Handpicked premium vehicles from Japan" light />
 
           {featuredCars.length > 0 ? (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-24 mb-48">
-                {featuredCars.map((car) => (
-                  <CarCard key={car._id} car={car} />
-                ))}
+                {featuredCars.map((car) => <CarCard key={car._id} car={car} />)}
               </div>
               <div className="text-center">
-                <Link href="/cars">
-                  <Button variant="primary">View All Cars</Button>
-                </Link>
+                <Link href="/cars"><Button variant="primary">View All Cars</Button></Link>
               </div>
             </>
           ) : (
-            /* Placeholder cards while CMS is not yet populated */
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-24 mb-48">
                 {[
@@ -119,15 +108,12 @@ export default function Home() {
                   { label: 'Nissan X-Trail 4WD', year: 2019, price: '2,800,000' },
                   { label: 'Subaru Forester XT', year: 2021, price: '3,200,000' },
                 ].map((p, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
+                  <motion.div key={i}
+                    initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                     className="bg-white border border-navy-brand/8 rounded-xl overflow-hidden shadow-sm"
                   >
-                    <div className="h-56 bg-gradient-to-br from-grey-soft to-white flex items-center justify-center border-b border-navy-brand/6">
+                    <div className="h-56 bg-grey-soft flex items-center justify-center border-b border-navy-brand/6">
                       <svg width="80" height="40" viewBox="0 0 120 50" fill="none" className="opacity-15">
                         <rect x="10" y="20" width="100" height="20" rx="4" fill="#0A3E66"/>
                         <rect x="25" y="10" width="70" height="20" rx="4" fill="#0A3E66"/>
@@ -149,36 +135,27 @@ export default function Home() {
                 ))}
               </div>
               <div className="text-center">
-                <Link href="/cars">
-                  <Button variant="secondary">Browse All Inventory</Button>
-                </Link>
+                <Link href="/cars"><Button variant="secondary">Browse All Inventory</Button></Link>
               </div>
             </>
           )}
         </div>
       </section>
 
-      {/* ── Why Choose Us — white background ──────────────────────── */}
-      <section className="relative py-96 bg-white overflow-hidden">
+      {/* ── Why Choose Us — light grey ────────────────────────────── */}
+      <section className="py-96 bg-grey-soft">
         <div className="absolute top-0 left-0 right-0 h-px bg-navy-brand/6" />
         <div className="max-w-7xl mx-auto px-16">
-          <SectionHeader
-            title="Why Choose Hive Motors"
-            subtitle="Your trusted partner for premium Japanese imports"
-            light
-          />
+          <SectionHeader title="Why Choose Hive Motors" subtitle="Your trusted partner for premium Japanese imports" light />
           <WhyChooseUs />
         </div>
       </section>
 
-      {/* ── Testimonials — navy background ────────────────────────── */}
+      {/* ── Testimonials — white ──────────────────────────────────── */}
       {testimonials.length > 0 && (
-        <section className="py-96 bg-navy-brand">
+        <section className="py-96 bg-white border-t border-navy-brand/8">
           <div className="max-w-7xl mx-auto px-16">
-            <SectionHeader
-              title="What Our Clients Say"
-              subtitle="Real reviews from happy customers"
-            />
+            <SectionHeader title="What Our Clients Say" subtitle="Real reviews from happy customers" light />
             <TestimonialCarousel testimonials={testimonials} />
           </div>
         </section>
@@ -187,7 +164,6 @@ export default function Home() {
       {/* ── Red CTA Banner ────────────────────────────────────────── */}
       <section className="relative py-80 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-red-dark via-red-brand to-red-dark" />
-        {/* Hexagon pattern overlay */}
         <svg className="absolute inset-0 w-full h-full opacity-[0.06]" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <defs>
             <pattern id="hc-cta" x="0" y="0" width="60" height="104" patternUnits="userSpaceOnUse">
@@ -199,30 +175,19 @@ export default function Home() {
         </svg>
 
         <div className="relative max-w-4xl mx-auto px-16 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <p className="text-white/60 text-sm font-medium tracking-widest uppercase mb-12">
-              🐝 Dream Cars, Real Deals!
-            </p>
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <p className="text-white/60 text-sm font-medium tracking-widest uppercase mb-12">🐝 Dream Cars, Real Deals!</p>
             <h2 className="text-4xl md:text-5xl font-display text-white mb-16 leading-tight">
               Find Your Perfect Japanese Import
             </h2>
             <p className="text-white/70 text-lg mb-40 max-w-2xl mx-auto">
-              Talk to our team on WhatsApp and we'll help you find exactly what you need —
+              Talk to our team on WhatsApp and we&apos;ll help you find exactly what you need —
               any budget, any spec, delivered to Nairobi.
             </p>
             <div className="flex flex-col sm:flex-row gap-16 justify-center">
-              <a
-                href="https://wa.me/254XXXXXXXXX"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-12 bg-white text-red-brand px-32 py-16 rounded-lg font-bold text-lg hover:bg-white/90 transition-colors shadow-lg"
-              >
-                <MessageCircle size={22} />
-                WhatsApp Us Now
+              <a href="https://wa.me/254XXXXXXXXX" target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-12 bg-white text-red-brand px-32 py-16 rounded-lg font-bold text-lg hover:bg-white/90 transition-colors shadow-lg">
+                <MessageCircle size={22} /> WhatsApp Us Now
               </a>
               <Link href="/cars">
                 <button className="inline-flex items-center gap-12 border-2 border-white text-white px-32 py-16 rounded-lg font-semibold text-lg hover:bg-white/10 transition-colors">

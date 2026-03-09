@@ -87,7 +87,7 @@ export default function CarAnimation() {
 
   return (
     <motion.div
-      className="w-[82%] max-w-[560px] opacity-90 pointer-events-none select-none"
+      className="w-[82%] max-w-[560px] opacity-100 pointer-events-none select-none"
       animate={carAnim}
     >
       <svg viewBox="0 0 520 210" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -113,7 +113,7 @@ export default function CarAnimation() {
         </defs>
 
         {/* ── Ground shadow ─────────────────────── */}
-        <ellipse cx="252" cy="205" rx="230" ry="9" fill="black" opacity="0.35" />
+        <ellipse cx="252" cy="205" rx="230" ry="10" fill="#0A3E66" opacity="0.12" />
 
         {/* ── Main body ─────────────────────────── */}
         <path
