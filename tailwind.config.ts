@@ -9,23 +9,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // ── Official Hive Motors Brand Colours ──────────────────────
         'red-brand':  '#DA1D17',  // Hive Red — primary CTA, prices, accents
         'red-dark':   '#B31510',  // Deep Red — hover / pressed states
-        'navy-brand': '#0A3E66',  // Navy Blue — navbar, footer, dark sections
-        'navy-light': '#0D4F82',  // Light Navy — gradients, hover backgrounds
-        'grey-soft':  '#F4F6F8',  // Off White — alternating section backgrounds
-        'charcoal':   '#1A1A2A',  // Body text on light backgrounds
-        // ── Legacy tokens (kept for any remaining references) ───────
-        midnight: { DEFAULT: '#1A1A2E' },
-        gold:     { DEFAULT: '#D4AF37', light: '#FDF6E3' },
-        cloud:    { DEFAULT: '#F8F9FA' },
-        steel:    { DEFAULT: '#4A5568' },
+        'navy-brand': '#0A3E66',  // Navy Blue — headings, navbar text
+        'navy-dark':  '#062A47',  // Dark Navy — footer gradient
+        'grey-soft':  '#F7F8FA',  // Soft Grey — section backgrounds
+        'blue-tint':  '#EEF3F8',  // Light Blue Tint — feature backgrounds
+        'charcoal':   '#1A1A2A',  // Body text
+        'mid-grey':   '#6B7280',  // Captions and subtitles
       },
       fontFamily: {
-        sans: ['var(--font-inter)'],
-        display: ['var(--font-playfair)'],
-        mono: ['var(--font-jetbrains)'],
+        sans: ['var(--font-inter)', 'sans-serif'],
+        display: ['var(--font-display)', 'serif'],
+        mono: ['var(--font-mono)', 'monospace'],
       },
       spacing: {
         '4': '4px',

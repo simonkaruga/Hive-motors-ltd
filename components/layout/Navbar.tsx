@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X, Phone } from 'lucide-react';
 
@@ -14,42 +14,51 @@ const links = [
 ];
 
 export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      scrolled ? 'bg-white shadow-md border-b border-gray-200' : 'bg-white'
+    }`}>
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <span className="text-2xl font-bold">
-              <span className="text-red-600">HIVE</span>
-              <span className="text-gray-900"> MOTORS</span>
+              <span className="text-red-brand">HIVE</span>
+              <span className="text-navy-brand"> MOTORS</span>
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-8">
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-gray-700 hover:text-red-600 font-medium transition-colors"
+                className="text-navy-brand hover:text-red-brand font-medium transition-colors text-[15px]"
               >
                 {link.label}
               </Link>
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:flex items-center space-x-4">
-            <a href="tel:+254XXXXXXXXX" className="flex items-center text-gray-700 hover:text-red-600">
+          {/* CTA Buttons */}
+          <div className="hidden lg:flex items-center space-x-4">
+            <a href="tel:+254XXXXXXXXX" className="flex items-center text-navy-brand hover:text-red-brand transition-colors">
               <Phone size={18} className="mr-2" />
-              <span className="font-medium">Call Us</span>
+              <span className="font-medium text-sm">Call Us</span>
             </a>
             <Link
               href="/cars"
-              className="bg-red-600 text-white px-6 py-2 rounded-md font-medium hover:bg-red-700 transition-colors"
+              className="bg-red-brand text-white px-6 py-2.5 rounded-md font-semibold text-sm hover:bg-red-dark transition-colors"
             >
               View Cars
             </Link>
@@ -58,7 +67,7 @@ export default function Navbar() {
           {/* Mobile menu button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-2 text-gray-700"
+            className="lg:hidden p-2 text-navy-brand"
           >
             {mobileOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -67,14 +76,14 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200">
-          <div className="px-4 py-4 space-y-2">
+        <div className="lg:hidden bg-white border-t border-gray-200">
+          <div className="px-6 py-4 space-y-2">
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
+                className="block px-4 py-3 text-navy-brand hover:bg-grey-soft rounded-md transition-colors"
               >
                 {link.label}
               </Link>
@@ -82,7 +91,7 @@ export default function Navbar() {
             <Link
               href="/cars"
               onClick={() => setMobileOpen(false)}
-              className="block bg-red-600 text-white text-center px-4 py-2 rounded-md font-medium mt-4"
+              className="block bg-red-brand text-white text-center px-4 py-3 rounded-md font-semibold mt-4"
             >
               View Cars
             </Link>
