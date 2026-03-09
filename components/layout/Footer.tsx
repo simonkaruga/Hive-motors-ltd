@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Instagram, Facebook, Youtube } from 'lucide-react';
+import { Instagram, Facebook } from 'lucide-react';
+import { SiTiktok } from 'react-icons/si';
 
 export default function Footer() {
   return (
@@ -76,24 +77,37 @@ export default function Footer() {
             </h4>
             <div className="flex flex-col gap-8 text-white/55 text-sm mb-24">
               <p>📞 +254 XXX XXX XXX</p>
-              <p>✉️ info@hivemotors.co.ke</p>
-              <p>📍 Nairobi, Kenya</p>
+              <p>✉️ hivemotorsltd@gmail.com</p>
+              <p>📍 Ridgeways, Kiambu Road, Nairobi</p>
             </div>
             <div className="flex gap-16">
-              {[
-                { icon: Instagram, href: '#', label: 'Instagram' },
-                { icon: Facebook, href: '#', label: 'Facebook' },
-                { icon: Youtube, href: '#', label: 'YouTube' },
-              ].map(({ icon: Icon, href, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  className="w-9 h-9 bg-white/10 hover:bg-red-brand rounded-lg flex items-center justify-center text-white/60 hover:text-white transition-all"
-                >
-                  <Icon size={16} />
-                </a>
-              ))}
+              <a
+                href="https://www.instagram.com/hivemotors"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="w-9 h-9 bg-white/10 hover:bg-red-brand rounded-lg flex items-center justify-center text-white/60 hover:text-white transition-all"
+              >
+                <Instagram size={16} />
+              </a>
+              <a
+                href="https://www.facebook.com/share/1NEPJ6VvYC"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="w-9 h-9 bg-white/10 hover:bg-red-brand rounded-lg flex items-center justify-center text-white/60 hover:text-white transition-all"
+              >
+                <Facebook size={16} />
+              </a>
+              <a
+                href="https://www.tiktok.com/@hivemotors"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="TikTok"
+                className="w-9 h-9 bg-white/10 hover:bg-red-brand rounded-lg flex items-center justify-center text-white/60 hover:text-white transition-all"
+              >
+                <SiTiktok size={14} />
+              </a>
             </div>
           </div>
         </div>

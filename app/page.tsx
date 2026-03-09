@@ -1,5 +1,5 @@
 'use client';
-
+// Light design v2.0
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';

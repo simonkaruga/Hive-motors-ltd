@@ -9,7 +9,7 @@
 
 ## Step 1: Sanity CMS Setup
 
-### 1.1 Create Sanity Project
+### 1.1  Create Sanity Project
 
 ```bash
 # Install Sanity CLI globally
