@@ -31,15 +31,21 @@ export default function StatCounter({ end, label, suffix = '' }: StatCounterProp
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      className="text-center"
+      transition={{ duration: 0.6 }}
+      className="relative text-center group"
     >
-      <div className="text-6xl md:text-7xl font-display text-red-brand mb-8 leading-none">
-        {count}<span className="text-red-brand/50">{suffix}</span>
+      {/* Gradient background on hover */}
+      <div className="absolute inset-0 bg-gradient-to-br from-red-brand/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      
+      <div className="relative p-24">
+        <div className="text-7xl md:text-8xl font-display font-bold bg-gradient-to-br from-red-brand via-red-dark to-red-brand bg-clip-text text-transparent mb-12 leading-none">
+          {count}<span className="text-red-brand/40">{suffix}</span>
+        </div>
+        <div className="w-12 h-[3px] bg-gradient-to-r from-transparent via-red-brand to-transparent mx-auto mb-16 rounded-full" />
+        <div className="text-navy-brand/70 text-sm font-bold tracking-widest uppercase">{label}</div>
       </div>
-      <div className="w-8 h-[2px] bg-red-brand/30 mx-auto mb-12" />
-      <div className="text-navy-brand/60 text-sm font-medium tracking-widest uppercase">{label}</div>
     </motion.div>
   );
 }
