@@ -5,6 +5,9 @@ import { useEffect, useState } from 'react';
 import { Ship, Shield, Award, Zap, Users } from 'lucide-react';
 import HeroSection from '@/components/home/HeroSection';
 import CarCard from '@/components/cars/CarCard';
+import PageLoader from '@/components/shared/PageLoader';
+import StaggerItem from '@/components/shared/StaggerItem';
+import FadeInSection from '@/components/shared/FadeInSection';
 import { client } from '@/lib/sanity/client';
 import { featuredCarsQuery } from '@/lib/sanity/queries';
 import { Car } from '@/lib/types';
@@ -132,7 +135,9 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="bg-white">
+    <>
+      <PageLoader />
+      <main className="bg-white">
       <HeroSection />
 
       {/* On Transit Banner */}
@@ -169,14 +174,20 @@ export default function Home() {
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
                 {/* Prado - First Featured Car */}
-                <CarCard key={pradoCar._id} car={pradoCar} />
+                <StaggerItem index={0}>
+                  <CarCard key={pradoCar._id} car={pradoCar} />
+                </StaggerItem>
                 
                 {/* Range Rover - Second Featured Car */}
-                <CarCard key={rangeRoverCar._id} car={rangeRoverCar} />
+                <StaggerItem index={1}>
+                  <CarCard key={rangeRoverCar._id} car={rangeRoverCar} />
+                </StaggerItem>
                 
                 {/* Other Featured Cars from Sanity */}
-                {featuredCars.map((car) => (
-                  <CarCard key={car._id} car={car} />
+                {featuredCars.map((car, idx) => (
+                  <StaggerItem key={car._id} index={idx + 2}>
+                    <CarCard car={car} />
+                  </StaggerItem>
                 ))}
               </div>
               <div className="text-center">
@@ -292,5 +303,6 @@ export default function Home() {
         </div>
       </section>
     </main>
+    </>
   );
 }
