@@ -4,23 +4,41 @@ import { useState, useEffect } from 'react';
 import { SlidersHorizontal, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-interface FilterBarProps {
-  onFilterChange: (filters: any) => void;
-  totalCount?: number;
-  filteredCount?: number;
+interface FilterState {
+  make: string;
+  bodyType: string;
+  transmission: string;
+  fuelType: string;
+  minPrice: string;
+  maxPrice: string;
 }
 
-export default function FilterBar({ onFilterChange, totalCount, filteredCount }: FilterBarProps) {
+interface FilterBarProps {
+  onFilterChange: (filters: FilterState) => void;
+  totalCount?: number;
+  filteredCount?: number;
+  initialFilters?: Partial<FilterState>;
+}
+
+export default function FilterBar({ onFilterChange, totalCount, filteredCount, initialFilters }: FilterBarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [filters, setFilters] = useState({
-    make: '',
-    bodyType: '',
-    transmission: '',
-    fuelType: '',
-    minPrice: '',
-    maxPrice: '',
+  const [filters, setFilters] = useState<FilterState>({
+    make: initialFilters?.make || '',
+    bodyType: initialFilters?.bodyType || '',
+    transmission: initialFilters?.transmission || '',
+    fuelType: initialFilters?.fuelType || '',
+    minPrice: initialFilters?.minPrice || '',
+    maxPrice: initialFilters?.maxPrice || '',
   });
+
+  // Apply initial filters on mount if any are set
+  useEffect(() => {
+    if (initialFilters && Object.values(initialFilters).some(v => v)) {
+      onFilterChange({ make: '', bodyType: '', transmission: '', fuelType: '', minPrice: '', maxPrice: '', ...initialFilters });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);

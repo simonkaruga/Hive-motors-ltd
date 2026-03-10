@@ -22,18 +22,21 @@ export default {
       type: 'string',
       options: {
         list: [
-          { title: 'Available', value: 'available' },
-          { title: 'Sold', value: 'sold' },
-          { title: 'On Transit', value: 'on-transit' },
+          { title: '✅ Available', value: 'available' },
+          { title: '🚢 On Transit', value: 'on-transit' },
+          { title: '🔴 Sold', value: 'sold' },
         ],
+        layout: 'radio',
       },
+      initialValue: 'available',
       validation: (Rule: any) => Rule.required(),
     },
     {
       name: 'images',
-      title: 'Images',
+      title: 'Images (upload multiple)',
       type: 'array',
-      of: [{ type: 'image' }],
+      of: [{ type: 'image', options: { hotspot: true } }],
+      options: { layout: 'grid' },
       validation: (Rule: any) => Rule.required().min(1),
     },
     {

@@ -72,7 +72,7 @@ export default function Footer() {
               Contact
             </h4>
             <div className="flex flex-col gap-2 text-white/70 text-sm mb-6">
-              <p>📞 +254 XXX XXX XXX</p>
+              <p>📞 +254 722 800 436</p>
               <p>✉️ hivemotorsltd@gmail.com</p>
               <p>📍 Ridgeways, Kiambu Road, Nairobi</p>
             </div>

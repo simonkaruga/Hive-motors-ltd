@@ -5,13 +5,14 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { MessageCircle, Eye, Gauge, Fuel, Settings } from 'lucide-react';
 import { urlFor } from '@/lib/sanity/client';
+import { SanityImage } from '@/lib/types';
 
 interface CarCardProps {
   car: {
     _id: string;
     title: string;
     slug: { current: string };
-    images: any[];
+    images: SanityImage[];
     price: number;
     year: number;
     mileage: number;

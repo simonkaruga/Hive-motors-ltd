@@ -1,13 +1,20 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Clock } from 'lucide-react';
+import { urlFor } from '@/lib/sanity/client';
+
+interface SanityImageAsset {
+  _ref?: string;
+  _type?: string;
+  url?: string;
+}
 
 interface BlogCardProps {
   post: {
     _id: string;
     title: string;
     slug: { current: string };
-    coverImage?: any;
+    coverImage?: { asset: SanityImageAsset; alt?: string };
     category: string;
     excerpt?: string;
     publishedAt: string;
@@ -16,14 +23,18 @@ interface BlogCardProps {
 }
 
 export default function BlogCard({ post }: BlogCardProps) {
+  const coverImageUrl = post.coverImage
+    ? (post.coverImage.asset?.url || urlFor(post.coverImage).width(800).height(400).auto('format').url())
+    : null;
+
   return (
     <Link href={`/blog/${post.slug.current}`}>
       <div className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-shadow">
-        {post.coverImage && (
+        {coverImageUrl && (
           <div className="relative h-48 bg-gray-100">
             <Image
-              src={post.coverImage}
-              alt={post.title}
+              src={coverImageUrl}
+              alt={post.coverImage?.alt || post.title}
               fill
               className="object-cover"
             />

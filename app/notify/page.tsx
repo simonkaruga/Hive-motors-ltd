@@ -22,10 +22,21 @@ export default function NotifyPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const whatsappNumber = '254722800436';
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise(r => setTimeout(r, 800));
+    const msg =
+      `*Car Request — Hive Motors*\n` +
+      `Name: ${formData.name}\n` +
+      `Phone: ${formData.phone}\n` +
+      `Email: ${formData.email}\n` +
+      `Make: ${formData.make || 'Any'}\n` +
+      `Body Type: ${formData.bodyType || 'Any'}\n` +
+      `Budget: ${formData.budget}\n` +
+      (formData.notes ? `Notes: ${formData.notes}` : '');
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
     setSubmitted(true);
     setLoading(false);
   };
@@ -121,7 +132,7 @@ export default function NotifyPage() {
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl text-charcoal focus:border-red-brand focus:ring-1 focus:ring-red-brand outline-none"
-                  placeholder="+254 XXX XXX XXX"
+                  placeholder="+254 722 800 436"
                 />
               </div>
             </div>

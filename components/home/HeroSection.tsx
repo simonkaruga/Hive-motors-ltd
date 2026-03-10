@@ -2,40 +2,76 @@
 
 import Link from 'next/link';
 import { Search } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
+const STATS = [
+  { label: 'Cars Sold', end: 500, suffix: '+' },
+  { label: 'Happy Clients', end: 450, suffix: '+' },
+  { label: 'Years Experience', end: 10, suffix: '+' },
+];
+
+const MAKES = ['Toyota', 'Nissan', 'Honda', 'Subaru', 'Land Rover', 'BMW', 'Mercedes', 'Mazda'];
+const BODY_TYPES = ['SUV', 'Sedan', 'Hatchback', 'Pickup'];
 
 export default function HeroSection() {
-  const [videoPaused, setVideoPaused] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [counts, setCounts] = useState([0, 0, 0]);
+  const [selectedMake, setSelectedMake] = useState('');
+  const [selectedBody, setSelectedBody] = useState('');
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const router = useRouter();
 
+  // Count-up animation on mount
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setVideoPaused(true);
-      if (iframeRef.current) {
-        iframeRef.current.src = iframeRef.current.src.replace('autoplay=1', 'autoplay=0');
-      }
-    }, 30000);
-
-    return () => clearTimeout(timer);
+    const duration = 2500;
+    const fps = 60;
+    const steps = duration / (1000 / fps);
+    let step = 0;
+    const timer = setInterval(() => {
+      step++;
+      const progress = Math.min(step / steps, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+      setCounts(STATS.map(s => Math.floor(s.end * eased)));
+      if (step >= steps) clearInterval(timer);
+    }, 1000 / fps);
+    return () => clearInterval(timer);
   }, []);
 
+  const handleSearch = (e: { preventDefault(): void }) => {
+    e.preventDefault();
+    const params = new URLSearchParams();
+    if (selectedMake) params.set('make', selectedMake);
+    if (selectedBody) params.set('bodyType', selectedBody.toLowerCase());
+    router.push(`/cars${params.toString() ? '?' + params.toString() : ''}`);
+  };
+
   return (
-    <section className="relative pt-32 pb-20 overflow-hidden">
+    <section className="relative pt-32 pb-20 overflow-hidden min-h-[620px]">
+      {/* Navy fallback while video loads */}
+      <div className="absolute inset-0 bg-navy-brand z-0" />
+
       {/* Background Video */}
-      <div className="absolute inset-0 z-0">
+      <div className={`absolute inset-0 z-0 transition-opacity duration-1000 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}>
         <iframe
           ref={iframeRef}
-          className="absolute top-1/2 left-1/2 w-[177.77777778vh] h-[56.25vw] min-h-full min-w-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-          src="https://www.youtube.com/embed/HVf28fVK5Xk?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&loop=0&modestbranding=1&playsinline=1"
-          allow="autoplay"
+          onLoad={() => setVideoLoaded(true)}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+          style={{ width: 'max(100%, calc(100vh * 16/9))', height: 'max(100%, calc(100vw * 9/16))' }}
+          src="https://www.youtube.com/embed/HVf28fVK5Xk?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&loop=1&playlist=HVf28fVK5Xk&modestbranding=1&playsinline=1"
+          allow="autoplay; encrypted-media"
           title="Hive Motors Background"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-brand/70 via-navy-brand/50 to-navy-brand/70" />
+        <div className="absolute inset-0 bg-gradient-to-b from-navy-brand/75 via-navy-brand/55 to-navy-brand/80" />
       </div>
+
+      {/* Static overlay before video loads */}
+      <div className={`absolute inset-0 z-0 bg-gradient-to-b from-navy-brand/75 via-navy-brand/55 to-navy-brand/80 transition-opacity duration-1000 ${videoLoaded ? 'opacity-0' : 'opacity-100'}`} />
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center max-w-4xl mx-auto">
+
           {/* Badge */}
           <div className="inline-flex items-center bg-white/90 backdrop-blur-sm border border-red-brand/20 px-5 py-2 rounded-full text-sm font-medium mb-8 shadow-sm">
             <span className="text-red-brand">🇯🇵 Premium Japanese Imports · Nairobi, Kenya</span>
@@ -48,9 +84,41 @@ export default function HeroSection() {
           </h1>
 
           {/* Subheadline */}
-          <p className="text-xl text-white/90 mb-12 leading-relaxed max-w-2xl mx-auto">
-            Kenya's finest Japanese import dealership. Browse hundreds of quality vehicles sourced directly from Japan.
+          <p className="text-xl text-white/90 mb-8 leading-relaxed max-w-2xl mx-auto">
+            Kenya&apos;s finest Japanese import dealership. Browse hundreds of quality vehicles sourced directly from Japan.
           </p>
+
+          {/* Quick Search Bar */}
+          <form
+            onSubmit={handleSearch}
+            className="bg-white/10 backdrop-blur-md border border-white/25 rounded-2xl p-3 mb-8 max-w-2xl mx-auto shadow-xl"
+          >
+            <div className="flex flex-col sm:flex-row gap-2">
+              <select
+                value={selectedMake}
+                onChange={e => setSelectedMake(e.target.value)}
+                className="flex-1 px-4 py-3 rounded-xl bg-white text-navy-brand font-medium text-sm outline-none cursor-pointer"
+              >
+                <option value="">Any Make</option>
+                {MAKES.map(m => <option key={m} value={m}>{m}</option>)}
+              </select>
+              <select
+                value={selectedBody}
+                onChange={e => setSelectedBody(e.target.value)}
+                className="flex-1 px-4 py-3 rounded-xl bg-white text-navy-brand font-medium text-sm outline-none cursor-pointer"
+              >
+                <option value="">Any Body Type</option>
+                {BODY_TYPES.map(b => <option key={b} value={b}>{b}</option>)}
+              </select>
+              <button
+                type="submit"
+                className="flex items-center justify-center gap-2 bg-red-brand text-white px-6 py-3 rounded-xl font-semibold hover:bg-red-dark transition-colors whitespace-nowrap"
+              >
+                <Search size={18} />
+                Search Cars
+              </button>
+            </div>
+          </form>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
@@ -58,33 +126,31 @@ export default function HeroSection() {
               href="/cars"
               className="inline-flex items-center justify-center bg-red-brand text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-red-dark transition-colors shadow-lg"
             >
-              <Search size={20} className="mr-2" />
-              Browse Inventory
+              Browse All Cars
             </Link>
             <a
               href="https://wa.me/254722800436"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center bg-white text-navy-brand border-2 border-navy-brand px-8 py-4 rounded-md font-semibold text-lg hover:bg-navy-brand hover:text-white transition-colors"
+              className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-[#1ebe5b] transition-colors shadow-lg"
             >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
               WhatsApp Us
             </a>
           </div>
 
-          {/* Stats */}
+          {/* Animated Stats */}
           <div className="grid grid-cols-3 gap-8 max-w-3xl mx-auto pt-12 border-t border-white/20">
-            <div>
-              <div className="text-4xl font-bold text-white font-mono">500+</div>
-              <div className="text-sm text-white/80 mt-2">Cars Sold</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-white font-mono">450+</div>
-              <div className="text-sm text-white/80 mt-2">Happy Clients</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-white font-mono">10+</div>
-              <div className="text-sm text-white/80 mt-2">Years Experience</div>
-            </div>
+            {STATS.map((stat, i) => (
+              <div key={stat.label}>
+                <div className="text-4xl font-bold text-white font-mono tabular-nums">
+                  {counts[i]}{stat.suffix}
+                </div>
+                <div className="text-sm text-white/80 mt-2">{stat.label}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

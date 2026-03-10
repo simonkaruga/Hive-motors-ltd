@@ -10,7 +10,7 @@ interface Post {
   _id: string;
   title: string;
   slug: { current: string };
-  coverImage?: any;
+  coverImage?: { asset: { _ref?: string; url?: string }; alt?: string };
   category: string;
   excerpt?: string;
   publishedAt: string;
@@ -29,6 +29,7 @@ export default function BlogPage() {
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     async function fetchPosts() {
@@ -36,8 +37,9 @@ export default function BlogPage() {
         const data = await client.fetch(postsQuery);
         setPosts(data);
         setFilteredPosts(data);
-      } catch (error) {
-        console.error('Error fetching posts:', error);
+      } catch (err) {
+        console.error('Error fetching posts:', err);
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -96,7 +98,13 @@ export default function BlogPage() {
           </div>
         </RevealOnScroll>
 
-        {loading ? (
+        {error ? (
+          <div className="text-center py-24">
+            <p className="text-4xl mb-4">⚠️</p>
+            <p className="text-2xl font-bold text-navy-brand mb-2">Failed to load posts</p>
+            <p className="text-mid-grey">Please check your connection and try again.</p>
+          </div>
+        ) : loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <div key={i} className="bg-grey-soft rounded-2xl h-64 animate-pulse" />

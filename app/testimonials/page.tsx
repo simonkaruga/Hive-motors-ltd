@@ -12,14 +12,16 @@ import { formatDate } from '@/lib/utils';
 export default function TestimonialsPage() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     async function fetchTestimonials() {
       try {
         const data = await client.fetch(testimonialsQuery);
         setTestimonials(data);
-      } catch (error) {
-        console.error('Error fetching testimonials:', error);
+      } catch (err) {
+        console.error('Error fetching testimonials:', err);
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -74,7 +76,13 @@ export default function TestimonialsPage() {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {loading ? (
+          {error ? (
+            <div className="text-center py-24">
+              <p className="text-4xl mb-4">⚠️</p>
+              <p className="text-2xl font-bold text-navy-brand mb-2">Failed to load reviews</p>
+              <p className="text-mid-grey">Please check your connection and try again.</p>
+            </div>
+          ) : loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div key={i} className="bg-grey-soft rounded-2xl h-48 animate-pulse" />

@@ -22,14 +22,16 @@ const SHIPPING_STEPS = [
 export default function OnTransitPage() {
   const [cars, setCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     async function fetchCars() {
       try {
         const data = await client.fetch(transitCarsQuery);
         setCars(data);
-      } catch (error) {
-        console.error('Error fetching transit cars:', error);
+      } catch (err) {
+        console.error('Error fetching transit cars:', err);
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -95,7 +97,13 @@ export default function OnTransitPage() {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {loading ? (
+          {error ? (
+            <div className="text-center py-24">
+              <p className="text-4xl mb-4">⚠️</p>
+              <p className="text-2xl font-bold text-navy-brand mb-2">Failed to load transit cars</p>
+              <p className="text-mid-grey">Please check your connection and try again.</p>
+            </div>
+          ) : loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="bg-grey-soft rounded-2xl h-64 animate-pulse" />

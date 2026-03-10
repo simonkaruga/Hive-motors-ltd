@@ -1,19 +1,30 @@
 'use client';
 
-import type { Metadata } from 'next';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Grid, List } from 'lucide-react';
 import CarCard from '@/components/cars/CarCard';
 import FilterBar from '@/components/cars/FilterBar';
 import { client } from '@/lib/sanity/client';
 import { carsQuery } from '@/lib/sanity/queries';
 import { Car } from '@/lib/types';
 
-export default function CarsPage() {
+interface FilterState {
+  make: string; bodyType: string; transmission: string;
+  fuelType: string; minPrice: string; maxPrice: string;
+}
+
+function CarsContent() {
+  const searchParams = useSearchParams();
+  const initialFilters = {
+    make: searchParams.get('make') || '',
+    bodyType: searchParams.get('bodyType') || '',
+  };
+
   const [cars, setCars] = useState<Car[]>([]);
   const [filteredCars, setFilteredCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     async function fetchCars() {
@@ -21,8 +32,9 @@ export default function CarsPage() {
         const data = await client.fetch(carsQuery);
         setCars(data);
         setFilteredCars(data);
-      } catch (error) {
-        console.error('Error fetching cars:', error);
+      } catch (err) {
+        console.error('Error fetching cars:', err);
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -30,7 +42,7 @@ export default function CarsPage() {
     fetchCars();
   }, []);
 
-  const handleFilterChange = (filters: any) => {
+  const handleFilterChange = (filters: FilterState) => {
     let filtered = [...cars];
     if (filters.make) filtered = filtered.filter(c => c.make?.toLowerCase() === filters.make.toLowerCase());
     if (filters.bodyType) filtered = filtered.filter(c => c.bodyType === filters.bodyType);
@@ -42,8 +54,7 @@ export default function CarsPage() {
   };
 
   return (
-    <main className="bg-white min-h-screen">
-
+    <>
       {/* Page Header */}
       <section className="pt-32 pb-12 bg-gradient-to-br from-grey-soft to-blue-tint border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -68,9 +79,22 @@ export default function CarsPage() {
           onFilterChange={handleFilterChange}
           totalCount={cars.length}
           filteredCount={filteredCars.length}
+          initialFilters={initialFilters}
         />
 
-        {loading ? (
+        {error ? (
+          <div className="text-center py-24">
+            <p className="text-4xl mb-4">⚠️</p>
+            <p className="text-2xl font-bold text-navy-brand mb-2">Failed to load inventory</p>
+            <p className="text-mid-grey mb-6">Please check your connection and try again.</p>
+            <button
+              onClick={() => { setError(false); setLoading(true); }}
+              className="bg-red-brand text-white px-6 py-3 rounded-xl font-semibold hover:bg-red-dark transition-colors"
+            >
+              Retry
+            </button>
+          </div>
+        ) : loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <div key={i} className="bg-grey-soft rounded-2xl h-72 animate-pulse" />
@@ -84,7 +108,7 @@ export default function CarsPage() {
           >
             <p className="text-4xl mb-4">🔍</p>
             <p className="text-2xl font-bold text-navy-brand mb-2">No cars found</p>
-            <p className="text-mid-grey">Try adjusting your filters to find what you're looking for.</p>
+            <p className="text-mid-grey">Try adjusting your filters to find what you&apos;re looking for.</p>
           </motion.div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -101,6 +125,27 @@ export default function CarsPage() {
           </div>
         )}
       </div>
+    </>
+  );
+}
+
+export default function CarsPage() {
+  return (
+    <main className="bg-white min-h-screen">
+      <Suspense fallback={
+        <div className="pt-32 pb-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="h-12 bg-grey-soft rounded-xl animate-pulse w-64 mb-4" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+              {[1, 2, 3, 4, 5, 6].map(i => (
+                <div key={i} className="bg-grey-soft rounded-2xl h-72 animate-pulse" />
+              ))}
+            </div>
+          </div>
+        </div>
+      }>
+        <CarsContent />
+      </Suspense>
     </main>
   );
 }

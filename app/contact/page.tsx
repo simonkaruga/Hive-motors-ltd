@@ -12,11 +12,16 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate submission — integrate EmailJS here
-    await new Promise(r => setTimeout(r, 800));
+    const msg =
+      `*New Message — Hive Motors*\n` +
+      `Name: ${formData.name}\n` +
+      `Phone: ${formData.phone}\n` +
+      `Email: ${formData.email}\n` +
+      `Message: ${formData.message}`;
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
     setSubmitted(true);
     setLoading(false);
   };
@@ -27,7 +32,7 @@ export default function ContactPage() {
     {
       icon: Phone,
       title: 'Phone',
-      primary: '+254 XXX XXX XXX',
+      primary: '+254 722 800 436',
       secondary: 'Click to call directly',
       href: 'tel:+254722800436',
       color: 'bg-blue-tint',
@@ -118,8 +123,8 @@ export default function ContactPage() {
                   className="bg-green-50 border border-green-200 rounded-2xl p-8 text-center"
                 >
                   <div className="text-4xl mb-3">✅</div>
-                  <h3 className="font-bold text-green-700 text-xl mb-2">Message Sent!</h3>
-                  <p className="text-green-600">Thank you — we'll be in touch within 24 hours.</p>
+                  <h3 className="font-bold text-green-700 text-xl mb-2">Opening WhatsApp!</h3>
+                  <p className="text-green-600">Your message is ready to send on WhatsApp — we reply within minutes.</p>
                   <button
                     onClick={() => { setSubmitted(false); setFormData({ name: '', phone: '', email: '', message: '' }); }}
                     className="mt-4 text-sm text-mid-grey hover:text-navy-brand transition-colors"
@@ -149,7 +154,7 @@ export default function ContactPage() {
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       className="w-full px-4 py-3 border border-gray-200 rounded-xl text-charcoal focus:border-red-brand focus:ring-1 focus:ring-red-brand outline-none transition-colors bg-white"
-                      placeholder="+254 XXX XXX XXX"
+                      placeholder="+254 722 800 436"
                     />
                   </div>
 
