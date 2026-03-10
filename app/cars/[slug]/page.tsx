@@ -8,11 +8,12 @@ import ImageGallery from '@/components/cars/ImageGallery';
 import { formatPrice, formatMileage } from '@/lib/utils';
 
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const car = await client.fetch(carBySlugQuery, { slug: params.slug });
+  const { slug } = await params;
+  const car = await client.fetch(carBySlugQuery, { slug });
   if (!car) return { title: 'Car Not Found' };
   return {
     title: `${car.title} | Hive Motors Ltd`,
@@ -25,7 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function CarDetailPage({ params }: Props) {
-  const car = await client.fetch(carBySlugQuery, { slug: params.slug });
+  const { slug } = await params;
+  const car = await client.fetch(carBySlugQuery, { slug });
 
   if (!car) notFound();
 

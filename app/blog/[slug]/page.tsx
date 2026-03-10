@@ -9,11 +9,12 @@ import { postBySlugQuery } from '@/lib/sanity/queries';
 import { formatDate } from '@/lib/utils';
 
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = await client.fetch(postBySlugQuery, { slug: params.slug });
+  const { slug } = await params;
+  const post = await client.fetch(postBySlugQuery, { slug });
   if (!post) return { title: 'Post Not Found' };
   return {
     title: `${post.title} | Hive Motors Blog`,
@@ -59,10 +60,27 @@ const portableTextComponents = {
     bullet: ({ children }: any) => <li className="leading-relaxed">{children}</li>,
     number: ({ children }: any) => <li className="leading-relaxed">{children}</li>,
   },
+  types: {
+    image: ({ value }: any) => {
+      if (!value?.asset) return null;
+      const imgUrl = urlFor(value).width(800).auto('format').url();
+      return (
+        <figure className="my-8">
+          <div className="relative w-full rounded-xl overflow-hidden" style={{ aspectRatio: '16/9' }}>
+            <Image src={imgUrl} alt={value.alt || ''} fill className="object-cover" />
+          </div>
+          {value.caption && (
+            <figcaption className="text-center text-xs text-mid-grey mt-2 italic">{value.caption}</figcaption>
+          )}
+        </figure>
+      );
+    },
+  },
 };
 
 export default async function BlogPostPage({ params }: Props) {
-  const post = await client.fetch(postBySlugQuery, { slug: params.slug });
+  const { slug } = await params;
+  const post = await client.fetch(postBySlugQuery, { slug });
 
   if (!post) notFound();
 
@@ -111,7 +129,22 @@ export default async function BlogPostPage({ params }: Props) {
         </h1>
 
         {/* Meta */}
-        <div className="flex flex-wrap items-center gap-4 text-sm text-mid-grey mb-8 pb-8 border-b border-gray-200">
+        <div className="flex flex-wrap items-center gap-4 text-sm text-mid-grey mb-6 pb-6 border-b border-gray-200">
+          {post.authorName && (
+            <span className="flex items-center gap-2">
+              {post.authorPhoto?.asset && (
+                <div className="relative w-7 h-7 rounded-full overflow-hidden bg-gray-200">
+                  <Image
+                    src={urlFor(post.authorPhoto).width(56).height(56).auto('format').url()}
+                    alt={post.authorName}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              )}
+              <span className="font-medium text-navy-brand">{post.authorName}</span>
+            </span>
+          )}
           <span className="flex items-center gap-1.5">
             <Calendar size={15} />
             {formatDate(post.publishedAt)}
@@ -121,6 +154,18 @@ export default async function BlogPostPage({ params }: Props) {
             {post.readTime} min read
           </span>
         </div>
+
+        {/* Tags */}
+        {post.tags && post.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-8">
+            {post.tags.map((tag: string) => (
+              <span key={tag} className="flex items-center gap-1 text-xs bg-grey-soft text-mid-grey px-3 py-1 rounded-full border border-gray-200">
+                <Tag size={11} />
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
 
         {/* Body */}
         <div className="prose-sm sm:prose max-w-none">

@@ -95,12 +95,16 @@ export const testimonialsQuery = `*[_type == "testimonial"] | order(date desc) {
   date
 }`;
 
-export const postsQuery = `*[_type == "post"] | order(publishedAt desc) {
+export const postsQuery = `*[_type == "post"] | order(isFeatured desc, publishedAt desc) {
   _id,
   title,
   slug,
+  isFeatured,
   "coverImage": coverImage{..., asset->},
   category,
+  tags,
+  authorName,
+  "authorPhoto": authorPhoto{..., asset->},
   excerpt,
   publishedAt,
   readTime
@@ -115,12 +119,15 @@ export const homepageTestimonialsQuery = `*[_type == "testimonial"] | order(date
   carPurchased
 }`;
 
-export const homepagePostsQuery = `*[_type == "post"] | order(publishedAt desc)[0...2] {
+export const homepagePostsQuery = `*[_type == "post"] | order(isFeatured desc, publishedAt desc)[0...2] {
   _id,
   title,
   slug,
+  isFeatured,
   "coverImage": coverImage{..., asset->},
   category,
+  tags,
+  authorName,
   excerpt,
   publishedAt,
   readTime
@@ -130,10 +137,20 @@ export const postBySlugQuery = `*[_type == "post" && slug.current == $slug][0] {
   _id,
   title,
   slug,
+  isFeatured,
   "coverImage": coverImage{..., asset->},
   category,
+  tags,
+  authorName,
+  "authorPhoto": authorPhoto{..., asset->},
   excerpt,
-  body,
+  "body": body[]{
+    ...,
+    _type == "image" => {
+      ...,
+      asset->
+    }
+  },
   publishedAt,
   readTime
 }`;
