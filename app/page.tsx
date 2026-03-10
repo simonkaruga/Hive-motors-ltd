@@ -194,6 +194,40 @@ const gleCar: Car = {
   _createdAt: new Date().toISOString(),
 };
 
+const cx5Car: Car = {
+  _id: 'cx5-static',
+  title: '2019 Mazda CX-5 AWD 2.5T',
+  slug: { current: 'cx5-static' },
+  status: 'available',
+  price: 3400000,
+  year: 2019,
+  make: 'Mazda',
+  model: 'CX-5 AWD 2.5T',
+  mileage: 86000,
+  transmission: 'automatic',
+  fuelType: 'petrol',
+  engine: '2.5L Turbocharged',
+  bodyType: 'suv',
+  driveType: 'awd',
+  colour: 'Black',
+  images: [
+    { asset: { url: '/cars/cx5/cx5-01.jpg' }, alt: 'CX-5 Side' },
+    { asset: { url: '/cars/cx5/cx5-02.jpg' }, alt: 'CX-5 Front' },
+    { asset: { url: '/cars/cx5/cx5-03.jpg' }, alt: 'CX-5 Interior' },
+    { asset: { url: '/cars/cx5/cx5-04.jpg' }, alt: 'CX-5 Rear' },
+    { asset: { url: '/cars/cx5/cx5-05.jpg' }, alt: 'CX-5 Detail' },
+  ],
+  description: [
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: '228 BHP, 420nm torque, HUD, 360° camera, BSM, LDW, 5 black leather seats.' }],
+    },
+  ],
+  features: ['6-Speed Automatic', '228 BHP', 'HUD', '360° Camera', 'BSM', 'LDW', 'Seat Warmers', 'Xenon Headlights'],
+  isFeatured: true,
+  _createdAt: new Date().toISOString(),
+};
+
 export default function Home() {
   const [featuredCars, setFeaturedCars] = useState<Car[]>([]);
   const [testimonials, setTestimonials] = useState<HomeTestimonial[]>([]);
@@ -266,8 +300,9 @@ export default function Home() {
                 <StaggerItem index={0}><CarCard car={pradoCar} /></StaggerItem>
                 <StaggerItem index={1}><CarCard car={rangeRoverCar} /></StaggerItem>
                 <StaggerItem index={2}><CarCard car={gleCar} /></StaggerItem>
+                <StaggerItem index={3}><CarCard car={cx5Car} /></StaggerItem>
                 {featuredCars.map((car, idx) => (
-                  <StaggerItem key={car._id} index={idx + 3}>
+                  <StaggerItem key={car._id} index={idx + 4}>
                     <CarCard car={car} />
                   </StaggerItem>
                 ))}
