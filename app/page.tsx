@@ -262,6 +262,40 @@ const poloCar: Car = {
   _createdAt: new Date().toISOString(),
 };
 
+const peugeot3008Car: Car = {
+  _id: '3008-static',
+  title: '2019 Peugeot 3008 Cross City',
+  slug: { current: '3008-static' },
+  status: 'available',
+  price: 3350000,
+  year: 2019,
+  make: 'Peugeot',
+  model: '3008 Cross City',
+  mileage: 41000,
+  transmission: 'automatic',
+  fuelType: 'petrol',
+  engine: '1.6L Turbocharged',
+  bodyType: 'suv',
+  driveType: 'fwd',
+  colour: 'Grey',
+  images: [
+    { asset: { url: '/cars/3008/3008-01.jpg' }, alt: '3008 Side' },
+    { asset: { url: '/cars/3008/3008-02.jpg' }, alt: '3008 Front' },
+    { asset: { url: '/cars/3008/3008-03.jpg' }, alt: '3008 Interior' },
+    { asset: { url: '/cars/3008/3008-04.jpg' }, alt: '3008 Rear' },
+    { asset: { url: '/cars/3008/3008-05.jpg' }, alt: '3008 Detail' },
+  ],
+  description: [
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: '165 BHP, 250nm torque, panoramic sunroof, 360° camera, BSM, LDW, half leather.' }],
+    },
+  ],
+  features: ['6-Speed Automatic', '165 BHP', 'Panoramic Sunroof', '360° Camera', 'BSM', 'LDW', 'Paddle Shifts'],
+  isFeatured: true,
+  _createdAt: new Date().toISOString(),
+};
+
 export default function Home() {
   const [featuredCars, setFeaturedCars] = useState<Car[]>([]);
   const [testimonials, setTestimonials] = useState<HomeTestimonial[]>([]);
@@ -336,8 +370,9 @@ export default function Home() {
                 <StaggerItem index={2}><CarCard car={gleCar} /></StaggerItem>
                 <StaggerItem index={3}><CarCard car={cx5Car} /></StaggerItem>
                 <StaggerItem index={4}><CarCard car={poloCar} /></StaggerItem>
+                <StaggerItem index={5}><CarCard car={peugeot3008Car} /></StaggerItem>
                 {featuredCars.map((car, idx) => (
-                  <StaggerItem key={car._id} index={idx + 5}>
+                  <StaggerItem key={car._id} index={idx + 6}>
                     <CarCard car={car} />
                   </StaggerItem>
                 ))}
