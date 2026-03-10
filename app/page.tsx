@@ -245,7 +245,7 @@ const poloCar: Car = {
   driveType: 'fwd',
   colour: 'White',
   images: [
-    { asset: { url: '/cars/polo/polo-01.jpg' }, alt: 'Polo Side' },
+    { asset: { url: '/cars/polo/polo-08.jpg' }, alt: 'Polo Side' },
     { asset: { url: '/cars/polo/polo-02.jpg' }, alt: 'Polo Front' },
     { asset: { url: '/cars/polo/polo-03.jpg' }, alt: 'Polo Interior' },
     { asset: { url: '/cars/polo/polo-04.jpg' }, alt: 'Polo Rear' },
@@ -279,7 +279,7 @@ const peugeot3008Car: Car = {
   driveType: 'fwd',
   colour: 'Grey',
   images: [
-    { asset: { url: '/cars/3008/3008-01.jpg' }, alt: '3008 Side' },
+    { asset: { url: '/cars/3008/3008-06.jpg' }, alt: '3008 Side' },
     { asset: { url: '/cars/3008/3008-02.jpg' }, alt: '3008 Front' },
     { asset: { url: '/cars/3008/3008-03.jpg' }, alt: '3008 Interior' },
     { asset: { url: '/cars/3008/3008-04.jpg' }, alt: '3008 Rear' },

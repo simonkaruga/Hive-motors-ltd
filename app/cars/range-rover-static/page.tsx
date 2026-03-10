@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ArrowLeft, MessageCircle, Phone, Calendar, Gauge, Fuel, Settings, Palette, Car, ChevronRight, Share2, Facebook, Twitter } from 'lucide-react';
 
 export default function RangeRoverPage() {
@@ -10,6 +10,13 @@ export default function RangeRoverPage() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isZoomed, setIsZoomed] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSelectedImage((prev) => (prev + 1) % 5);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -170,15 +177,17 @@ export default function RangeRoverPage() {
             </div>
             <div className="grid grid-cols-5 gap-2">
               {car.images.map((img, idx) => (
-                <button
+                <a
                   key={idx}
-                  onClick={() => setSelectedImage(idx)}
+                  href={img}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`relative h-20 rounded-lg overflow-hidden border-2 transition-all ${
                     selectedImage === idx ? 'border-red-brand' : 'border-gray-200'
                   }`}
                 >
                   <Image src={img} alt={`View ${idx + 1}`} fill className="object-cover" />
-                </button>
+                </a>
               ))}
             </div>
           </div>
