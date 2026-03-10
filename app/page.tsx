@@ -506,19 +506,19 @@ export default function Home() {
             <p className="text-center text-sm font-semibold text-mid-grey uppercase tracking-widest mb-10">
               Brands We Import
             </p>
-            <div className="grid grid-cols-5 sm:grid-cols-5 md:grid-cols-10 gap-4">
+            <div className="grid grid-cols-5 sm:grid-cols-5 md:grid-cols-10 gap-6">
               {BRANDS.map(brand => {
                 const Logo = BRAND_LOGOS[brand];
                 return (
                   <Link
                     key={brand}
                     href={`/cars?make=${brand}`}
-                    className="group flex flex-col items-center gap-2 bg-white rounded-xl border border-gray-200 px-3 py-4 hover:border-navy-brand/30 hover:shadow-md transition-all duration-200"
+                    className="group flex flex-col items-center gap-3 bg-white rounded-xl border border-gray-200 px-4 py-6 hover:border-navy-brand/30 hover:shadow-lg transition-all duration-200"
                   >
-                    <div className="h-10 flex items-center justify-center w-full">
-                      {Logo && <Logo className="h-8 w-auto max-w-[72px]" />}
+                    <div className="h-16 flex items-center justify-center w-full">
+                      {Logo && <Logo className="h-12 w-full max-w-full object-contain" />}
                     </div>
-                    <span className="text-[11px] font-semibold text-mid-grey group-hover:text-navy-brand transition-colors text-center leading-tight">
+                    <span className="text-xs font-semibold text-mid-grey group-hover:text-navy-brand transition-colors text-center leading-tight">
                       {brand}
                     </span>
                   </Link>
