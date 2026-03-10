@@ -10,6 +10,7 @@ import TestimonialsCarousel from '@/components/home/TestimonialsCarousel';
 import PageLoader from '@/components/shared/PageLoader';
 import StaggerItem from '@/components/shared/StaggerItem';
 import FadeInSection from '@/components/shared/FadeInSection';
+import { BRAND_LOGOS } from '@/components/home/BrandLogos';
 import RevealOnScroll from '@/components/shared/RevealOnScroll';
 import { client } from '@/lib/sanity/client';
 import { featuredCarsQuery, homepageTestimonialsQuery, homepagePostsQuery } from '@/lib/sanity/queries';
@@ -242,7 +243,7 @@ const poloCar: Car = {
   fuelType: 'petrol',
   engine: '1.0L Turbocharged',
   bodyType: 'hatchback',
-  driveType: 'fwd',
+  driveType: '2wd',
   colour: 'White',
   images: [
     { asset: { url: '/cars/polo/polo-08.jpg' }, alt: 'Polo Side' },
@@ -276,7 +277,7 @@ const peugeot3008Car: Car = {
   fuelType: 'petrol',
   engine: '1.6L Turbocharged',
   bodyType: 'suv',
-  driveType: 'fwd',
+  driveType: '2wd',
   colour: 'Grey',
   images: [
     { asset: { url: '/cars/3008/3008-06.jpg' }, alt: '3008 Side' },
@@ -502,19 +503,27 @@ export default function Home() {
         {/* ── Brands We Import ───────────────────────────────────── */}
         <section className="py-14 bg-grey-soft border-y border-gray-200">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <p className="text-center text-sm font-semibold text-mid-grey uppercase tracking-widest mb-8">
+            <p className="text-center text-sm font-semibold text-mid-grey uppercase tracking-widest mb-10">
               Brands We Import
             </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              {BRANDS.map(brand => (
-                <Link
-                  key={brand}
-                  href={`/cars?make=${brand}`}
-                  className="px-5 py-2.5 bg-white border border-gray-200 rounded-full text-navy-brand font-semibold text-sm hover:bg-navy-brand hover:text-white hover:border-navy-brand transition-all duration-200 shadow-sm"
-                >
-                  {brand}
-                </Link>
-              ))}
+            <div className="grid grid-cols-5 sm:grid-cols-5 md:grid-cols-10 gap-4">
+              {BRANDS.map(brand => {
+                const Logo = BRAND_LOGOS[brand];
+                return (
+                  <Link
+                    key={brand}
+                    href={`/cars?make=${brand}`}
+                    className="group flex flex-col items-center gap-2 bg-white rounded-xl border border-gray-200 px-3 py-4 hover:border-navy-brand/30 hover:shadow-md transition-all duration-200"
+                  >
+                    <div className="h-10 flex items-center justify-center w-full">
+                      {Logo && <Logo className="h-8 w-auto max-w-[72px]" />}
+                    </div>
+                    <span className="text-[11px] font-semibold text-mid-grey group-hover:text-navy-brand transition-colors text-center leading-tight">
+                      {brand}
+                    </span>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>
