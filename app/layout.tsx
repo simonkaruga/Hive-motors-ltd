@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, DM_Serif_Display, JetBrains_Mono } from "next/font/google";
+import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -11,9 +11,8 @@ const inter = Inter({
   display: 'swap',
 });
 
-const dmSerif = DM_Serif_Display({
+const outfit = Outfit({
   subsets: ["latin"],
-  weight: '400',
   variable: '--font-display',
   display: 'swap',
 });
@@ -56,7 +55,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${dmSerif.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
+      <body className={`${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
         <Navbar />
         {children}
         <Footer />

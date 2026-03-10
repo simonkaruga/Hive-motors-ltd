@@ -162,13 +162,14 @@ export default function Home() {
       </section>
 
       {/* Featured Cars */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-display text-navy-brand mb-4">Featured Cars</h2>
-            <div className="w-16 h-1 bg-red-brand mx-auto mb-4 rounded-full" />
-            <p className="text-lg text-mid-grey">Handpicked premium vehicles from Japan</p>
-          </div>
+      <FadeInSection>
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-display text-navy-brand mb-4">Featured Cars</h2>
+              <div className="w-16 h-1 bg-red-brand mx-auto mb-4 rounded-full" />
+              <p className="text-lg text-mid-grey">Handpicked premium vehicles from Japan</p>
+            </div>
 
           {featuredCars.length > 0 || pradoCar ? (
             <>
@@ -217,9 +218,11 @@ export default function Home() {
           )}
         </div>
       </section>
+      </FadeInSection>
 
       {/* Why Choose Us */}
-      <section className="py-20 bg-grey-soft">
+      <FadeInSection>
+        <section className="py-20 bg-grey-soft">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-display text-navy-brand mb-4">Why Choose Hive Motors</h2>
@@ -245,9 +248,11 @@ export default function Home() {
           </div>
         </div>
       </section>
+      </FadeInSection>
 
       {/* Recently Sold */}
-      <section className="py-20 bg-white">
+      <FadeInSection>
+        <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-display text-navy-brand mb-4">Recently Sold</h2>
@@ -276,6 +281,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      </FadeInSection>
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-red-brand to-red-dark">

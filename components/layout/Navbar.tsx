@@ -41,7 +41,10 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <Link href="/" className="flex items-center shrink-0">
+          <Link href="/" className="flex items-center gap-2 shrink-0">
+            <div className="w-10 h-10 bg-red-brand rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-2xl">H</span>
+            </div>
             <span className="text-2xl font-bold tracking-tight">
               <span className="text-red-brand">HIVE</span>
               <span className="text-navy-brand"> MOTORS</span>
