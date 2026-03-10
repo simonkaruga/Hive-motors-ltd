@@ -228,6 +228,40 @@ const cx5Car: Car = {
   _createdAt: new Date().toISOString(),
 };
 
+const poloCar: Car = {
+  _id: 'polo-static',
+  title: '2019 VW Polo Highline MK7.5',
+  slug: { current: 'polo-static' },
+  status: 'available',
+  price: 2150000,
+  year: 2019,
+  make: 'Volkswagen',
+  model: 'Polo Highline MK7.5',
+  mileage: 22000,
+  transmission: 'automatic',
+  fuelType: 'petrol',
+  engine: '1.0L Turbocharged',
+  bodyType: 'hatchback',
+  driveType: 'fwd',
+  colour: 'White',
+  images: [
+    { asset: { url: '/cars/polo/polo-01.jpg' }, alt: 'Polo Side' },
+    { asset: { url: '/cars/polo/polo-02.jpg' }, alt: 'Polo Front' },
+    { asset: { url: '/cars/polo/polo-03.jpg' }, alt: 'Polo Interior' },
+    { asset: { url: '/cars/polo/polo-04.jpg' }, alt: 'Polo Rear' },
+    { asset: { url: '/cars/polo/polo-05.jpg' }, alt: 'Polo Detail' },
+  ],
+  description: [
+    {
+      _type: 'block',
+      children: [{ _type: 'span', text: 'Digital cluster, premium sound, dual zone climate, auto start-stop, reverse camera.' }],
+    },
+  ],
+  features: ['7-Speed Automatic', 'Digital Cluster', 'Premium Sound', 'Dual Climate', 'Reverse Camera', 'Cruise Control'],
+  isFeatured: true,
+  _createdAt: new Date().toISOString(),
+};
+
 export default function Home() {
   const [featuredCars, setFeaturedCars] = useState<Car[]>([]);
   const [testimonials, setTestimonials] = useState<HomeTestimonial[]>([]);
@@ -301,8 +335,9 @@ export default function Home() {
                 <StaggerItem index={1}><CarCard car={rangeRoverCar} /></StaggerItem>
                 <StaggerItem index={2}><CarCard car={gleCar} /></StaggerItem>
                 <StaggerItem index={3}><CarCard car={cx5Car} /></StaggerItem>
+                <StaggerItem index={4}><CarCard car={poloCar} /></StaggerItem>
                 {featuredCars.map((car, idx) => (
-                  <StaggerItem key={car._id} index={idx + 4}>
+                  <StaggerItem key={car._id} index={idx + 5}>
                     <CarCard car={car} />
                   </StaggerItem>
                 ))}
