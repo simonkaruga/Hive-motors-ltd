@@ -190,17 +190,15 @@ export default function GLEPage() {
             </div>
             <div className="grid grid-cols-4 gap-2">
               {car.images.map((img, idx) => (
-                <a
+                <button
                   key={idx}
-                  href={img}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  onClick={() => setSelectedImage(idx)}
                   className={`relative h-20 rounded-lg overflow-hidden border-2 transition-all ${
                     selectedImage === idx ? 'border-red-brand' : 'border-gray-200'
                   }`}
                 >
                   <Image src={img} alt={`View ${idx + 1}`} fill className="object-cover" />
-                </a>
+                </button>
               ))}
             </div>
           </div>
