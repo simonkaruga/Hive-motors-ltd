@@ -91,7 +91,27 @@ export default async function CarDetailPage({ params }: Props) {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        {/* Mobile sticky bottom CTA bar */}
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 px-4 py-3 flex gap-3">
+          <a
+            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 flex items-center justify-center gap-2 bg-[#25D366] text-white py-3 rounded-xl font-bold text-sm"
+          >
+            <MessageCircle size={18} />
+            WhatsApp
+          </a>
+          <a
+            href="tel:+254722800436"
+            className="flex-1 flex items-center justify-center gap-2 border-2 border-navy-brand text-navy-brand py-3 rounded-xl font-bold text-sm"
+          >
+            <Phone size={18} />
+            Call Us
+          </a>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-24 lg:pb-10">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
 
             {/* Left: Images + Details */}

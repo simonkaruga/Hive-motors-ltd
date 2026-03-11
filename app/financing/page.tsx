@@ -54,8 +54,8 @@ export default function FinancingPage() {
 
           {/* Calculator Inputs */}
           <RevealOnScroll>
-            <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
-              <div className="flex items-center gap-3 mb-8">
+            <div className="bg-white border border-gray-200 rounded-2xl p-4 sm:p-8 shadow-sm">
+              <div className="flex items-center gap-3 mb-6 sm:mb-8">
                 <div className="w-10 h-10 bg-red-brand/10 rounded-xl flex items-center justify-center">
                   <Calculator size={20} className="text-red-brand" />
                 </div>
@@ -152,7 +152,7 @@ export default function FinancingPage() {
           <RevealOnScroll delay={0.1}>
             <div className="space-y-4">
               {/* Monthly Payment — Hero Result */}
-              <div className="bg-gradient-to-br from-navy-brand to-navy-dark rounded-2xl p-8 text-center text-white">
+              <div className="bg-gradient-to-br from-navy-brand to-navy-dark rounded-2xl p-4 sm:p-8 text-center text-white">
                 <div className="flex items-center justify-center gap-2 mb-3">
                   <TrendingUp size={18} className="text-white/70" />
                   <p className="text-sm font-medium text-white/70 uppercase tracking-widest">Estimated Monthly</p>

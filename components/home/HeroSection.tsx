@@ -78,13 +78,13 @@ export default function HeroSection() {
           </div>
 
           {/* Headline */}
-          <h1 className="text-5xl md:text-7xl font-display font-normal text-white mb-6 leading-tight">
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-display font-normal text-white mb-6 leading-tight">
             Dream Cars,{' '}
             <span className="text-red-brand">Real Deals!</span>
           </h1>
 
           {/* Subheadline */}
-          <p className="text-xl text-white/90 mb-8 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-base sm:text-xl text-white/90 mb-8 leading-relaxed max-w-2xl mx-auto">
             Kenya&apos;s finest Japanese import dealership. Browse hundreds of quality vehicles sourced directly from Japan.
           </p>
 
@@ -142,13 +142,13 @@ export default function HeroSection() {
           </div>
 
           {/* Animated Stats */}
-          <div className="grid grid-cols-3 gap-8 max-w-3xl mx-auto pt-12 border-t border-white/20">
+          <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-3xl mx-auto pt-8 sm:pt-12 border-t border-white/20">
             {STATS.map((stat, i) => (
               <div key={stat.label}>
-                <div className="text-4xl font-bold text-white font-mono tabular-nums">
+                <div className="text-2xl sm:text-4xl font-bold text-white font-mono tabular-nums">
                   {counts[i]}{stat.suffix}
                 </div>
-                <div className="text-sm text-white/80 mt-2">{stat.label}</div>
+                <div className="text-xs sm:text-sm text-white/80 mt-1 sm:mt-2">{stat.label}</div>
               </div>
             ))}
           </div>
