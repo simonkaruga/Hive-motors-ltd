@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { MessageCircle, Eye, Gauge, Fuel, Settings } from 'lucide-react';
+import { MessageCircle, Gauge, Fuel, Settings } from 'lucide-react';
 import { urlFor } from '@/lib/sanity/client';
 import { SanityImage } from '@/lib/types';
 
@@ -39,10 +39,11 @@ export default function CarCard({ car }: CarCardProps) {
   const status = statusConfig[car.status as keyof typeof statusConfig] || statusConfig.available;
 
   return (
+    <Link href={`/cars/${car.slug.current}`}>
     <motion.div
       whileHover={{ y: -4 }}
       transition={{ duration: 0.25, ease: 'easeOut' }}
-      className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl hover:shadow-navy-brand/10 transition-shadow duration-300 group"
+      className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl hover:shadow-navy-brand/10 transition-shadow duration-300 group cursor-pointer"
     >
       {/* Image */}
       <div className="relative h-48 bg-grey-soft overflow-hidden">
@@ -116,21 +117,11 @@ export default function CarCard({ car }: CarCardProps) {
           </p>
 
           <div className="flex gap-2">
-            <Link href={`/cars/${car.slug.current}`}>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-2 bg-grey-soft text-navy-brand rounded-lg hover:bg-blue-tint transition-colors"
-                title="View Details"
-              >
-                <Eye size={16} />
-              </motion.button>
-            </Link>
-
             <motion.a
               href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="p-2 bg-[#25D366] text-white rounded-lg hover:bg-[#1ebe5b] transition-colors"
@@ -142,5 +133,6 @@ export default function CarCard({ car }: CarCardProps) {
         </div>
       </div>
     </motion.div>
+    </Link>
   );
 }
