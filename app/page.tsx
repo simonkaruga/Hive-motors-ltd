@@ -92,213 +92,9 @@ const FALLBACK_TESTIMONIALS: HomeTestimonial[] = [
   },
 ];
 
-// Static featured cars (shown while Sanity loads or as always-visible picks)
-const pradoCar: Car = {
-  _id: 'prado-static',
-  title: '2020 Toyota Prado TX-L J150',
-  slug: { current: 'prado-static' },
-  status: 'available',
-  price: 7250000,
-  year: 2020,
-  make: 'Toyota',
-  model: 'Land Cruiser Prado TX-L',
-  mileage: 68000,
-  transmission: 'automatic',
-  fuelType: 'diesel',
-  engine: '2.8L Turbocharged',
-  bodyType: 'suv',
-  driveType: '4wd',
-  colour: 'Blue',
-  images: [
-    { asset: { url: '/cars/prado/prado-01.jpg' }, alt: 'Prado Side View' },
-    { asset: { url: '/cars/prado/prado-02.jpg' }, alt: 'Prado Front' },
-    { asset: { url: '/cars/prado/prado-03.jpg' }, alt: 'Prado Interior' },
-    { asset: { url: '/cars/prado/prado-04.jpg' }, alt: 'Prado Rear' },
-    { asset: { url: '/cars/prado/prado-05.jpg' }, alt: 'Prado Detail' },
-  ],
-  description: [
-    {
-      _type: 'block',
-      children: [{ _type: 'span', text: '2800cc turbocharged diesel 3DA engine with 6 Speed Automatic Transmission. Stunning Blue Prado, 68k kms, 4WD, 7 Black Leather Seats with Electric adjustment.' }],
-    },
-  ],
-  features: ['2800cc Turbocharged Diesel', '6-Speed Automatic', '4WD', '7 Leather Seats', 'Electric Seats', 'Dual Zone Climate', '360° Camera', 'Cruise Control'],
-  isFeatured: true,
-  _createdAt: new Date().toISOString(),
-};
-
-const rangeRoverCar: Car = {
-  _id: 'range-rover-static',
-  title: '2019 Range Rover Sport HSE',
-  slug: { current: 'range-rover-static' },
-  status: 'available',
-  price: 9750000,
-  year: 2019,
-  make: 'Land Rover',
-  model: 'Range Rover Sport HSE',
-  mileage: 72000,
-  transmission: 'automatic',
-  fuelType: 'diesel',
-  engine: '3.0L Turbocharged',
-  bodyType: 'suv',
-  driveType: '4wd',
-  colour: 'Beige',
-  images: [
-    { asset: { url: '/cars/range-rover/range-rover-01.jpg' }, alt: 'Range Rover Side' },
-    { asset: { url: '/cars/range-rover/range-rover-02.jpg' }, alt: 'Range Rover Front' },
-    { asset: { url: '/cars/range-rover/range-rover-03.jpg' }, alt: 'Range Rover Interior' },
-    { asset: { url: '/cars/range-rover/range-rover-04.jpg' }, alt: 'Range Rover Rear' },
-    { asset: { url: '/cars/range-rover/range-rover-05.jpg' }, alt: 'Range Rover Detail' },
-  ],
-  description: [
-    {
-      _type: 'block',
-      children: [{ _type: 'span', text: '3.0L turbocharged diesel, 8-Speed Automatic, panoramic sunroof, HUD, BSM, digital cluster.' }],
-    },
-  ],
-  features: ['3.0L Turbocharged Diesel', '8-Speed Automatic', 'Panoramic Sunroof', 'HUD', 'BSM', 'Digital Cluster', 'Memory Seats', 'Cruise Control'],
-  isFeatured: true,
-  _createdAt: new Date().toISOString(),
-};
-
-const gleCar: Car = {
-  _id: 'gle-static',
-  title: '2019 Mercedes-Benz GLE400d AMG-Line',
-  slug: { current: 'gle-static' },
-  status: 'available',
-  price: 12750000,
-  year: 2019,
-  make: 'Mercedes-Benz',
-  model: 'GLE400d AMG-Line',
-  mileage: 50000,
-  transmission: 'automatic',
-  fuelType: 'diesel',
-  engine: '3.0L Turbocharged',
-  bodyType: 'suv',
-  driveType: '4wd',
-  colour: 'Black',
-  images: [
-    { asset: { url: '/cars/gle/gle-01.jpg' }, alt: 'GLE Side' },
-    { asset: { url: '/cars/gle/gle-02.jpg' }, alt: 'GLE Front' },
-    { asset: { url: '/cars/gle/gle-03.jpg' }, alt: 'GLE Interior' },
-    { asset: { url: '/cars/gle/gle-04.jpg' }, alt: 'GLE Rear' },
-    { asset: { url: '/cars/gle/gle-05.jpg' }, alt: 'GLE Detail' },
-  ],
-  description: [
-    {
-      _type: 'block',
-      children: [{ _type: 'span', text: '330 BHP, 700nm torque, panoramic sunroof, 13-speaker Burmester sound, Apple CarPlay.' }],
-    },
-  ],
-  features: ['9G-Tronic Automatic', '330 BHP', 'Panoramic Sunroof', 'Burmester Sound', 'Apple CarPlay', '360° Camera', 'AMG Wheels'],
-  isFeatured: true,
-  _createdAt: new Date().toISOString(),
-};
-
-const cx5Car: Car = {
-  _id: 'cx5-static',
-  title: '2019 Mazda CX-5 AWD 2.5T',
-  slug: { current: 'cx5-static' },
-  status: 'available',
-  price: 3400000,
-  year: 2019,
-  make: 'Mazda',
-  model: 'CX-5 AWD 2.5T',
-  mileage: 86000,
-  transmission: 'automatic',
-  fuelType: 'petrol',
-  engine: '2.5L Turbocharged',
-  bodyType: 'suv',
-  driveType: 'awd',
-  colour: 'Black',
-  images: [
-    { asset: { url: '/cars/cx5/cx5-01.jpg' }, alt: 'CX-5 Side' },
-    { asset: { url: '/cars/cx5/cx5-02.jpg' }, alt: 'CX-5 Front' },
-    { asset: { url: '/cars/cx5/cx5-03.jpg' }, alt: 'CX-5 Interior' },
-    { asset: { url: '/cars/cx5/cx5-04.jpg' }, alt: 'CX-5 Rear' },
-    { asset: { url: '/cars/cx5/cx5-05.jpg' }, alt: 'CX-5 Detail' },
-  ],
-  description: [
-    {
-      _type: 'block',
-      children: [{ _type: 'span', text: '228 BHP, 420nm torque, HUD, 360° camera, BSM, LDW, 5 black leather seats.' }],
-    },
-  ],
-  features: ['6-Speed Automatic', '228 BHP', 'HUD', '360° Camera', 'BSM', 'LDW', 'Seat Warmers', 'Xenon Headlights'],
-  isFeatured: true,
-  _createdAt: new Date().toISOString(),
-};
-
-const poloCar: Car = {
-  _id: 'polo-static',
-  title: '2019 VW Polo Highline MK7.5',
-  slug: { current: 'polo-static' },
-  status: 'available',
-  price: 2150000,
-  year: 2019,
-  make: 'Volkswagen',
-  model: 'Polo Highline MK7.5',
-  mileage: 22000,
-  transmission: 'automatic',
-  fuelType: 'petrol',
-  engine: '1.0L Turbocharged',
-  bodyType: 'hatchback',
-  driveType: '2wd',
-  colour: 'White',
-  images: [
-    { asset: { url: '/cars/polo/polo-08.jpg' }, alt: 'Polo Side' },
-    { asset: { url: '/cars/polo/polo-02.jpg' }, alt: 'Polo Front' },
-    { asset: { url: '/cars/polo/polo-03.jpg' }, alt: 'Polo Interior' },
-    { asset: { url: '/cars/polo/polo-04.jpg' }, alt: 'Polo Rear' },
-    { asset: { url: '/cars/polo/polo-05.jpg' }, alt: 'Polo Detail' },
-  ],
-  description: [
-    {
-      _type: 'block',
-      children: [{ _type: 'span', text: 'Digital cluster, premium sound, dual zone climate, auto start-stop, reverse camera.' }],
-    },
-  ],
-  features: ['7-Speed Automatic', 'Digital Cluster', 'Premium Sound', 'Dual Climate', 'Reverse Camera', 'Cruise Control'],
-  isFeatured: true,
-  _createdAt: new Date().toISOString(),
-};
-
-const peugeot3008Car: Car = {
-  _id: '3008-static',
-  title: '2019 Peugeot 3008 Cross City',
-  slug: { current: '3008-static' },
-  status: 'available',
-  price: 3350000,
-  year: 2019,
-  make: 'Peugeot',
-  model: '3008 Cross City',
-  mileage: 41000,
-  transmission: 'automatic',
-  fuelType: 'petrol',
-  engine: '1.6L Turbocharged',
-  bodyType: 'suv',
-  driveType: '2wd',
-  colour: 'Grey',
-  images: [
-    { asset: { url: '/cars/3008/3008-06.jpg' }, alt: '3008 Side' },
-    { asset: { url: '/cars/3008/3008-02.jpg' }, alt: '3008 Front' },
-    { asset: { url: '/cars/3008/3008-03.jpg' }, alt: '3008 Interior' },
-    { asset: { url: '/cars/3008/3008-04.jpg' }, alt: '3008 Rear' },
-    { asset: { url: '/cars/3008/3008-05.jpg' }, alt: '3008 Detail' },
-  ],
-  description: [
-    {
-      _type: 'block',
-      children: [{ _type: 'span', text: '165 BHP, 250nm torque, panoramic sunroof, 360° camera, BSM, LDW, half leather.' }],
-    },
-  ],
-  features: ['6-Speed Automatic', '165 BHP', 'Panoramic Sunroof', '360° Camera', 'BSM', 'LDW', 'Paddle Shifts'],
-  isFeatured: true,
-  _createdAt: new Date().toISOString(),
-};
-
 export default function Home() {
   const [featuredCars, setFeaturedCars] = useState<Car[]>([]);
+  const [carsLoading, setCarsLoading] = useState(true);
   const [testimonials, setTestimonials] = useState<HomeTestimonial[]>([]);
   const [posts, setPosts] = useState<HomePost[]>([]);
 
@@ -315,7 +111,8 @@ export default function Home() {
         setPosts(blogPosts);
       } catch (err) {
         console.error('Error fetching homepage data:', err);
-        // Static cars still display — no error state needed on homepage
+      } finally {
+        setCarsLoading(false);
       }
     }
     fetchData();
@@ -365,19 +162,21 @@ export default function Home() {
                 <p className="text-lg text-mid-grey">Handpicked premium vehicles from Japan</p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-                <StaggerItem index={0}><CarCard car={pradoCar} /></StaggerItem>
-                <StaggerItem index={1}><CarCard car={rangeRoverCar} /></StaggerItem>
-                <StaggerItem index={2}><CarCard car={gleCar} /></StaggerItem>
-                <StaggerItem index={3}><CarCard car={cx5Car} /></StaggerItem>
-                <StaggerItem index={4}><CarCard car={poloCar} /></StaggerItem>
-                <StaggerItem index={5}><CarCard car={peugeot3008Car} /></StaggerItem>
-                {featuredCars.map((car, idx) => (
-                  <StaggerItem key={car._id} index={idx + 6}>
-                    <CarCard car={car} />
-                  </StaggerItem>
-                ))}
-              </div>
+              {carsLoading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                  {[1, 2, 3, 4, 5, 6].map(i => (
+                    <div key={i} className="bg-grey-soft rounded-2xl h-72 animate-pulse" />
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                  {featuredCars.map((car, idx) => (
+                    <StaggerItem key={car._id} index={idx}>
+                      <CarCard car={car} />
+                    </StaggerItem>
+                  ))}
+                </div>
+              )}
 
               <div className="text-center">
                 <Link

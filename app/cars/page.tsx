@@ -26,63 +26,15 @@ function CarsContent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  // Static cars from homepage
-  const staticCars: Car[] = [
-    {
-      _id: 'prado-static', title: '2020 Toyota Prado TX-L J150', slug: { current: 'prado-static' }, status: 'available',
-      price: 7250000, year: 2020, make: 'Toyota', model: 'Land Cruiser Prado TX-L', mileage: 68000,
-      transmission: 'automatic', fuelType: 'diesel', engine: '2.8L Turbocharged', bodyType: 'suv', driveType: '4wd', colour: 'Blue',
-      images: [{ asset: { url: '/cars/prado/prado-01.jpg' }, alt: 'Prado' }],
-      features: ['2800cc Turbocharged Diesel', '6-Speed Automatic', '4WD', '7 Leather Seats'], isFeatured: true, _createdAt: new Date().toISOString(),
-    },
-    {
-      _id: 'range-rover-static', title: '2019 Range Rover Sport HSE', slug: { current: 'range-rover-static' }, status: 'available',
-      price: 9750000, year: 2019, make: 'Land Rover', model: 'Range Rover Sport HSE', mileage: 72000,
-      transmission: 'automatic', fuelType: 'diesel', engine: '3.0L Turbocharged', bodyType: 'suv', driveType: '4wd', colour: 'Beige',
-      images: [{ asset: { url: '/cars/range-rover/range-rover-01.jpg' }, alt: 'Range Rover' }],
-      features: ['3.0L Turbocharged Diesel', '8-Speed Automatic', 'Panoramic Sunroof'], isFeatured: true, _createdAt: new Date().toISOString(),
-    },
-    {
-      _id: 'gle-static', title: '2019 Mercedes-Benz GLE400d AMG-Line', slug: { current: 'gle-static' }, status: 'available',
-      price: 12750000, year: 2019, make: 'Mercedes-Benz', model: 'GLE400d AMG-Line', mileage: 50000,
-      transmission: 'automatic', fuelType: 'diesel', engine: '3.0L Turbocharged', bodyType: 'suv', driveType: '4wd', colour: 'Black',
-      images: [{ asset: { url: '/cars/gle/gle-01.jpg' }, alt: 'GLE' }],
-      features: ['9G-Tronic Automatic', '330 BHP', 'Panoramic Sunroof'], isFeatured: true, _createdAt: new Date().toISOString(),
-    },
-    {
-      _id: 'cx5-static', title: '2019 Mazda CX-5 AWD 2.5T', slug: { current: 'cx5-static' }, status: 'available',
-      price: 3400000, year: 2019, make: 'Mazda', model: 'CX-5 AWD 2.5T', mileage: 86000,
-      transmission: 'automatic', fuelType: 'petrol', engine: '2.5L Turbocharged', bodyType: 'suv', driveType: 'awd', colour: 'Black',
-      images: [{ asset: { url: '/cars/cx5/cx5-01.jpg' }, alt: 'CX-5' }],
-      features: ['6-Speed Automatic', '228 BHP', 'HUD'], isFeatured: true, _createdAt: new Date().toISOString(),
-    },
-    {
-      _id: 'polo-static', title: '2019 VW Polo Highline MK7.5', slug: { current: 'polo-static' }, status: 'available',
-      price: 2150000, year: 2019, make: 'Volkswagen', model: 'Polo Highline MK7.5', mileage: 22000,
-      transmission: 'automatic', fuelType: 'petrol', engine: '1.0L Turbocharged', bodyType: 'hatchback', driveType: 'fwd', colour: 'White',
-      images: [{ asset: { url: '/cars/polo/polo-08.jpg' }, alt: 'Polo' }],
-      features: ['7-Speed Automatic', 'Digital Cluster'], isFeatured: true, _createdAt: new Date().toISOString(),
-    },
-    {
-      _id: '3008-static', title: '2019 Peugeot 3008 Cross City', slug: { current: '3008-static' }, status: 'available',
-      price: 3350000, year: 2019, make: 'Peugeot', model: '3008 Cross City', mileage: 41000,
-      transmission: 'automatic', fuelType: 'petrol', engine: '1.6L Turbocharged', bodyType: 'suv', driveType: 'fwd', colour: 'Grey',
-      images: [{ asset: { url: '/cars/3008/3008-06.jpg' }, alt: '3008' }],
-      features: ['6-Speed Automatic', '165 BHP', 'Panoramic Sunroof'], isFeatured: true, _createdAt: new Date().toISOString(),
-    },
-  ];
-
   useEffect(() => {
     async function fetchCars() {
       try {
         const data = await client.fetch(carsQuery);
-        const allCars = [...staticCars, ...data];
-        setCars(allCars);
-        setFilteredCars(allCars);
+        setCars(data);
+        setFilteredCars(data);
       } catch (err) {
         console.error('Error fetching cars:', err);
-        setCars(staticCars);
-        setFilteredCars(staticCars);
+        setError(true);
       } finally {
         setLoading(false);
       }

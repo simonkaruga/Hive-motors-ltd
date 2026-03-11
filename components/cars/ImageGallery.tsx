@@ -18,8 +18,10 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
   const nextImage = () => setSelectedIndex((prev) => (prev + 1) % images.length);
   const prevImage = () => setSelectedIndex((prev) => (prev - 1 + images.length) % images.length);
 
-  const getImageUrl = (image: any, width: number, height: number) =>
-    urlFor(image).width(width).height(height).auto('format').url();
+  const getImageUrl = (image: any, width: number, height: number) => {
+    if (image?.asset?.url) return image.asset.url;
+    return urlFor(image).width(width).height(height).auto('format').url();
+  };
 
   if (!images || images.length === 0) {
     return (
@@ -36,7 +38,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
         <motion.div
           layoutId={`car-image-${selectedIndex}`}
           onClick={() => setLightboxOpen(true)}
-          className="relative h-72 md:h-[420px] rounded-2xl overflow-hidden cursor-zoom-in group border border-gray-200"
+          className="relative h-72 md:h-[420px] rounded-2xl overflow-hidden cursor-zoom-in group border border-gray-200 bg-grey-soft"
         >
           <Image
             src={getImageUrl(images[selectedIndex], 1200, 800)}

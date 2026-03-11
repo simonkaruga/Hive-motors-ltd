@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { MessageCircle, Phone, Share2, Calendar, Gauge, Fuel, Settings, Palette, MapPin, ArrowLeft, Car } from 'lucide-react';
-import { client } from '@/lib/sanity/client';
+import { client, urlFor } from '@/lib/sanity/client';
 import { carBySlugQuery } from '@/lib/sanity/queries';
 import ImageGallery from '@/components/cars/ImageGallery';
 import { formatPrice, formatMileage } from '@/lib/utils';
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: `${car.year} ${car.title} — ${car.mileage?.toLocaleString()} km, ${car.transmission}, ${car.fuelType}. Price: KSh ${car.price?.toLocaleString()}. Available at Hive Motors Nairobi.`,
     openGraph: {
       title: `${car.title} | Hive Motors`,
-      images: car.images?.[0] ? [{ url: car.images[0] }] : [],
+      images: car.images?.[0] ? [{ url: car.images[0].asset?.url || urlFor(car.images[0]).width(1200).url() }] : [],
     },
   };
 }
