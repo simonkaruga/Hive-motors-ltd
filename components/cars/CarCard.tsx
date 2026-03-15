@@ -1,11 +1,12 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { MessageCircle, Gauge, Fuel, Settings } from 'lucide-react';
 import { urlFor } from '@/lib/sanity/client';
 import { SanityImage } from '@/lib/types';
+import { WHATSAPP_NUMBER } from '@/lib/constants';
 
 interface CarCardProps {
   car: {
@@ -19,16 +20,17 @@ interface CarCardProps {
     transmission: string;
     fuelType: string;
     status: string;
+    condition?: 'fresh-import' | 'locally-used';
     expectedArrival?: string;
   };
 }
 
 export default function CarCard({ car }: CarCardProps) {
-  const whatsappNumber = '254722800436';
+  const router = useRouter();
   const message = `Hi, I'm interested in the ${car.title}. Please share more details.`;
 
   const imageUrl = car.images?.[0]
-    ? (car.images[0].asset?.url || urlFor(car.images[0]).width(600).height(400).auto('format').url())
+    ? urlFor(car.images[0]).width(800).height(533).auto('format').quality(80).url()
     : null;
 
   const statusConfig = {
@@ -39,11 +41,12 @@ export default function CarCard({ car }: CarCardProps) {
   const status = statusConfig[car.status as keyof typeof statusConfig] || statusConfig.available;
 
   return (
-    <Link href={`/cars/${car.slug.current}`}>
     <motion.div
+      onClick={() => router.push(`/cars/${car.slug.current}`)}
       whileHover={{ y: -4 }}
       transition={{ duration: 0.25, ease: 'easeOut' }}
       className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl hover:shadow-navy-brand/10 transition-shadow duration-300 group cursor-pointer"
+      role="article"
     >
       {/* Image */}
       <div className="relative h-48 bg-grey-soft overflow-hidden">
@@ -52,6 +55,7 @@ export default function CarCard({ car }: CarCardProps) {
             src={imageUrl}
             alt={car.title}
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
@@ -60,12 +64,21 @@ export default function CarCard({ car }: CarCardProps) {
           </div>
         )}
 
-        {/* Status Badge top-left */}
-        <div className="absolute top-3 left-3">
+        {/* Badges top-left */}
+        <div className="absolute top-3 left-3 flex flex-col gap-1.5">
           <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${status.bg} ${status.text}`}>
             <span className={`w-1.5 h-1.5 rounded-full ${status.dot}`} />
             {status.label}
           </span>
+          {car.condition && (
+            <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${
+              car.condition === 'fresh-import'
+                ? 'bg-blue-tint text-navy-brand'
+                : 'bg-amber-50 text-amber-700'
+            }`}>
+              {car.condition === 'fresh-import' ? '🇯🇵 Fresh Import' : '🇰🇪 Locally Used'}
+            </span>
+          )}
         </div>
 
         {/* Year Badge top-right */}
@@ -118,14 +131,14 @@ export default function CarCard({ car }: CarCardProps) {
 
           <div className="flex gap-2">
             <motion.a
-              href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`}
+              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="p-2 bg-[#25D366] text-white rounded-lg hover:bg-[#1ebe5b] transition-colors"
-              title="WhatsApp"
+              aria-label={`Enquire about ${car.title} via WhatsApp`}
             >
               <MessageCircle size={16} />
             </motion.a>
@@ -133,6 +146,5 @@ export default function CarCard({ car }: CarCardProps) {
         </div>
       </div>
     </motion.div>
-    </Link>
   );
 }

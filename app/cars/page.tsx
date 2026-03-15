@@ -3,28 +3,38 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { Bell } from 'lucide-react';
 import CarCard from '@/components/cars/CarCard';
-import FilterBar from '@/components/cars/FilterBar';
+import FilterBar, { FilterState } from '@/components/cars/FilterBar';
 import { client } from '@/lib/sanity/client';
 import { carsQuery } from '@/lib/sanity/queries';
 import { Car } from '@/lib/types';
 
-interface FilterState {
-  make: string; bodyType: string; transmission: string;
-  fuelType: string; minPrice: string; maxPrice: string;
+function sortCars(cars: Car[], sortBy: string): Car[] {
+  const sorted = [...cars];
+  switch (sortBy) {
+    case 'price-asc':    return sorted.sort((a, b) => a.price - b.price);
+    case 'price-desc':   return sorted.sort((a, b) => b.price - a.price);
+    case 'year-desc':    return sorted.sort((a, b) => b.year - a.year);
+    case 'year-asc':     return sorted.sort((a, b) => a.year - b.year);
+    case 'mileage-asc':  return sorted.sort((a, b) => a.mileage - b.mileage);
+    default:             return sorted;
+  }
 }
 
 function CarsContent() {
   const searchParams = useSearchParams();
-  const initialFilters = {
-    make: searchParams.get('make') || '',
-    bodyType: searchParams.get('bodyType') || '',
-  };
 
   const [cars, setCars] = useState<Car[]>([]);
   const [filteredCars, setFilteredCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+
+  const initialFilters: Partial<FilterState> = {
+    make: searchParams.get('make') || '',
+    bodyType: searchParams.get('bodyType') || '',
+  };
 
   useEffect(() => {
     async function fetchCars() {
@@ -43,14 +53,18 @@ function CarsContent() {
   }, []);
 
   const handleFilterChange = (filters: FilterState) => {
-    let filtered = [...cars];
-    if (filters.make) filtered = filtered.filter(c => c.make?.toLowerCase() === filters.make.toLowerCase());
-    if (filters.bodyType) filtered = filtered.filter(c => c.bodyType === filters.bodyType);
-    if (filters.transmission) filtered = filtered.filter(c => c.transmission === filters.transmission);
-    if (filters.fuelType) filtered = filtered.filter(c => c.fuelType === filters.fuelType);
-    if (filters.minPrice) filtered = filtered.filter(c => c.price >= parseInt(filters.minPrice));
-    if (filters.maxPrice) filtered = filtered.filter(c => c.price <= parseInt(filters.maxPrice));
-    setFilteredCars(filtered);
+    let result = [...cars];
+    if (filters.make)         result = result.filter(c => c.make?.toLowerCase() === filters.make.toLowerCase());
+    if (filters.bodyType)     result = result.filter(c => c.bodyType === filters.bodyType);
+    if (filters.condition)    result = result.filter(c => c.condition === filters.condition);
+    if (filters.transmission) result = result.filter(c => c.transmission === filters.transmission);
+    if (filters.fuelType)     result = result.filter(c => c.fuelType === filters.fuelType);
+    if (filters.minYear)      result = result.filter(c => c.year >= parseInt(filters.minYear));
+    if (filters.maxYear)      result = result.filter(c => c.year <= parseInt(filters.maxYear));
+    if (filters.minPrice)     result = result.filter(c => c.price >= parseInt(filters.minPrice));
+    if (filters.maxPrice)     result = result.filter(c => c.price <= parseInt(filters.maxPrice));
+    result = sortCars(result, filters.sortBy);
+    setFilteredCars(result);
   };
 
   return (
@@ -67,9 +81,7 @@ function CarsContent() {
               </p>
               <h1 className="text-4xl md:text-5xl font-display text-navy-brand">Our Inventory</h1>
             </div>
-            <p className="text-mid-grey">
-              Browse our collection of premium Japanese import cars
-            </p>
+            <p className="text-mid-grey">Browse our collection of premium Japanese import cars</p>
           </div>
         </div>
       </section>
@@ -104,11 +116,20 @@ function CarsContent() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center py-24"
+            className="text-center py-20"
           >
-            <p className="text-4xl mb-4">🔍</p>
-            <p className="text-2xl font-bold text-navy-brand mb-2">No cars found</p>
-            <p className="text-mid-grey">Try adjusting your filters to find what you&apos;re looking for.</p>
+            <p className="text-5xl mb-4">🔍</p>
+            <p className="text-2xl font-bold text-navy-brand mb-3">No cars match your filters</p>
+            <p className="text-mid-grey mb-8 max-w-md mx-auto">
+              We might not have it in stock right now — but we source directly from Japan and can find exactly what you need.
+            </p>
+            <Link
+              href="/notify"
+              className="inline-flex items-center gap-2 bg-navy-brand text-white px-8 py-4 rounded-xl font-semibold hover:bg-navy-dark transition-colors"
+            >
+              <Bell size={18} />
+              Request This Car
+            </Link>
           </motion.div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

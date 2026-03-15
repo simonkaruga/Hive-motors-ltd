@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import { Search } from 'lucide-react';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { WHATSAPP_NUMBER } from '@/lib/constants';
 
 const STATS = [
   { label: 'Cars Sold', end: 500, suffix: '+' },
@@ -15,11 +16,9 @@ const MAKES = ['Toyota', 'Nissan', 'Honda', 'Subaru', 'Land Rover', 'BMW', 'Merc
 const BODY_TYPES = ['SUV', 'Sedan', 'Hatchback', 'Pickup'];
 
 export default function HeroSection() {
-  const [videoLoaded, setVideoLoaded] = useState(false);
   const [counts, setCounts] = useState([0, 0, 0]);
   const [selectedMake, setSelectedMake] = useState('');
   const [selectedBody, setSelectedBody] = useState('');
-  const iframeRef = useRef<HTMLIFrameElement>(null);
   const router = useRouter();
 
   // Count-up animation on mount
@@ -48,25 +47,23 @@ export default function HeroSection() {
 
   return (
     <section className="relative pt-32 pb-20 overflow-hidden min-h-[620px]">
-      {/* Navy fallback while video loads */}
+      {/* Navy fallback shown until video loads */}
       <div className="absolute inset-0 bg-navy-brand z-0" />
 
-      {/* Background Video */}
-      <div className={`absolute inset-0 z-0 transition-opacity duration-1000 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}>
-        <iframe
-          ref={iframeRef}
-          onLoad={() => setVideoLoaded(true)}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-          style={{ width: 'max(100%, calc(100vh * 16/9))', height: 'max(100%, calc(100vw * 9/16))' }}
-          src="https://www.youtube.com/embed/HVf28fVK5Xk?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&loop=1&playlist=HVf28fVK5Xk&modestbranding=1&playsinline=1"
-          allow="autoplay; encrypted-media"
-          title="Hive Motors Background"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-brand/75 via-navy-brand/55 to-navy-brand/80" />
-      </div>
+      {/* Background Video — local file, works on all devices including mobile */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+        aria-hidden="true"
+      >
+        <source src="/hero-bg.mp4" type="video/mp4" />
+      </video>
 
-      {/* Static overlay before video loads */}
-      <div className={`absolute inset-0 z-0 bg-gradient-to-b from-navy-brand/75 via-navy-brand/55 to-navy-brand/80 transition-opacity duration-1000 ${videoLoaded ? 'opacity-0' : 'opacity-100'}`} />
+      {/* Dark gradient overlay — always visible over video */}
+      <div className="absolute inset-0 bg-gradient-to-b from-navy-brand/75 via-navy-brand/55 to-navy-brand/80 z-0" />
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
@@ -91,10 +88,13 @@ export default function HeroSection() {
           {/* Quick Search Bar */}
           <form
             onSubmit={handleSearch}
+            aria-label="Search cars"
             className="bg-white/10 backdrop-blur-md border border-white/25 rounded-2xl p-3 mb-8 max-w-2xl mx-auto shadow-xl"
           >
             <div className="flex flex-col sm:flex-row gap-2">
+              <label htmlFor="hero-make" className="sr-only">Car Make</label>
               <select
+                id="hero-make"
                 value={selectedMake}
                 onChange={e => setSelectedMake(e.target.value)}
                 className="flex-1 px-4 py-3 rounded-xl bg-white text-navy-brand font-medium text-sm outline-none cursor-pointer"
@@ -102,7 +102,9 @@ export default function HeroSection() {
                 <option value="">Any Make</option>
                 {MAKES.map(m => <option key={m} value={m}>{m}</option>)}
               </select>
+              <label htmlFor="hero-body" className="sr-only">Body Type</label>
               <select
+                id="hero-body"
                 value={selectedBody}
                 onChange={e => setSelectedBody(e.target.value)}
                 className="flex-1 px-4 py-3 rounded-xl bg-white text-navy-brand font-medium text-sm outline-none cursor-pointer"
@@ -129,7 +131,7 @@ export default function HeroSection() {
               Browse All Cars
             </Link>
             <a
-              href="https://wa.me/254722800436"
+              href={`https://wa.me/${WHATSAPP_NUMBER}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-[#1ebe5b] transition-colors shadow-lg"

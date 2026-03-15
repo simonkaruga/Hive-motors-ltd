@@ -19,8 +19,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
   const prevImage = () => setSelectedIndex((prev) => (prev - 1 + images.length) % images.length);
 
   const getImageUrl = (image: any, width: number, height: number) => {
-    if (image?.asset?.url) return image.asset.url;
-    return urlFor(image).width(width).height(height).auto('format').url();
+    return urlFor(image).width(width).height(height).auto('format').quality(80).url();
   };
 
   if (!images || images.length === 0) {
@@ -44,6 +43,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
             src={getImageUrl(images[selectedIndex], 1200, 800)}
             alt={`${title} - Image ${selectedIndex + 1}`}
             fill
+            sizes="(max-width: 1024px) 100vw, 66vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             priority
           />
@@ -74,6 +74,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
                   src={getImageUrl(image, 300, 200)}
                   alt={`${title} thumbnail ${index + 1}`}
                   fill
+                  sizes="25vw"
                   className="object-cover"
                 />
               </motion.div>
@@ -128,6 +129,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
                 src={getImageUrl(images[selectedIndex], 1600, 1066)}
                 alt={`${title} - Image ${selectedIndex + 1}`}
                 fill
+                sizes="100vw"
                 className="object-contain"
               />
             </motion.div>

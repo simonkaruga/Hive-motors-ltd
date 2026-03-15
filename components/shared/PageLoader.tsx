@@ -40,6 +40,7 @@ export default function PageLoader() {
                 src="/logo.jpg"
                 alt="Hive Motors"
                 fill
+                sizes="256px"
                 className="object-contain"
                 priority
               />

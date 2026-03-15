@@ -34,7 +34,7 @@ const categoryLabels: Record<string, string> = {
 
 export default function BlogCard({ post }: BlogCardProps) {
   const coverImageUrl = post.coverImage
-    ? (post.coverImage.asset?.url || urlFor(post.coverImage).width(800).height(400).auto('format').url())
+    ? urlFor(post.coverImage).width(800).height(400).auto('format').quality(80).url()
     : null;
 
   const authorPhotoUrl = post.authorPhoto?.asset
@@ -50,6 +50,7 @@ export default function BlogCard({ post }: BlogCardProps) {
               src={coverImageUrl}
               alt={post.coverImage?.alt || post.title}
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="object-cover"
             />
             {post.isFeatured && (
@@ -85,7 +86,7 @@ export default function BlogCard({ post }: BlogCardProps) {
               <div className="flex items-center gap-1.5">
                 {authorPhotoUrl && (
                   <div className="relative w-5 h-5 rounded-full overflow-hidden bg-gray-200">
-                    <Image src={authorPhotoUrl} alt={post.authorName} fill className="object-cover" />
+                    <Image src={authorPhotoUrl} alt={post.authorName} fill sizes="20px" className="object-cover" />
                   </div>
                 )}
                 <span className="font-medium text-navy-brand">{post.authorName}</span>

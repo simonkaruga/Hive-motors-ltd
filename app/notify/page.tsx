@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Bell, CheckCircle, Search, Users, Clock } from 'lucide-react';
 import RevealOnScroll from '@/components/shared/RevealOnScroll';
+import { WHATSAPP_NUMBER } from '@/lib/constants';
 
 const MAKES = ['Toyota', 'Nissan', 'Honda', 'Subaru', 'Mazda', 'Mitsubishi', 'BMW', 'Mercedes', 'Other'];
 const BODY_TYPES = ['SUV', 'Sedan', 'Hatchback', 'Pickup', 'Van', 'Coupe'];
@@ -22,8 +23,6 @@ export default function NotifyPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const whatsappNumber = '254722800436';
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -36,7 +35,7 @@ export default function NotifyPage() {
       `Body Type: ${formData.bodyType || 'Any'}\n` +
       `Budget: ${formData.budget}\n` +
       (formData.notes ? `Notes: ${formData.notes}` : '');
-    window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
     setSubmitted(true);
     setLoading(false);
   };

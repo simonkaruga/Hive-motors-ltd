@@ -1,3 +1,5 @@
+import { mediaAssetSource } from 'sanity-plugin-media';
+
 export default {
   name: 'car',
   title: 'Cars',
@@ -32,11 +34,39 @@ export default {
       validation: (Rule: any) => Rule.required(),
     },
     {
+      name: 'condition',
+      title: 'Condition',
+      type: 'string',
+      options: {
+        list: [
+          { title: '🇯🇵 Fresh Import', value: 'fresh-import' },
+          { title: '🇰🇪 Locally Used', value: 'locally-used' },
+        ],
+        layout: 'radio',
+      },
+    },
+    {
       name: 'images',
-      title: 'Images (upload multiple)',
+      title: 'Photos — drag to reorder, first photo is the cover',
       type: 'array',
-      of: [{ type: 'image', options: { hotspot: true } }],
-      options: { layout: 'grid' },
+      of: [{
+        type: 'image',
+        options: {
+          hotspot: true,
+          sources: [mediaAssetSource],
+        },
+        fields: [
+          {
+            name: 'alt',
+            title: 'Alt text',
+            type: 'string',
+            description: 'Describe the photo (e.g. "Front view of 2020 Toyota Prado")',
+          },
+        ],
+      }],
+      options: {
+        layout: 'grid',
+      },
       validation: (Rule: any) => Rule.required().min(1),
     },
     {

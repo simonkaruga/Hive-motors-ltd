@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Phone, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { PHONE_HREF } from '@/lib/constants';
 
 const links = [
   { href: '/', label: 'Home' },
@@ -74,7 +75,7 @@ export default function Navbar() {
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-3">
             <a
-              href="tel:+254722800436"
+              href={PHONE_HREF}
               className="flex items-center gap-1.5 text-navy-brand hover:text-red-brand transition-colors text-sm font-medium"
             >
               <Phone size={15} />
@@ -92,7 +93,9 @@ export default function Navbar() {
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="lg:hidden p-2 text-navy-brand hover:text-red-brand transition-colors"
-            aria-label="Toggle menu"
+            aria-label="Toggle navigation menu"
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
           >
             {mobileOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -103,6 +106,7 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
+            id="mobile-menu"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -131,7 +135,7 @@ export default function Navbar() {
               {/* Mobile CTA */}
               <div className="pt-3 border-t border-gray-100 space-y-2">
                 <a
-                  href="tel:+254722800436"
+                  href={PHONE_HREF}
                   className="flex items-center gap-2 px-4 py-3 text-sm font-medium text-navy-brand"
                 >
                   <Phone size={16} />

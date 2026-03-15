@@ -8,21 +8,38 @@ import { client, urlFor } from '@/lib/sanity/client';
 import { postBySlugQuery } from '@/lib/sanity/queries';
 import { formatDate } from '@/lib/utils';
 
+export const revalidate = 3600;
+
 interface Props {
   params: Promise<{ slug: string }>;
 }
+
+export async function generateStaticParams() {
+  const slugs = await client.fetch<{ slug: string }[]>(
+    `*[_type == "post"]{ "slug": slug.current }`
+  );
+  return slugs.map(({ slug }) => ({ slug }));
+}
+
+const BASE_URL = 'https://hivemotorsltd.com';
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = await client.fetch(postBySlugQuery, { slug });
   if (!post) return { title: 'Post Not Found' };
+  const ogImage = post.coverImage ? urlFor(post.coverImage).width(1200).height(630).url() : null;
+  const description = post.excerpt || `Read ${post.title} — expert car tips from Hive Motors Kenya.`;
   return {
     title: `${post.title} | Hive Motors Blog`,
-    description: post.excerpt || `Read ${post.title} — expert car tips from Hive Motors Kenya.`,
+    description,
+    alternates: { canonical: `${BASE_URL}/blog/${slug}` },
     openGraph: {
       title: post.title,
-      images: post.coverImage ? [{ url: urlFor(post.coverImage).width(1200).height(630).url() }] : [],
+      description,
+      url: `${BASE_URL}/blog/${slug}`,
+      images: ogImage ? [{ url: ogImage, width: 1200, height: 630, alt: post.title }] : [],
     },
+    twitter: { card: 'summary_large_image', title: post.title, description, images: ogImage ? [ogImage] : [] },
   };
 }
 
@@ -67,7 +84,7 @@ const portableTextComponents = {
       return (
         <figure className="my-8">
           <div className="relative w-full rounded-xl overflow-hidden" style={{ aspectRatio: '16/9' }}>
-            <Image src={imgUrl} alt={value.alt || ''} fill className="object-cover" />
+            <Image src={imgUrl} alt={value.alt || ''} fill sizes="(max-width: 768px) 100vw, 768px" className="object-cover" />
           </div>
           {value.caption && (
             <figcaption className="text-center text-xs text-mid-grey mt-2 italic">{value.caption}</figcaption>
@@ -88,8 +105,34 @@ export default async function BlogPostPage({ params }: Props) {
     ? urlFor(post.coverImage).width(1200).height(630).auto('format').url()
     : null;
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE_URL}/` },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: `${BASE_URL}/blog` },
+      { '@type': 'ListItem', position: 3, name: post.title, item: `${BASE_URL}/blog/${slug}` },
+    ],
+  };
+
+  const blogPostingJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt,
+    image: coverImageUrl,
+    datePublished: post.publishedAt,
+    dateModified: post.publishedAt,
+    author: { '@type': 'Person', name: post.authorName || 'Hive Motors' },
+    publisher: { '@type': 'Organization', name: 'Hive Motors Ltd', url: 'https://hivemotorsltd.com' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://hivemotorsltd.com/blog/${slug}` },
+    keywords: post.tags?.join(', '),
+  };
+
   return (
     <main className="bg-white min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingJsonLd) }} />
 
       {/* Cover Image */}
       {coverImageUrl && (
@@ -98,6 +141,7 @@ export default async function BlogPostPage({ params }: Props) {
             src={coverImageUrl}
             alt={post.title}
             fill
+            sizes="100vw"
             className="object-cover"
             priority
           />
@@ -138,6 +182,7 @@ export default async function BlogPostPage({ params }: Props) {
                     src={urlFor(post.authorPhoto).width(56).height(56).auto('format').url()}
                     alt={post.authorName}
                     fill
+                    sizes="28px"
                     className="object-cover"
                   />
                 </div>

@@ -2,14 +2,14 @@
 
 import { MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { WHATSAPP_NUMBER } from '@/lib/constants';
 
 export default function WhatsAppButton() {
-  const whatsappNumber = '254722800436';
   const message = 'Hi Hive Motors! I am interested in your cars.';
 
   return (
     <motion.a
-      href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`}
+      href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Contact us on WhatsApp"

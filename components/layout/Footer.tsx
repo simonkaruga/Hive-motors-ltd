@@ -81,25 +81,28 @@ export default function Footer() {
                 href="https://www.instagram.com/hivemotors"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Follow us on Instagram"
                 className="w-10 h-10 bg-white/10 hover:bg-red-brand rounded-lg flex items-center justify-center text-white transition-colors"
               >
-                <Instagram size={18} />
+                <Instagram size={18} aria-hidden="true" />
               </a>
               <a
                 href="https://www.facebook.com/share/1NEPJ6VvYC"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Follow us on Facebook"
                 className="w-10 h-10 bg-white/10 hover:bg-red-brand rounded-lg flex items-center justify-center text-white transition-colors"
               >
-                <Facebook size={18} />
+                <Facebook size={18} aria-hidden="true" />
               </a>
               <a
                 href="https://www.tiktok.com/@hivemotors"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Follow us on TikTok"
                 className="w-10 h-10 bg-white/10 hover:bg-red-brand rounded-lg flex items-center justify-center text-white transition-colors"
               >
-                <SiTiktok size={16} />
+                <SiTiktok size={16} aria-hidden="true" />
               </a>
             </div>
           </div>

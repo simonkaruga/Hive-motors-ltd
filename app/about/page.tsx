@@ -4,8 +4,16 @@ import RevealOnScroll from '@/components/shared/RevealOnScroll';
 import StatCounter from '@/components/home/StatCounter';
 
 export const metadata: Metadata = {
-  title: 'About Us | Hive Motors Ltd - Japanese Import Dealers Nairobi',
-  description: 'Learn about Hive Motors Ltd — Kenya\'s premier Japanese import car dealership. Founded in Nairobi with a mission to bring quality cars at honest prices.',
+  title: 'About Hive Motors Ltd | Japanese Import Car Dealers Nairobi',
+  description: "Kenya's premier Japanese import car dealership based in Ridgeways, Nairobi. 10+ years experience, 500+ cars sold, sourced directly from Japan at honest prices.",
+  keywords: ['about Hive Motors', 'Japanese car dealer Nairobi', 'car importer Kenya', 'Ridgeways car dealer'],
+  alternates: { canonical: 'https://hivemotorsltd.com/about' },
+  openGraph: {
+    title: 'About Hive Motors Ltd | Nairobi Car Dealer',
+    description: "Kenya's premier Japanese import car dealership. 10+ years, 500+ cars sold.",
+    url: 'https://hivemotorsltd.com/about',
+  },
+  twitter: { card: 'summary_large_image', title: 'About Hive Motors Ltd | Nairobi, Kenya' },
 };
 
 const values = [

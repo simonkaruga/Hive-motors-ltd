@@ -20,6 +20,7 @@ export interface Car {
   title: string;
   slug: { current: string };
   status: 'available' | 'sold' | 'on-transit';
+  condition?: 'fresh-import' | 'locally-used';
   images: SanityImage[];
   price: number;
   year: number;

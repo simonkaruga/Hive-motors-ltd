@@ -2,26 +2,42 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { MessageCircle, Phone, Share2, Calendar, Gauge, Fuel, Settings, Palette, MapPin, ArrowLeft, Car } from 'lucide-react';
-import { client, urlFor } from '@/lib/sanity/client';
+import { client } from '@/lib/sanity/client';
 import { carBySlugQuery } from '@/lib/sanity/queries';
+import { WHATSAPP_NUMBER, PHONE_NUMBER, PHONE_HREF } from '@/lib/constants';
 import ImageGallery from '@/components/cars/ImageGallery';
 import { formatPrice, formatMileage } from '@/lib/utils';
+
+export const revalidate = 3600; // rebuild pages every hour
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
+export async function generateStaticParams() {
+  const slugs = await client.fetch<{ slug: string }[]>(
+    `*[_type == "car"]{ "slug": slug.current }`
+  );
+  return slugs.map(({ slug }) => ({ slug }));
+}
+
+const BASE_URL = 'https://hivemotorsltd.com';
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const car = await client.fetch(carBySlugQuery, { slug });
   if (!car) return { title: 'Car Not Found' };
+  const description = `${car.year} ${car.title} — ${car.mileage?.toLocaleString()} km, ${car.transmission}, ${car.fuelType}. Price: KSh ${car.price?.toLocaleString()}. Available at Hive Motors Nairobi.`;
   return {
-    title: `${car.title} | Hive Motors Ltd`,
-    description: `${car.year} ${car.title} — ${car.mileage?.toLocaleString()} km, ${car.transmission}, ${car.fuelType}. Price: KSh ${car.price?.toLocaleString()}. Available at Hive Motors Nairobi.`,
+    title: car.title,
+    description,
+    alternates: { canonical: `${BASE_URL}/cars/${slug}` },
     openGraph: {
       title: `${car.title} | Hive Motors`,
-      images: car.images?.[0] ? [{ url: car.images[0].asset?.url || urlFor(car.images[0]).width(1200).url() }] : [],
+      description,
+      url: `${BASE_URL}/cars/${slug}`,
     },
+    twitter: { card: 'summary_large_image', title: car.title, description },
   };
 }
 
@@ -31,7 +47,6 @@ export default async function CarDetailPage({ params }: Props) {
 
   if (!car) notFound();
 
-  const whatsappNumber = '254722800436';
   const whatsappMessage = `Hi Hive Motors! I'm interested in the ${car.title} (${car.year}). Could you share more details?`;
 
   const specs = [
@@ -51,6 +66,17 @@ export default async function CarDetailPage({ params }: Props) {
     sold: { label: 'Sold', bg: 'bg-red-50', text: 'text-red-brand' },
   };
   const status = statusConfig[car.status] || statusConfig.available;
+
+  // BreadcrumbList JSON-LD
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE_URL}/` },
+      { '@type': 'ListItem', position: 2, name: 'Inventory', item: `${BASE_URL}/cars` },
+      { '@type': 'ListItem', position: 3, name: car.title, item: `${BASE_URL}/cars/${slug}` },
+    ],
+  };
 
   // JSON-LD structured data
   const jsonLd = {
@@ -74,6 +100,7 @@ export default async function CarDetailPage({ params }: Props) {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <main className="bg-white min-h-screen">
@@ -94,7 +121,7 @@ export default async function CarDetailPage({ params }: Props) {
         {/* Mobile sticky bottom CTA bar */}
         <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 px-4 py-3 flex gap-3">
           <a
-            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`}
+            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 flex items-center justify-center gap-2 bg-[#25D366] text-white py-3 rounded-xl font-bold text-sm"
@@ -103,7 +130,7 @@ export default async function CarDetailPage({ params }: Props) {
             WhatsApp
           </a>
           <a
-            href="tel:+254722800436"
+            href={PHONE_HREF}
             className="flex-1 flex items-center justify-center gap-2 border-2 border-navy-brand text-navy-brand py-3 rounded-xl font-bold text-sm"
           >
             <Phone size={18} />
@@ -159,10 +186,19 @@ export default async function CarDetailPage({ params }: Props) {
                   {/* Title + Status */}
                   <div className="mb-4">
                     <h1 className="text-2xl font-display text-navy-brand mb-2 leading-tight">{car.title}</h1>
-                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${status.bg} ${status.text}`}>
-                      <span className={`w-1.5 h-1.5 rounded-full ${car.status === 'available' ? 'bg-green-500' : car.status === 'on-transit' ? 'bg-amber-500' : 'bg-red-brand'}`} />
-                      {status.label}
-                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${status.bg} ${status.text}`}>
+                        <span className={`w-1.5 h-1.5 rounded-full ${car.status === 'available' ? 'bg-green-500' : car.status === 'on-transit' ? 'bg-amber-500' : 'bg-red-brand'}`} />
+                        {status.label}
+                      </span>
+                      {car.condition && (
+                        <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${
+                          car.condition === 'fresh-import' ? 'bg-blue-tint text-navy-brand' : 'bg-amber-50 text-amber-700'
+                        }`}>
+                          {car.condition === 'fresh-import' ? '🇯🇵 Fresh Import' : '🇰🇪 Locally Used'}
+                        </span>
+                      )}
+                    </div>
                   </div>
 
                   {/* Price */}
@@ -186,7 +222,7 @@ export default async function CarDetailPage({ params }: Props) {
                   {/* CTA Buttons */}
                   <div className="space-y-3">
                     <a
-                      href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`}
+                      href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2 w-full bg-[#25D366] text-white py-3.5 rounded-xl font-bold hover:bg-[#1ebe5b] transition-colors"
@@ -196,7 +232,7 @@ export default async function CarDetailPage({ params }: Props) {
                     </a>
 
                     <a
-                      href="tel:+254722800436"
+                      href={PHONE_HREF}
                       className="flex items-center justify-center gap-2 w-full border-2 border-navy-brand text-navy-brand py-3.5 rounded-xl font-bold hover:bg-navy-brand hover:text-white transition-colors"
                     >
                       <Phone size={20} />

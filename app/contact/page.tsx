@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, Send, MessageCircle, Instagram, Facebook } from 'lucide-react';
 import { SiTiktok } from 'react-icons/si';
 import RevealOnScroll from '@/components/shared/RevealOnScroll';
+import { WHATSAPP_NUMBER, PHONE_NUMBER, PHONE_DISPLAY, PHONE_HREF } from '@/lib/constants';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: '', phone: '', email: '', message: '' });
@@ -21,20 +22,18 @@ export default function ContactPage() {
       `Phone: ${formData.phone}\n` +
       `Email: ${formData.email}\n` +
       `Message: ${formData.message}`;
-    window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
     setSubmitted(true);
     setLoading(false);
   };
-
-  const whatsappNumber = '254722800436';
 
   const contactCards = [
     {
       icon: Phone,
       title: 'Phone',
-      primary: '+254 722 800 436',
+      primary: PHONE_DISPLAY,
       secondary: 'Click to call directly',
-      href: 'tel:+254722800436',
+      href: PHONE_HREF,
       color: 'bg-blue-tint',
     },
     {
@@ -88,7 +87,7 @@ export default function ContactPage() {
         {/* WhatsApp Banner — Primary CTA */}
         <RevealOnScroll>
           <a
-            href={`https://wa.me/${whatsappNumber}?text=Hi%20Hive%20Motors!%20I'm%20looking%20for%20a%20car.`}
+            href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi%20Hive%20Motors!%20I'm%20looking%20for%20a%20car.`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-between bg-[#25D366] text-white rounded-2xl p-6 mb-12 hover:bg-[#1ebe5b] transition-colors group shadow-lg shadow-green-400/20"

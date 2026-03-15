@@ -15,6 +15,7 @@ import RevealOnScroll from '@/components/shared/RevealOnScroll';
 import { client } from '@/lib/sanity/client';
 import { featuredCarsQuery, homepageTestimonialsQuery, homepagePostsQuery } from '@/lib/sanity/queries';
 import { Car } from '@/lib/types';
+import { WHATSAPP_NUMBER } from '@/lib/constants';
 
 interface HomeTestimonial {
   _id: string;
@@ -222,7 +223,7 @@ export default function Home() {
 
               <div className="text-center mt-12">
                 <a
-                  href="https://wa.me/254722800436?text=Hi%20Hive%20Motors!%20I%27d%20like%20to%20know%20more%20about%20how%20the%20import%20process%20works."
+                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi%20Hive%20Motors!%20I%27d%20like%20to%20know%20more%20about%20how%20the%20import%20process%20works.`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-[#25D366] text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-[#1ebe5b] transition-colors"
@@ -276,9 +277,9 @@ export default function Home() {
               <div className="text-center mb-12">
                 <h2 className="text-4xl md:text-5xl font-display text-navy-brand mb-4">What Our Clients Say</h2>
                 <div className="w-16 h-1 bg-red-brand mx-auto mb-4 rounded-full" />
-                <div className="flex items-center justify-center gap-1 mb-2">
+                <div className="flex items-center justify-center gap-1 mb-2" aria-label="5 out of 5 stars">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={18} className="fill-amber-400 text-amber-400" />
+                    <Star key={i} size={18} className="fill-amber-400 text-amber-400" aria-hidden="true" />
                   ))}
                 </div>
                 <p className="text-mid-grey">Trusted by 450+ happy customers across Kenya</p>
@@ -369,7 +370,7 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="https://wa.me/254722800436"
+                href={`https://wa.me/${WHATSAPP_NUMBER}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 bg-white text-red-brand px-8 py-4 rounded-md font-semibold text-lg hover:bg-gray-100 transition-colors"
