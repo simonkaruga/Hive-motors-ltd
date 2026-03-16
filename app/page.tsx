@@ -14,6 +14,15 @@ import { featuredCarsQuery, homepageTestimonialsQuery, homepagePostsQuery } from
 import { Car } from '@/lib/types';
 import { WHATSAPP_NUMBER } from '@/lib/constants';
 
+const STATIC_CARS: Car[] = [
+  { _id: 'prado-static', title: 'Toyota Land Cruiser Prado TX-L', slug: { current: 'prado-static' }, status: 'available', condition: 'fresh-import', images: [{ asset: { url: '/cars/prado/prado-01.jpg' } }], price: 7250000, year: 2018, make: 'Toyota', model: 'Prado', bodyType: 'suv', mileage: 62000, transmission: 'automatic', fuelType: 'diesel', _createdAt: '' },
+  { _id: 'range-rover-static', title: 'Range Rover Sport HSE', slug: { current: 'range-rover-static' }, status: 'available', condition: 'fresh-import', images: [{ asset: { url: '/cars/range-rover/range-rover-01.jpg' } }], price: 9750000, year: 2019, make: 'Land Rover', model: 'Range Rover Sport', bodyType: 'suv', mileage: 48000, transmission: 'automatic', fuelType: 'petrol', _createdAt: '' },
+  { _id: 'gle-static', title: 'Mercedes-Benz GLE 400d AMG Line', slug: { current: 'gle-static' }, status: 'available', condition: 'fresh-import', images: [{ asset: { url: '/cars/gle/gle-01.jpg' } }], price: 12750000, year: 2021, make: 'Mercedes-Benz', model: 'GLE 400d', bodyType: 'suv', mileage: 31000, transmission: 'automatic', fuelType: 'diesel', _createdAt: '' },
+  { _id: 'cx5-static', title: 'Mazda CX-5 2.5 AWD', slug: { current: 'cx5-static' }, status: 'available', condition: 'fresh-import', images: [{ asset: { url: '/cars/cx5/cx5-01.jpg' } }], price: 3400000, year: 2020, make: 'Mazda', model: 'CX-5', bodyType: 'suv', mileage: 41000, transmission: 'automatic', fuelType: 'petrol', _createdAt: '' },
+  { _id: 'polo-static', title: 'Volkswagen Polo Highline MK7.5', slug: { current: 'polo-static' }, status: 'available', condition: 'fresh-import', images: [{ asset: { url: '/cars/polo/polo-08.jpg' } }], price: 2150000, year: 2019, make: 'Volkswagen', model: 'Polo', bodyType: 'hatchback', mileage: 38000, transmission: 'automatic', fuelType: 'petrol', _createdAt: '' },
+  { _id: '3008-static', title: 'Peugeot 3008 Cross City', slug: { current: '3008-static' }, status: 'available', condition: 'fresh-import', images: [{ asset: { url: '/cars/3008/3008-06.jpg' } }], price: 3350000, year: 2020, make: 'Peugeot', model: '3008', bodyType: 'suv', mileage: 44000, transmission: 'automatic', fuelType: 'petrol', _createdAt: '' },
+];
+
 interface HomeTestimonial {
   _id: string;
   customerName: string;
@@ -67,6 +76,8 @@ export default async function Home() {
     // fallback to empty arrays — static content still renders
   }
 
+  const displayCars = featuredCars.length > 0 ? featuredCars : STATIC_CARS;
+
   const displayTestimonials = testimonials.length > 0 ? testimonials : FALLBACK_TESTIMONIALS;
 
   return (
@@ -109,7 +120,7 @@ export default async function Home() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-                {featuredCars.map((car, idx) => (
+                {displayCars.map((car, idx) => (
                   <StaggerItem key={car._id} index={idx}>
                     <CarCard car={car} />
                   </StaggerItem>
