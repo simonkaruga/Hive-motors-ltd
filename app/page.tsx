@@ -1,8 +1,5 @@
-'use client';
-
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { Ship, Shield, Award, Zap, Users, Search, Anchor, Truck, Star, Quote, ArrowRight, BookOpen, Clock } from 'lucide-react';
+import { Ship, Shield, Award, Zap, Users, Search, Anchor, Truck, Star, ArrowRight, BookOpen } from 'lucide-react';
 import HeroSection from '@/components/home/HeroSection';
 import CarCard from '@/components/cars/CarCard';
 import BlogCard from '@/components/blog/BlogCard';
@@ -37,30 +34,10 @@ interface HomePost {
 }
 
 const HOW_IT_WORKS = [
-  {
-    num: '01',
-    icon: Search,
-    title: 'Browse or Request',
-    desc: 'Search our inventory or tell us your exact specs — make, model, year, and budget.',
-  },
-  {
-    num: '02',
-    icon: Anchor,
-    title: 'We Source from Japan',
-    desc: 'Our agents bid at trusted Japanese auctions on your behalf, securing the best price.',
-  },
-  {
-    num: '03',
-    icon: Ship,
-    title: 'Shipped & Cleared',
-    desc: 'Your car sails from Japan and we handle all customs clearance in Nairobi.',
-  },
-  {
-    num: '04',
-    icon: Truck,
-    title: 'Drive Away',
-    desc: 'Pick up your fully cleared, roadworthy car — ready for registration.',
-  },
+  { num: '01', icon: Search, title: 'Browse or Request', desc: 'Search our inventory or tell us your exact specs — make, model, year, and budget.' },
+  { num: '02', icon: Anchor, title: 'We Source from Japan', desc: 'Our agents bid at trusted Japanese auctions on your behalf, securing the best price.' },
+  { num: '03', icon: Ship, title: 'Shipped & Cleared', desc: 'Your car sails from Japan and we handle all customs clearance in Nairobi.' },
+  { num: '04', icon: Truck, title: 'Drive Away', desc: 'Pick up your fully cleared, roadworthy car — ready for registration.' },
 ];
 
 const BRANDS = [
@@ -70,54 +47,25 @@ const BRANDS = [
 ];
 
 const FALLBACK_TESTIMONIALS: HomeTestimonial[] = [
-  {
-    _id: 'f1',
-    customerName: 'James Kamau',
-    rating: 5,
-    review: 'Excellent service! Got my Toyota Prado in perfect condition. Hive Motors made the whole import process seamless and stress-free.',
-    carPurchased: 'Toyota Land Cruiser Prado',
-  },
-  {
-    _id: 'f2',
-    customerName: 'Sarah Wanjiru',
-    rating: 5,
-    review: 'Very professional team. They found me exactly the Subaru Forester I wanted within my budget. Highly recommend to anyone!',
-    carPurchased: 'Subaru Forester XT',
-  },
-  {
-    _id: 'f3',
-    customerName: 'David Mwangi',
-    rating: 5,
-    review: 'Transparent pricing, no hidden costs. My Range Rover arrived in pristine condition. Will definitely use Hive Motors again.',
-    carPurchased: 'Range Rover Sport',
-  },
+  { _id: 'f1', customerName: 'James Kamau', rating: 5, review: 'Excellent service! Got my Toyota Prado in perfect condition. Hive Motors made the whole import process seamless and stress-free.', carPurchased: 'Toyota Land Cruiser Prado' },
+  { _id: 'f2', customerName: 'Sarah Wanjiru', rating: 5, review: 'Very professional team. They found me exactly the Subaru Forester I wanted within my budget. Highly recommend to anyone!', carPurchased: 'Subaru Forester XT' },
+  { _id: 'f3', customerName: 'David Mwangi', rating: 5, review: 'Transparent pricing, no hidden costs. My Range Rover arrived in pristine condition. Will definitely use Hive Motors again.', carPurchased: 'Range Rover Sport' },
 ];
 
-export default function Home() {
-  const [featuredCars, setFeaturedCars] = useState<Car[]>([]);
-  const [carsLoading, setCarsLoading] = useState(true);
-  const [testimonials, setTestimonials] = useState<HomeTestimonial[]>([]);
-  const [posts, setPosts] = useState<HomePost[]>([]);
+export default async function Home() {
+  let featuredCars: Car[] = [];
+  let testimonials: HomeTestimonial[] = [];
+  let posts: HomePost[] = [];
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const [cars, reviews, blogPosts] = await Promise.all([
-          client.fetch(featuredCarsQuery),
-          client.fetch(homepageTestimonialsQuery),
-          client.fetch(homepagePostsQuery),
-        ]);
-        setFeaturedCars(cars);
-        setTestimonials(reviews);
-        setPosts(blogPosts);
-      } catch (err) {
-        console.error('Error fetching homepage data:', err);
-      } finally {
-        setCarsLoading(false);
-      }
-    }
-    fetchData();
-  }, []);
+  try {
+    [featuredCars, testimonials, posts] = await Promise.all([
+      client.fetch(featuredCarsQuery),
+      client.fetch(homepageTestimonialsQuery),
+      client.fetch(homepagePostsQuery),
+    ]);
+  } catch {
+    // fallback to empty arrays — static content still renders
+  }
 
   const displayTestimonials = testimonials.length > 0 ? testimonials : FALLBACK_TESTIMONIALS;
 
@@ -143,10 +91,7 @@ export default function Home() {
                   <p className="text-sm text-mid-grey">New stock on the way — see what&apos;s in transit</p>
                 </div>
               </div>
-              <Link
-                href="/on-transit"
-                className="bg-navy-brand text-white px-6 py-2.5 rounded-md font-medium hover:bg-navy-dark transition-colors whitespace-nowrap"
-              >
+              <Link href="/on-transit" className="bg-navy-brand text-white px-6 py-2.5 rounded-md font-medium hover:bg-navy-dark transition-colors whitespace-nowrap">
                 View Transit Cars
               </Link>
             </div>
@@ -163,27 +108,16 @@ export default function Home() {
                 <p className="text-lg text-mid-grey">Handpicked premium vehicles from Japan</p>
               </div>
 
-              {carsLoading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-                  {[1, 2, 3, 4, 5, 6].map(i => (
-                    <div key={i} className="bg-grey-soft rounded-2xl h-72 animate-pulse" />
-                  ))}
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-                  {featuredCars.map((car, idx) => (
-                    <StaggerItem key={car._id} index={idx}>
-                      <CarCard car={car} />
-                    </StaggerItem>
-                  ))}
-                </div>
-              )}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                {featuredCars.map((car, idx) => (
+                  <StaggerItem key={car._id} index={idx}>
+                    <CarCard car={car} />
+                  </StaggerItem>
+                ))}
+              </div>
 
               <div className="text-center">
-                <Link
-                  href="/cars"
-                  className="inline-flex items-center gap-2 bg-red-brand text-white px-8 py-3.5 rounded-md font-semibold text-lg hover:bg-red-dark transition-colors"
-                >
+                <Link href="/cars" className="inline-flex items-center gap-2 bg-red-brand text-white px-8 py-3.5 rounded-md font-semibold text-lg hover:bg-red-dark transition-colors">
                   View All Cars
                   <ArrowRight size={18} />
                 </Link>
@@ -206,7 +140,6 @@ export default function Home() {
                 {HOW_IT_WORKS.map((step, i) => (
                   <RevealOnScroll key={step.num} delay={i * 0.1}>
                     <div className="relative bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors group">
-                      {/* Connector line */}
                       {i < HOW_IT_WORKS.length - 1 && (
                         <div className="hidden lg:block absolute top-10 left-full w-6 h-0.5 bg-white/20 z-10" />
                       )}
@@ -288,10 +221,7 @@ export default function Home() {
               <TestimonialsCarousel testimonials={displayTestimonials} />
 
               <div className="text-center mt-10">
-                <Link
-                  href="/testimonials"
-                  className="inline-flex items-center gap-2 text-navy-brand font-semibold hover:text-red-brand transition-colors border border-navy-brand/20 px-6 py-3 rounded-xl hover:border-red-brand/30"
-                >
+                <Link href="/testimonials" className="inline-flex items-center gap-2 text-navy-brand font-semibold hover:text-red-brand transition-colors border border-navy-brand/20 px-6 py-3 rounded-xl hover:border-red-brand/30">
                   Read All Reviews
                   <ArrowRight size={16} />
                 </Link>
@@ -348,10 +278,7 @@ export default function Home() {
                 </div>
 
                 <div className="text-center">
-                  <Link
-                    href="/blog"
-                    className="inline-flex items-center gap-2 text-navy-brand font-semibold hover:text-red-brand transition-colors border border-navy-brand/20 px-6 py-3 rounded-xl hover:border-red-brand/30"
-                  >
+                  <Link href="/blog" className="inline-flex items-center gap-2 text-navy-brand font-semibold hover:text-red-brand transition-colors border border-navy-brand/20 px-6 py-3 rounded-xl hover:border-red-brand/30">
                     <BookOpen size={16} />
                     View All Articles
                   </Link>
@@ -380,10 +307,7 @@ export default function Home() {
                 </svg>
                 WhatsApp Us Now
               </a>
-              <Link
-                href="/cars"
-                className="inline-flex items-center justify-center gap-2 bg-red-dark border-2 border-white text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-red-brand transition-colors"
-              >
+              <Link href="/cars" className="inline-flex items-center justify-center gap-2 bg-red-dark border-2 border-white text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-red-brand transition-colors">
                 Browse Inventory
                 <ArrowRight size={18} />
               </Link>

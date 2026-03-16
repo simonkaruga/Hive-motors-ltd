@@ -23,6 +23,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/blog`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
   ];
 
+  const staticCarRoutes: MetadataRoute.Sitemap = [
+    'prado-static', 'range-rover-static', 'gle-static', 'cx5-static', 'polo-static', '3008-static',
+  ].map(slug => ({
+    url: `${BASE_URL}/cars/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }));
+
   const carRoutes: MetadataRoute.Sitemap = (cars ?? []).map((car: { slug: string; _updatedAt: string }) => ({
     url: `${BASE_URL}/cars/${car.slug}`,
     lastModified: new Date(car._updatedAt),
@@ -37,5 +46,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  return [...staticRoutes, ...carRoutes, ...postRoutes];
+  return [...staticRoutes, ...staticCarRoutes, ...carRoutes, ...postRoutes];
 }
