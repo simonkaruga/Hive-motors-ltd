@@ -13,18 +13,25 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const msg =
-      `*New Message — Hive Motors*\n` +
-      `Name: ${formData.name}\n` +
-      `Phone: ${formData.phone}\n` +
-      `Email: ${formData.email}\n` +
-      `Message: ${formData.message}`;
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
-    setSubmitted(true);
-    setLoading(false);
+    setError('');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (!res.ok) throw new Error();
+      setSubmitted(true);
+    } catch {
+      setError('Something went wrong. Please try WhatsApp or email us directly.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const contactCards = [
@@ -122,8 +129,8 @@ export default function ContactPage() {
                   className="bg-green-50 border border-green-200 rounded-2xl p-8 text-center"
                 >
                   <div className="text-4xl mb-3">✅</div>
-                  <h3 className="font-bold text-green-700 text-xl mb-2">Opening WhatsApp!</h3>
-                  <p className="text-green-600">Your message is ready to send on WhatsApp — we reply within minutes.</p>
+                  <h3 className="font-bold text-green-700 text-xl mb-2">Message Sent!</h3>
+                  <p className="text-green-600">We've received your message and will get back to you within 24 hours.</p>
                   <button
                     onClick={() => { setSubmitted(false); setFormData({ name: '', phone: '', email: '', message: '' }); }}
                     className="mt-4 text-sm text-mid-grey hover:text-navy-brand transition-colors"
@@ -189,6 +196,9 @@ export default function ContactPage() {
                     <Send size={20} />
                     {loading ? 'Sending...' : 'Send Message'}
                   </button>
+                  {error && (
+                    <p className="text-red-brand text-sm text-center">{error}</p>
+                  )}
                 </form>
               )}
             </div>
