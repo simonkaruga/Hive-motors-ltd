@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { MessageCircle, Phone, Share2, Calendar, Gauge, Fuel, Settings, Palette, MapPin, ArrowLeft, Car } from 'lucide-react';
+import Image from 'next/image';
+import { MessageCircle, Phone, Calendar, Gauge, Fuel, Settings, Palette, MapPin, ArrowLeft, Car } from 'lucide-react';
 import { client } from '@/lib/sanity/client';
 import { carBySlugQuery } from '@/lib/sanity/queries';
 import { WHATSAPP_NUMBER, PHONE_NUMBER, PHONE_HREF } from '@/lib/constants';
@@ -114,12 +115,12 @@ export default async function CarDetailPage({ params }: Props) {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
               <div className="lg:col-span-2">
                 <div className="relative h-96 rounded-2xl overflow-hidden border border-gray-200 bg-grey-soft mb-3">
-                  <img src={staticCar.images[0]} alt={`${staticCar.title} - front view`} className="w-full h-full object-cover" />
+                  <Image src={staticCar.images[0]} alt={`${staticCar.title} - front view`} fill sizes="(max-width: 1024px) 100vw, 66vw" className="object-cover" priority />
                 </div>
                 <div className="grid grid-cols-5 gap-2">
                   {staticCar.images.slice(0, 5).map((img, i) => (
                     <div key={i} className="relative h-16 rounded-xl overflow-hidden border border-gray-200">
-                      <img src={img} alt={`${staticCar.title} - view ${i + 1}`} className="w-full h-full object-cover" />
+                      <Image src={img} alt={`${staticCar.title} - view ${i + 1}`} fill sizes="20vw" className="object-cover" />
                     </div>
                   ))}
                 </div>

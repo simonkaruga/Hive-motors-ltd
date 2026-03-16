@@ -2,6 +2,15 @@ import { ImageResponse } from 'next/og';
 import { client } from '@/lib/sanity/client';
 import { carBySlugQuery } from '@/lib/sanity/queries';
 
+const STATIC_OG_DATA: Record<string, { title: string; price: number; year: number; mileage: number; transmission: string; fuelType: string; image: string }> = {
+  'prado-static':       { title: 'Toyota Land Cruiser Prado TX-L',    price: 7250000,  year: 2018, mileage: 62000, transmission: 'Automatic', fuelType: 'Diesel',  image: '/cars/prado/prado-01.jpg' },
+  'range-rover-static': { title: 'Range Rover Sport HSE',              price: 9750000,  year: 2019, mileage: 48000, transmission: 'Automatic', fuelType: 'Petrol',  image: '/cars/range-rover/range-rover-01.jpg' },
+  'gle-static':         { title: 'Mercedes-Benz GLE 400d AMG Line',    price: 12750000, year: 2021, mileage: 31000, transmission: 'Automatic', fuelType: 'Diesel',  image: '/cars/gle/gle-01.jpg' },
+  'cx5-static':         { title: 'Mazda CX-5 2.5 AWD',                 price: 3400000,  year: 2020, mileage: 41000, transmission: 'Automatic', fuelType: 'Petrol',  image: '/cars/cx5/cx5-01.jpg' },
+  'polo-static':        { title: 'Volkswagen Polo Highline MK7.5',     price: 2150000,  year: 2019, mileage: 38000, transmission: 'Automatic', fuelType: 'Petrol',  image: '/cars/polo/polo-08.jpg' },
+  '3008-static':        { title: 'Peugeot 3008 Cross City',            price: 3350000,  year: 2020, mileage: 44000, transmission: 'Automatic', fuelType: 'Petrol',  image: '/cars/3008/3008-06.jpg' },
+};
+
 export const runtime = 'edge';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
@@ -12,9 +21,19 @@ interface Props {
 
 export default async function Image({ params }: Props) {
   const { slug } = await params;
-  const car = await client.fetch(carBySlugQuery, { slug });
 
-  const carImageUrl = car?.images?.[0]?.asset?.url;
+  const staticData = STATIC_OG_DATA[slug];
+  const sanityData = staticData ? null : await client.fetch(carBySlugQuery, { slug });
+
+  const title        = staticData?.title        ?? sanityData?.title        ?? 'Premium Japanese Import';
+  const price        = staticData?.price        ?? sanityData?.price        ?? null;
+  const year         = staticData?.year         ?? sanityData?.year         ?? null;
+  const mileage      = staticData?.mileage      ?? sanityData?.mileage      ?? null;
+  const transmission = staticData?.transmission ?? sanityData?.transmission ?? null;
+  const fuelType     = staticData?.fuelType     ?? sanityData?.fuelType     ?? null;
+  const carImageUrl  = staticData?.image
+    ? `https://hivemotorsltd.com${staticData.image}`
+    : sanityData?.images?.[0]?.asset?.url ?? null;
 
   return new ImageResponse(
     (
@@ -81,29 +100,29 @@ export default async function Image({ params }: Props) {
 
           {/* Car title */}
           <div style={{
-            color: '#ffffff', fontSize: car?.title?.length > 25 ? '28px' : '34px',
+            color: '#ffffff', fontSize: title.length > 25 ? '28px' : '34px',
             fontWeight: 800, lineHeight: '1.2', marginBottom: '16px',
           }}>
-            {car?.title || 'Premium Japanese Import'}
+            {title}
           </div>
 
           {/* Price */}
-          {car?.price && (
+          {price && (
             <div style={{
               color: '#DA1D17', fontSize: '28px', fontWeight: 800,
               fontVariantNumeric: 'tabular-nums', marginBottom: '20px',
             }}>
-              KSh {car.price.toLocaleString()}
+              KSh {price.toLocaleString()}
             </div>
           )}
 
           {/* Specs chips */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '24px' }}>
             {[
-              car?.year && `${car.year}`,
-              car?.mileage && `${car.mileage.toLocaleString()} km`,
-              car?.transmission,
-              car?.fuelType,
+              year && `${year}`,
+              mileage && `${mileage.toLocaleString()} km`,
+              transmission,
+              fuelType,
             ].filter(Boolean).map((spec, i) => (
               <div key={i} style={{
                 background: 'rgba(255,255,255,0.12)', borderRadius: '20px',
