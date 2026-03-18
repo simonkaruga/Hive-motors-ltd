@@ -50,6 +50,9 @@ export const metadata: Metadata = {
     title: "Hive Motors Ltd | Imported Cars Kenya",
     description: "Dream Cars, Real Deals! Kenya's premier car dealership.",
   },
+  verification: {
+    google: 'xoZ6QnxNr2TE_H4_bQEtL_Fe3BCjZ7H6ggbdDTa3x3c',
+  },
   robots: {
     index: true,
     follow: true,
