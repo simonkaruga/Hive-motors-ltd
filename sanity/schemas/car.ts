@@ -58,9 +58,14 @@ export default {
         fields: [
           {
             name: 'alt',
-            title: 'Alt text',
+            title: 'Alt text (auto-filled)',
             type: 'string',
-            description: 'Describe the photo (e.g. "Front view of 2020 Toyota Prado")',
+            initialValue: ({ parent, document }: any) => {
+              const { year, make, model, title } = document ?? {};
+              return title || [year, make, model].filter(Boolean).join(' ') || 'Hive Motors car photo';
+            },
+            readOnly: false,
+            description: 'Auto-filled from car details. You can leave this as is.',
           },
         ],
       }],

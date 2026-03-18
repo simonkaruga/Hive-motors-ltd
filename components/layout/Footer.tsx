@@ -14,7 +14,7 @@ export default function Footer() {
               <span className="text-white"> MOTORS</span>
             </h3>
             <p className="text-white/70 text-sm leading-relaxed mb-4">
-              Premium Japanese import cars in Nairobi, Kenya.
+              Quality imported cars in Nairobi, Kenya.
             </p>
             <p className="text-red-brand text-sm font-semibold italic">
               Dream Cars, Real Deals!
@@ -111,7 +111,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-white/60 text-sm">
           <p>&copy; {new Date().getFullYear()} Hive Motors Ltd. All rights reserved.</p>
-          <p>Japanese Import Cars · Nairobi, Kenya</p>
+          <p>Quality Imported Cars · Nairobi, Kenya</p>
         </div>
       </div>
     </footer>

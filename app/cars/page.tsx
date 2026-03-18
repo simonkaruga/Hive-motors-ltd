@@ -81,7 +81,7 @@ function CarsContent() {
               </p>
               <h1 className="text-4xl md:text-5xl font-display text-navy-brand">Our Inventory</h1>
             </div>
-            <p className="text-mid-grey">Browse our collection of premium Japanese import cars</p>
+            <p className="text-mid-grey">Browse our collection of premium imported cars</p>
           </div>
         </div>
       </section>
@@ -121,7 +121,7 @@ function CarsContent() {
             <p className="text-5xl mb-4">🔍</p>
             <p className="text-2xl font-bold text-navy-brand mb-3">No cars match your filters</p>
             <p className="text-mid-grey mb-8 max-w-md mx-auto">
-              We might not have it in stock right now — but we source directly from Japan and can find exactly what you need.
+              We might not have it in stock right now — but we source globally and can find exactly what you need.
             </p>
             <Link
               href="/notify"

@@ -72,7 +72,7 @@ export default function HeroSection() {
 
           {/* Badge */}
           <div className="inline-flex items-center bg-white/90 backdrop-blur-sm border border-red-brand/20 px-5 py-2 rounded-full text-sm font-medium mb-8 shadow-sm">
-            <span className="text-red-brand">🇯🇵 Premium Japanese Imports · Nairobi, Kenya</span>
+            <span className="text-red-brand">🌍 Premium Imported Cars · Nairobi, Kenya</span>
           </div>
 
           {/* Headline */}
@@ -83,7 +83,7 @@ export default function HeroSection() {
 
           {/* Subheadline */}
           <p className="text-base sm:text-xl text-white/90 mb-8 leading-relaxed max-w-2xl mx-auto">
-            Kenya&apos;s finest Japanese import dealership. Browse hundreds of quality vehicles sourced directly from Japan.
+            Kenya&apos;s trusted car dealership. Browse hundreds of quality vehicles sourced from around the world.
           </p>
 
           {/* Quick Search Bar */}

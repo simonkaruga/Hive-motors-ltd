@@ -29,11 +29,11 @@ const BASE_URL = 'https://hivemotorsltd.com';
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Hive Motors Ltd | Premium Japanese Import Cars in Kenya",
+    default: "Hive Motors Ltd | Quality Imported Cars in Kenya",
     template: "%s | Hive Motors Ltd",
   },
-  description: "Dream Cars, Real Deals! Kenya's premier Japanese import car dealership in Nairobi. Quality Toyota, Nissan, Subaru, Honda vehicles with financing available.",
-  keywords: ["Japanese cars Kenya", "buy car Nairobi", "Toyota import Kenya", "used cars Nairobi", "Japanese import dealer", "Hive Motors", "Nairobi car dealer"],
+  description: "Dream Cars, Real Deals! Kenya's premier car dealership in Nairobi. Quality Toyota, Nissan, Subaru, Honda vehicles with financing available.",
+  keywords: ["imported cars Kenya", "buy car Nairobi", "Toyota import Kenya", "used cars Nairobi", "car import dealer", "Hive Motors", "Nairobi car dealer"],
   alternates: {
     canonical: BASE_URL,
   },
@@ -42,13 +42,13 @@ export const metadata: Metadata = {
     locale: "en_KE",
     url: BASE_URL,
     siteName: "Hive Motors Ltd",
-    title: "Hive Motors Ltd | Premium Japanese Import Cars in Kenya",
-    description: "Dream Cars, Real Deals! Browse hundreds of quality Japanese vehicles. Nairobi's most trusted import dealer.",
+    title: "Hive Motors Ltd | Quality Imported Cars in Kenya",
+    description: "Dream Cars, Real Deals! Browse hundreds of quality imported vehicles. Nairobi's most trusted import dealer.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hive Motors Ltd | Japanese Import Cars Kenya",
-    description: "Dream Cars, Real Deals! Kenya's premier Japanese import car dealership.",
+    title: "Hive Motors Ltd | Imported Cars Kenya",
+    description: "Dream Cars, Real Deals! Kenya's premier car dealership.",
   },
   robots: {
     index: true,
@@ -61,7 +61,7 @@ const localBusinessJsonLd = {
   '@context': 'https://schema.org',
   '@type': ['AutoDealer', 'LocalBusiness'],
   name: 'Hive Motors Ltd',
-  description: "Kenya's premier Japanese import car dealership in Nairobi.",
+  description: "Kenya's premier car dealership in Nairobi.",
   url: BASE_URL,
   telephone: '+254722800436',
   email: 'hivemotorsltd@gmail.com',

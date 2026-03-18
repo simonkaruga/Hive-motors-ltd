@@ -87,7 +87,7 @@ export default function NotifyPage() {
               </h1>
               <div className="w-16 h-1 bg-red-brand mx-auto mb-4 rounded-full" />
               <p className="text-charcoal text-lg leading-relaxed">
-                Tell us exactly what you want and we'll source it directly from Japan for you.
+                Tell us exactly what you want and we'll source it for you from anywhere in the world.
                 No obligation — just your dream car.
               </p>
             </div>

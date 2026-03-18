@@ -37,7 +37,7 @@ export default async function BlogPage() {
                 Car Tips & Guides
               </h1>
               <p className="text-mid-grey text-lg">
-                Expert advice on importing and maintaining Japanese cars in Kenya
+                Expert advice on importing and maintaining cars in Kenya
               </p>
             </div>
           </RevealOnScroll>

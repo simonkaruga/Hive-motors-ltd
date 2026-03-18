@@ -8,13 +8,13 @@ const features = [
     icon: Shield,
     step: '01',
     title: 'Quality Assured',
-    description: 'Every vehicle thoroughly inspected before import from Japan — only the best make it through our selection.',
+    description: 'Every vehicle thoroughly inspected before purchase — only the best make it through our selection.',
   },
   {
     icon: Award,
     step: '02',
-    title: 'Direct Import',
-    description: 'We source directly from trusted Japanese auctions, cutting out middlemen for the best prices in Nairobi.',
+    title: 'Global Sourcing',
+    description: 'We source from trusted dealers and auctions worldwide, cutting out middlemen for the best prices in Nairobi.',
   },
   {
     icon: Zap,

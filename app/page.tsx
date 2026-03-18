@@ -44,8 +44,8 @@ interface HomePost {
 
 const HOW_IT_WORKS = [
   { num: '01', icon: Search, title: 'Browse or Request', desc: 'Search our inventory or tell us your exact specs — make, model, year, and budget.' },
-  { num: '02', icon: Anchor, title: 'We Source from Japan', desc: 'Our agents bid at trusted Japanese auctions on your behalf, securing the best price.' },
-  { num: '03', icon: Ship, title: 'Shipped & Cleared', desc: 'Your car sails from Japan and we handle all customs clearance in Nairobi.' },
+  { num: '02', icon: Anchor, title: 'We Source It For You', desc: 'Our agents source from trusted dealers and auctions worldwide to secure the best deal.' },
+  { num: '03', icon: Ship, title: 'Shipped & Cleared', desc: 'We handle all shipping logistics and customs clearance right here in Nairobi.' },
   { num: '04', icon: Truck, title: 'Drive Away', desc: 'Pick up your fully cleared, roadworthy car — ready for registration.' },
 ];
 
@@ -98,8 +98,8 @@ export default async function Home() {
                   <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-amber-500 rounded-full animate-pulse" />
                 </div>
                 <div>
-                  <p className="font-semibold text-navy-brand">🚢 Cars Arriving from Japan</p>
-                  <p className="text-sm text-mid-grey">New stock on the way — see what&apos;s in transit</p>
+                  <p className="font-semibold text-navy-brand">🚢 New Stock Arriving Soon</p>
+                  <p className="text-sm text-mid-grey">Fresh imports on the way — see what&apos;s in transit</p>
                 </div>
               </div>
               <Link href="/on-transit" className="bg-navy-brand text-white px-6 py-2.5 rounded-md font-medium hover:bg-navy-dark transition-colors whitespace-nowrap">
@@ -116,7 +116,7 @@ export default async function Home() {
               <div className="text-center mb-12">
                 <h2 className="text-4xl md:text-5xl font-display text-navy-brand mb-4">Featured Cars</h2>
                 <div className="w-16 h-1 bg-red-brand mx-auto mb-4 rounded-full" />
-                <p className="text-lg text-mid-grey">Handpicked premium vehicles from Japan</p>
+                <p className="text-lg text-mid-grey">Handpicked premium vehicles from around the world</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
@@ -144,7 +144,7 @@ export default async function Home() {
               <div className="text-center mb-14">
                 <h2 className="text-4xl md:text-5xl font-display text-white mb-4">How It Works</h2>
                 <div className="w-16 h-1 bg-red-brand mx-auto mb-4 rounded-full" />
-                <p className="text-lg text-white/70">From Japan to your driveway in 4 simple steps</p>
+                <p className="text-lg text-white/70">From source to your driveway in 4 simple steps</p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -189,13 +189,13 @@ export default async function Home() {
               <div className="text-center mb-12">
                 <h2 className="text-4xl md:text-5xl font-display text-navy-brand mb-4">Why Choose Hive Motors</h2>
                 <div className="w-16 h-1 bg-red-brand mx-auto mb-4 rounded-full" />
-                <p className="text-lg text-mid-grey">Your trusted partner for Japanese imports</p>
+                <p className="text-lg text-mid-grey">Your trusted partner for quality imported vehicles</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
                   { icon: Shield, title: 'Quality Assured', desc: 'Every vehicle thoroughly inspected before import' },
-                  { icon: Award, title: 'Direct Import', desc: 'Sourced directly from trusted Japanese auctions' },
+                  { icon: Award, title: 'Direct Import', desc: 'Sourced from trusted dealers and auctions worldwide' },
                   { icon: Zap, title: 'Fast Process', desc: 'Streamlined clearance and delivery process' },
                   { icon: Users, title: 'Expert Support', desc: 'Dedicated team guides you through every step' },
                 ].map((item, i) => (
@@ -277,7 +277,7 @@ export default async function Home() {
                 <div className="text-center mb-12">
                   <h2 className="text-4xl md:text-5xl font-display text-navy-brand mb-4">Car Tips & Guides</h2>
                   <div className="w-16 h-1 bg-red-brand mx-auto mb-4 rounded-full" />
-                  <p className="text-lg text-mid-grey">Expert advice on Japanese cars in Kenya</p>
+                  <p className="text-lg text-mid-grey">Expert advice on buying & owning cars in Kenya</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10 max-w-4xl mx-auto">

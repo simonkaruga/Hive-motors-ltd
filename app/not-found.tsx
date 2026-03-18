@@ -4,7 +4,7 @@ import { ArrowLeft, Search } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Page Not Found | Hive Motors Ltd',
-  description: 'The page you are looking for does not exist. Browse our inventory of premium Japanese import cars in Nairobi, Kenya.',
+  description: 'The page you are looking for does not exist. Browse our inventory of premium imported cars in Nairobi, Kenya.',
   robots: { index: false, follow: false },
 };
 

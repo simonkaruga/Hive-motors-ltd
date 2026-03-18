@@ -286,7 +286,7 @@ export default async function CarDetailPage({ params }: Props) {
                   <p className="text-charcoal leading-relaxed">
                     {typeof car.description === 'string'
                       ? car.description
-                      : 'Premium Japanese import in excellent condition. Contact us for full details.'}
+                      : 'Premium import in excellent condition. Contact us for full details.'}
                   </p>
                 </div>
               )}

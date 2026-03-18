@@ -4,27 +4,27 @@ import RevealOnScroll from '@/components/shared/RevealOnScroll';
 import StatCounter from '@/components/home/StatCounter';
 
 export const metadata: Metadata = {
-  title: 'About Hive Motors Ltd | Japanese Import Car Dealers Nairobi',
-  description: "Kenya's premier Japanese import car dealership based in Ridgeways, Nairobi. 10+ years experience, 500+ cars sold, sourced directly from Japan at honest prices.",
-  keywords: ['about Hive Motors', 'Japanese car dealer Nairobi', 'car importer Kenya', 'Ridgeways car dealer'],
+  title: 'About Hive Motors Ltd | Quality Car Dealers Nairobi',
+  description: "Kenya's trusted car dealership based in Ridgeways, Nairobi. 10+ years experience, 500+ cars sold, sourced globally at honest prices.",
+  keywords: ['about Hive Motors', 'car dealer Nairobi', 'car importer Kenya', 'Ridgeways car dealer'],
   alternates: { canonical: 'https://hivemotorsltd.com/about' },
   openGraph: {
     title: 'About Hive Motors Ltd | Nairobi Car Dealer',
-    description: "Kenya's premier Japanese import car dealership. 10+ years, 500+ cars sold.",
+    description: "Kenya's trusted car dealership. 10+ years, 500+ cars sold.",
     url: 'https://hivemotorsltd.com/about',
   },
   twitter: { card: 'summary_large_image', title: 'About Hive Motors Ltd | Nairobi, Kenya' },
 };
 
 const values = [
-  { icon: Award, title: 'Quality Assured', desc: 'Every vehicle is thoroughly inspected before import from Japan.' },
+  { icon: Award, title: 'Quality Assured', desc: 'Every vehicle is thoroughly inspected before purchase — only the best make it to our lot.' },
   { icon: Users, title: 'Customer First', desc: 'Dedicated support from inquiry through delivery and beyond.' },
-  { icon: Globe, title: 'Direct Import', desc: 'We source directly from trusted Japanese auctions and dealers.' },
+  { icon: Globe, title: 'Direct Import', desc: 'We source from trusted dealers and auctions worldwide to get you the best deal.' },
   { icon: Shield, title: 'Transparent Process', desc: 'Clear pricing, no hidden fees, full documentation support.' },
 ];
 
 const milestones = [
-  { year: '2014', event: 'Hive Motors Founded', desc: 'Started with a mission to bring quality Japanese cars to Kenya.' },
+  { year: '2014', event: 'Hive Motors Founded', desc: 'Started with a mission to bring quality imported cars to Kenya.' },
   { year: '2016', event: '100+ Cars Imported', desc: 'Hit our first major milestone, building a trusted client base.' },
   { year: '2019', event: 'Expanded Showroom', desc: 'Moved to our current location in Ridgeways to serve more clients.' },
   { year: '2022', event: '500+ Happy Clients', desc: 'Crossed 500 satisfied customers across Kenya.' },
@@ -63,11 +63,11 @@ export default function AboutPage() {
               <div>
                 <h2 className="text-3xl md:text-4xl font-display text-navy-brand mb-6">
                   Kenya's Most Trusted<br />
-                  <span className="text-red-brand">Japanese Import Dealer</span>
+                  <span className="text-red-brand">Car Import Dealer</span>
                 </h2>
                 <div className="w-12 h-1 bg-red-brand rounded-full mb-6" />
                 <p className="text-charcoal text-lg leading-relaxed mb-6">
-                  Since 2014, Hive Motors has been Kenya's premier destination for quality Japanese import vehicles.
+                  Since 2014, Hive Motors has been Kenya's trusted destination for quality imported vehicles.
                   We specialise in sourcing, importing, and delivering premium cars that combine reliability,
                   performance, and value.
                 </p>
@@ -195,7 +195,7 @@ export default function AboutPage() {
               Ready to Drive Your Dream Car?
             </h2>
             <p className="text-mid-grey mb-8">
-              Browse our current inventory or contact us to source your perfect car from Japan.
+              Browse our current inventory or contact us to source your perfect car from anywhere in the world.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a

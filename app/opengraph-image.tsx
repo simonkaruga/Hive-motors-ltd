@@ -74,7 +74,7 @@ export default function Image() {
           color: 'rgba(255,255,255,0.7)', fontSize: '20px',
           textAlign: 'center', maxWidth: '600px', lineHeight: '1.5',
         }}>
-          Kenya's Premier Japanese Import Car Dealership
+          Kenya's Trusted Car Dealership
         </div>
 
         {/* Location badge */}

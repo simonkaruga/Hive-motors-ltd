@@ -25,7 +25,7 @@ export default async function Image({ params }: Props) {
   const staticData = STATIC_OG_DATA[slug];
   const sanityData = staticData ? null : await client.fetch(carBySlugQuery, { slug });
 
-  const title        = staticData?.title        ?? sanityData?.title        ?? 'Premium Japanese Import';
+  const title        = staticData?.title        ?? sanityData?.title        ?? 'Premium Import';
   const price        = staticData?.price        ?? sanityData?.price        ?? null;
   const year         = staticData?.year         ?? sanityData?.year         ?? null;
   const mileage      = staticData?.mileage      ?? sanityData?.mileage      ?? null;

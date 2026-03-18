@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Customer Reviews | What Our Clients Say | Hive Motors Kenya',
-  description: 'Read verified reviews from 450+ happy Hive Motors customers across Kenya. See why Nairobi trusts us for quality Japanese import cars. Real stories, real deals.',
-  keywords: ['Hive Motors reviews', 'car dealer reviews Nairobi', 'Japanese car dealer Kenya reviews', 'trusted car dealer Nairobi'],
+  description: 'Read verified reviews from 450+ happy Hive Motors customers across Kenya. See why Nairobi trusts us for quality imported cars. Real stories, real deals.',
+  keywords: ['Hive Motors reviews', 'car dealer reviews Nairobi', 'car dealer Kenya reviews', 'trusted car dealer Nairobi'],
   alternates: { canonical: 'https://hivemotorsltd.com/testimonials' },
   openGraph: {
     title: 'Customer Reviews | Hive Motors Kenya',

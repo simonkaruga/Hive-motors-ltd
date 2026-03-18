@@ -41,7 +41,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
         >
           <Image
             src={getImageUrl(images[selectedIndex], 1200, 800)}
-            alt={`${title} - Image ${selectedIndex + 1}`}
+            alt={images[selectedIndex]?.alt || title}
             fill
             sizes="(max-width: 1024px) 100vw, 66vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -72,7 +72,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
               >
                 <Image
                   src={getImageUrl(image, 300, 200)}
-                  alt={`${title} thumbnail ${index + 1}`}
+                  alt={image?.alt || `${title} photo ${index + 1}`}
                   fill
                   sizes="25vw"
                   className="object-cover"
@@ -127,7 +127,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
             >
               <Image
                 src={getImageUrl(images[selectedIndex], 1600, 1066)}
-                alt={`${title} - Image ${selectedIndex + 1}`}
+                alt={images[selectedIndex]?.alt || title}
                 fill
                 sizes="100vw"
                 className="object-contain"

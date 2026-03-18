@@ -49,13 +49,13 @@ export default function OnTransitPage() {
             <div className="max-w-2xl">
               <div className="inline-flex items-center gap-2 bg-amber-100 text-amber-700 text-sm font-semibold px-3 py-1.5 rounded-full mb-4">
                 <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-                Arriving Soon from Japan
+                Arriving Soon
               </div>
               <h1 className="text-4xl md:text-5xl font-display text-navy-brand mb-4">
                 🚢 Cars On Transit
               </h1>
               <p className="text-charcoal text-lg leading-relaxed">
-                These cars are already purchased and sailing from Japan. Be the first to know when they arrive —
+                These cars are already purchased and on their way to Nairobi. Be the first to know when they arrive —
                 reserve yours today before they hit the showroom.
               </p>
             </div>
@@ -171,7 +171,7 @@ export default function OnTransitPage() {
               Don't Miss the Next Arrivals
             </h2>
             <p className="text-mid-grey mb-8">
-              Leave your details and we'll contact you as soon as new cars arrive from Japan.
+              Leave your details and we’ll contact you as soon as new cars arrive.
             </p>
             <Link
               href="/notify"
@@ -192,10 +192,10 @@ export default function OnTransitPage() {
           </RevealOnScroll>
 
           {[
-            { q: 'How long does shipping from Japan take?', a: 'Typically 4–6 weeks from Japan to Nairobi, including sea shipping and customs clearance.' },
+            { q: 'How long does shipping take?', a: 'Typically 4–8 weeks depending on the source country, including sea shipping and customs clearance in Nairobi.' },
             { q: 'Can I reserve a transit car?', a: 'Yes! Contact us via WhatsApp or phone to place a reservation. A deposit secures the car for you.' },
             { q: 'What are the clearance costs?', a: 'Import duty, excise, and VAT depend on engine size and year. We can give you a full cost breakdown — just ask!' },
-            { q: 'Are transit cars inspected before shipping?', a: 'Absolutely. Every car is inspected in Japan before purchase and again upon arrival in Kenya.' },
+            { q: 'Are transit cars inspected before shipping?', a: 'Absolutely. Every car is inspected at the source before purchase and again upon arrival in Kenya.' },
           ].map((faq, i) => (
             <RevealOnScroll key={i} delay={i * 0.07}>
               <div className="mb-4 bg-grey-soft rounded-2xl p-6 border border-gray-200">
