@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Calculator, TrendingUp, MessageCircle, Info } from 'lucide-react';
+import { Calculator, TrendingUp, MessageCircle } from 'lucide-react';
 import RevealOnScroll from '@/components/shared/RevealOnScroll';
 import Link from 'next/link';
 
@@ -12,7 +12,7 @@ export default function FinancingPage() {
   const [carPrice, setCarPrice] = useState(2000000);
   const [downPaymentPct, setDownPaymentPct] = useState(20);
   const [loanTerm, setLoanTerm] = useState(36);
-  const interestRate = 14;
+  const [interestRate, setInterestRate] = useState(14);
 
   const downPayment = Math.round(carPrice * (downPaymentPct / 100));
   const loanAmount = carPrice - downPayment;
@@ -137,12 +137,25 @@ export default function FinancingPage() {
                 </div>
 
                 {/* Interest Rate */}
-                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-sm text-mid-grey">Interest Rate (Annual)</span>
-                    <Info size={14} className="text-mid-grey" />
+                <div>
+                  <div className="flex justify-between items-center mb-3">
+                    <label className="text-sm font-medium text-navy-brand">Interest Rate (Annual)</label>
+                    <span className="text-lg font-bold text-red-brand font-mono">{interestRate}%</span>
                   </div>
-                  <span className="font-bold text-navy-brand font-mono">{interestRate}%</span>
+                  <input
+                    type="range"
+                    min="5"
+                    max="30"
+                    step="0.5"
+                    value={interestRate}
+                    onChange={(e) => setInterestRate(Number(e.target.value))}
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                    style={{ accentColor: '#DA1D17' }}
+                  />
+                  <div className="flex justify-between text-xs text-mid-grey mt-1">
+                    <span>5%</span>
+                    <span>30%</span>
+                  </div>
                 </div>
               </div>
             </div>
