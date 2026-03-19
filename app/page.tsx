@@ -99,7 +99,7 @@ export default async function Home() {
                 </div>
                 <div>
                   <p className="font-semibold text-navy-brand">🚢 New Stock Arriving Soon</p>
-                  <p className="text-sm text-mid-grey">Fresh imports on the way — see what&apos;s in transit</p>
+                  <p className="text-sm text-charcoal">Fresh imports on the way — see what&apos;s in transit</p>
                 </div>
               </div>
               <Link href="/on-transit" className="bg-navy-brand text-white px-6 py-2.5 rounded-md font-medium hover:bg-navy-dark transition-colors whitespace-nowrap">
@@ -122,7 +122,7 @@ export default async function Home() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
                 {displayCars.map((car, idx) => (
                   <StaggerItem key={car._id} index={idx}>
-                    <CarCard car={car} />
+                    <CarCard car={car} priority={idx === 0} />
                   </StaggerItem>
                 ))}
               </div>
@@ -221,7 +221,7 @@ export default async function Home() {
               <div className="text-center mb-12">
                 <h2 className="text-4xl md:text-5xl font-display text-navy-brand mb-4">What Our Clients Say</h2>
                 <div className="w-16 h-1 bg-red-brand mx-auto mb-4 rounded-full" />
-                <div className="flex items-center justify-center gap-1 mb-2" aria-label="5 out of 5 stars">
+                <div className="flex items-center justify-center gap-1 mb-2" role="img" aria-label="5 out of 5 stars">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} size={18} className="fill-amber-400 text-amber-400" aria-hidden="true" />
                   ))}

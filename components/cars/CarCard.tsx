@@ -23,14 +23,15 @@ interface CarCardProps {
     condition?: 'fresh-import' | 'locally-used';
     expectedArrival?: string;
   };
+  priority?: boolean;
 }
 
-export default function CarCard({ car }: CarCardProps) {
+export default function CarCard({ car, priority = false }: CarCardProps) {
   const router = useRouter();
   const message = `Hi, I'm interested in the ${car.title}. Please share more details.`;
 
   const imageUrl = car.images?.[0]
-    ? urlFor(car.images[0]).width(800).height(533).auto('format').quality(80).url()
+    ? urlFor(car.images[0]).width(800).height(533).auto('format').quality(75).url()
     : null;
 
   const statusConfig = {
@@ -56,6 +57,7 @@ export default function CarCard({ car }: CarCardProps) {
             alt={car.title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            priority={priority}
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
