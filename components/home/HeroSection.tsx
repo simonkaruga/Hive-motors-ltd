@@ -66,15 +66,9 @@ export default function HeroSection() {
           preload="none"
           className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
           aria-hidden="true"
+          onError={(e) => { (e.currentTarget as HTMLVideoElement).style.display = 'none'; }}
         >
-          <source
-            src="/hero-bg.mp4"
-            type="video/mp4"
-            onError={(e) => {
-              const video = (e.currentTarget as HTMLSourceElement).parentElement as HTMLVideoElement | null;
-              if (video) video.style.display = 'none';
-            }}
-          />
+          <source src="/hero-bg.mp4" type="video/mp4" />
         </video>
       )}
 

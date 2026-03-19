@@ -122,7 +122,7 @@ export default async function Home() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
                 {displayCars.map((car, idx) => (
                   <StaggerItem key={car._id} index={idx}>
-                    <CarCard car={car} priority={idx === 0} />
+                    <CarCard car={car} priority={idx < 3} />
                   </StaggerItem>
                 ))}
               </div>

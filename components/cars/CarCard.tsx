@@ -1,8 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
+import Link from 'next/link';
 import { MessageCircle, Gauge, Fuel, Settings } from 'lucide-react';
 import { urlFor } from '@/lib/sanity/client';
 import { SanityImage } from '@/lib/types';
@@ -27,7 +26,6 @@ interface CarCardProps {
 }
 
 export default function CarCard({ car, priority = false }: CarCardProps) {
-  const router = useRouter();
   const message = `Hi, I'm interested in the ${car.title}. Please share more details.`;
 
   const imageUrl = car.images?.[0]
@@ -42,11 +40,9 @@ export default function CarCard({ car, priority = false }: CarCardProps) {
   const status = statusConfig[car.status as keyof typeof statusConfig] || statusConfig.available;
 
   return (
-    <motion.div
-      onClick={() => router.push(`/cars/${car.slug.current}`)}
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.25, ease: 'easeOut' }}
-      className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl hover:shadow-navy-brand/10 transition-shadow duration-300 group cursor-pointer"
+    <Link
+      href={`/cars/${car.slug.current}`}
+      className="block bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl hover:shadow-navy-brand/10 hover:-translate-y-1 transition-all duration-300 group"
       role="article"
     >
       {/* Image */}
@@ -132,21 +128,19 @@ export default function CarCard({ car, priority = false }: CarCardProps) {
           </p>
 
           <div className="flex gap-2">
-            <motion.a
+            <a
               href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="p-2 bg-[#1A8A4A] text-white rounded-lg hover:bg-[#157a3e] transition-colors"
+              className="p-2 bg-[#1A8A4A] text-white rounded-lg hover:bg-[#157a3e] hover:scale-105 active:scale-95 transition-all"
               aria-label={`Enquire about ${car.title} via WhatsApp`}
             >
               <MessageCircle size={16} />
-            </motion.a>
+            </a>
           </div>
         </div>
       </div>
-    </motion.div>
+    </Link>
   );
 }

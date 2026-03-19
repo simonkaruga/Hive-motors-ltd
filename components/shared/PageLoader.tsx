@@ -1,59 +1,36 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
 export default function PageLoader() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [visible, setVisible] = useState(true);
+  const [fading, setFading] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1800);
+    // Skip loader on slow connections to avoid blocking FCP
+    const nav = (navigator as Navigator & { connection?: { effectiveType?: string; saveData?: boolean } }).connection;
+    const isSlow = nav?.saveData || nav?.effectiveType === 'slow-2g' || nav?.effectiveType === '2g';
+    if (isSlow) { setVisible(false); return; }
 
-    return () => clearTimeout(timer);
+    const fadeTimer = setTimeout(() => setFading(true), 600);
+    const hideTimer = setTimeout(() => setVisible(false), 900);
+    return () => { clearTimeout(fadeTimer); clearTimeout(hideTimer); };
   }, []);
 
+  if (!visible) return null;
+
   return (
-    <AnimatePresence>
-      {isLoading && (
-        <motion.div
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-white"
-        >
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="text-center"
-          >
-            <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="relative w-64 h-32 mx-auto"
-            >
-              <Image
-                src="/logo.jpg"
-                alt="Hive Motors"
-                fill
-                sizes="256px"
-                className="object-contain"
-                priority
-              />
-            </motion.div>
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: '100%' }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="h-1 bg-red-brand mt-4 rounded-full max-w-xs mx-auto"
-            />
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-white transition-opacity duration-300"
+      style={{ opacity: fading ? 0 : 1, pointerEvents: fading ? 'none' : 'auto' }}
+    >
+      <div className="text-center">
+        <div className="relative w-64 h-32 mx-auto">
+          <Image src="/logo.jpg" alt="Hive Motors" fill sizes="256px" className="object-contain" priority />
+        </div>
+        <div className="h-1 bg-red-brand mt-4 rounded-full max-w-xs mx-auto" />
+      </div>
+    </div>
   );
 }
