@@ -56,8 +56,8 @@ export default function HeroSection() {
       {/* Navy fallback shown until video loads */}
       <div className="absolute inset-0 bg-navy-brand z-0" />
 
-      {/* Background Video */}
-      {showVideo && (
+      {/* Background Video — always rendered to avoid hydration mismatch */}
+      <div suppressHydrationWarning className={showVideo ? undefined : 'hidden'}>
         <video
           autoPlay
           muted
@@ -70,7 +70,7 @@ export default function HeroSection() {
         >
           <source src="/hero-bg.mp4" type="video/mp4" />
         </video>
-      )}
+      </div>
 
       {/* Dark gradient overlay — always visible over video */}
       <div className="absolute inset-0 bg-gradient-to-b from-navy-brand/75 via-navy-brand/55 to-navy-brand/80 z-0" />

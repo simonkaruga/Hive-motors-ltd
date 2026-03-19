@@ -43,7 +43,7 @@ export default function CarCard({ car, priority = false }: CarCardProps) {
     <Link
       href={`/cars/${car.slug.current}`}
       aria-label={`View ${car.title}`}
-      className="block bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl hover:shadow-navy-brand/10 hover:-translate-y-1 transition-all duration-300 group"
+      className="block bg-white rounded-2xl border border-gray-200 overflow-hidden hover:-translate-y-1 transition-transform duration-300 group"
     >
       {/* Image */}
       <div className="relative h-48 bg-grey-soft overflow-hidden">

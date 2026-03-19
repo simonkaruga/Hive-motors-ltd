@@ -31,7 +31,7 @@ export default function WhyChooseUs() {
               className="relative w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110"
               style={{ background: 'linear-gradient(135deg, rgba(218,29,23,0.15) 0%, rgba(218,29,23,0.05) 100%)', border: '1px solid rgba(218,29,23,0.2)' }}
             >
-              <feature.icon className="text-red-brand transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(218,29,23,0.8)]" size={26} />
+              <feature.icon className="text-red-brand" size={26} />
             </div>
             <div className="text-red-brand/50 text-xs font-bold tracking-[0.25em] uppercase mb-2">Step {feature.step}</div>
             <h3 className="text-lg font-semibold text-white mb-3 group-hover:text-red-brand/90 transition-colors">{feature.title}</h3>

@@ -84,8 +84,10 @@ export default async function Home() {
     <>
       <PageLoader />
       <main className="bg-white">
-        {/* Preconnect for Sanity CDN images on this page */}
-        <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
+        {/* Preconnect for Sanity CDN — only when Sanity returned real data */}
+        {featuredCars.length > 0 && (
+          <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
+        )}
 
         {/* ── Hero ───────────────────────────────────────────────── */}
         <HeroSection />
