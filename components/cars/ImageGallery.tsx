@@ -3,10 +3,14 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
-import { urlFor } from '@/lib/sanity/client';
+
+interface GalleryImage {
+  url: string;
+  alt?: string;
+}
 
 interface ImageGalleryProps {
-  images: any[];
+  images: GalleryImage[];
   title: string;
 }
 
@@ -16,9 +20,6 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
 
   const nextImage = () => setSelectedIndex(p => (p + 1) % images.length);
   const prevImage = () => setSelectedIndex(p => (p - 1 + images.length) % images.length);
-
-  const getImageUrl = (image: any, width: number, height: number) =>
-    urlFor(image).width(width).height(height).auto('format').quality(75).url();
 
   if (!images || images.length === 0) {
     return (
@@ -36,8 +37,8 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
           className="relative h-72 md:h-[420px] rounded-2xl overflow-hidden cursor-zoom-in group border border-gray-200 bg-grey-soft"
         >
           <Image
-            src={getImageUrl(images[selectedIndex], 1200, 800)}
-            alt={images[selectedIndex]?.alt || title}
+            src={images[selectedIndex].url}
+            alt={images[selectedIndex].alt || title}
             fill
             sizes="(max-width: 1024px) 100vw, 66vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -62,14 +63,13 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
                   selectedIndex === index ? 'border-red-brand shadow-md' : 'border-transparent hover:border-gray-300'
                 }`}
               >
-                <Image src={getImageUrl(image, 300, 200)} alt={image?.alt || `${title} photo ${index + 1}`} fill sizes="25vw" className="object-cover" />
+                <Image src={image.url} alt={image.alt || `${title} photo ${index + 1}`} fill sizes="25vw" className="object-cover" />
               </div>
             ))}
           </div>
         )}
       </div>
 
-      {/* Lightbox */}
       {lightboxOpen && (
         <div
           className="fixed inset-0 bg-navy-dark/95 z-50 flex items-center justify-center p-4 animate-fade-in"
@@ -91,7 +91,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
           )}
 
           <div className="relative w-full max-w-5xl max-h-[85vh] aspect-[4/3]" onClick={e => e.stopPropagation()}>
-            <Image src={getImageUrl(images[selectedIndex], 1600, 1066)} alt={images[selectedIndex]?.alt || title} fill sizes="100vw" className="object-contain" />
+            <Image src={images[selectedIndex].url} alt={images[selectedIndex].alt || title} fill sizes="100vw" className="object-contain" />
           </div>
 
           <div className="absolute bottom-6 text-white/70 text-sm font-medium">

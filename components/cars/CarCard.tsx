@@ -3,8 +3,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { MessageCircle, Gauge, Fuel, Settings } from 'lucide-react';
-import { urlFor } from '@/lib/sanity/client';
-import { SanityImage } from '@/lib/types';
 import { WHATSAPP_NUMBER } from '@/lib/constants';
 
 interface CarCardProps {
@@ -12,7 +10,7 @@ interface CarCardProps {
     _id: string;
     title: string;
     slug: { current: string };
-    images: SanityImage[];
+    imageUrl?: string | null;
     price: number;
     year: number;
     mileage: number;
@@ -28,9 +26,7 @@ interface CarCardProps {
 export default function CarCard({ car, priority = false }: CarCardProps) {
   const message = `Hi, I'm interested in the ${car.title}. Please share more details.`;
 
-  const imageUrl = car.images?.[0]
-    ? urlFor(car.images[0]).width(800).height(533).auto('format').quality(60).url()
-    : null;
+  const imageUrl = car.imageUrl ?? null;
 
   const statusConfig = {
     available: { label: 'Available', bg: 'bg-green-100', text: 'text-green-700', dot: 'bg-green-500' },

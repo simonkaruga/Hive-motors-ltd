@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { MessageCircle, Phone, Calendar, Gauge, Fuel, Settings, Palette, MapPin, ArrowLeft, Car } from 'lucide-react';
-import { client } from '@/lib/sanity/client';
+import { client, urlFor } from '@/lib/sanity/client';
 import { carBySlugQuery } from '@/lib/sanity/queries';
 import { WHATSAPP_NUMBER, PHONE_NUMBER, PHONE_HREF } from '@/lib/constants';
 import ImageGallery from '@/components/cars/ImageGallery';
@@ -276,7 +276,13 @@ export default async function CarDetailPage({ params }: Props) {
 
             {/* Left: Images + Details */}
             <div className="lg:col-span-2 space-y-8">
-              <ImageGallery images={car.images || []} title={car.title} />
+              <ImageGallery
+                images={(car.images || []).map((img: any) => ({
+                  url: urlFor(img).width(1200).height(800).auto('format').quality(75).url(),
+                  alt: img?.alt,
+                }))}
+                title={car.title}
+              />
 
               {/* Description */}
               {car.description && (

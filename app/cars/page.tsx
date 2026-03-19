@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Bell } from 'lucide-react';
 import CarCard from '@/components/cars/CarCard';
 import FilterBar, { FilterState } from '@/components/cars/FilterBar';
-import { client } from '@/lib/sanity/client';
+import { client, urlFor } from '@/lib/sanity/client';
 import { carsQuery } from '@/lib/sanity/queries';
 import { Car } from '@/lib/types';
 
@@ -130,7 +130,12 @@ function CarsContent() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredCars.map((car, index) => (
               <div key={car._id} className="animate-fade-in" style={{ animationDelay: `${index * 50}ms` }}>
-                <CarCard car={car} />
+                <CarCard car={{
+                  ...car,
+                  imageUrl: car.images?.[0]
+                    ? urlFor(car.images[0]).width(800).height(533).auto('format').quality(60).url()
+                    : null,
+                }} />
               </div>
             ))}
           </div>

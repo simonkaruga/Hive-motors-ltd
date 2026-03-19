@@ -11,6 +11,7 @@ import { BRAND_LOGOS } from '@/components/home/BrandLogos';
 import RevealOnScroll from '@/components/shared/RevealOnScroll';
 import { client } from '@/lib/sanity/client';
 import { featuredCarsQuery, homepageTestimonialsQuery, homepagePostsQuery } from '@/lib/sanity/queries';
+import { urlFor } from '@/lib/sanity/client';
 import { Car } from '@/lib/types';
 import { WHATSAPP_NUMBER } from '@/lib/constants';
 
@@ -126,7 +127,17 @@ export default async function Home() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
                 {displayCars.map((car, idx) => (
                   <StaggerItem key={car._id} index={idx}>
-                    <CarCard car={car} priority={idx < 3} />
+                    <CarCard
+                      car={{
+                        ...car,
+                        imageUrl: car.images?.[0]
+                          ? (car.images[0] as any)?.asset?._ref
+                            ? urlFor(car.images[0]).width(800).height(533).auto('format').quality(60).url()
+                            : (car.images[0] as any)?.asset?.url ?? null
+                          : null,
+                      }}
+                      priority={idx < 3}
+                    />
                   </StaggerItem>
                 ))}
               </div>
