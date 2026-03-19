@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { Star, Quote, ExternalLink } from 'lucide-react';
 import RevealOnScroll from '@/components/shared/RevealOnScroll';
 import { client } from '@/lib/sanity/client';

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Calculator, TrendingUp, MessageCircle } from 'lucide-react';
 import RevealOnScroll from '@/components/shared/RevealOnScroll';
 import Link from 'next/link';
@@ -170,14 +169,9 @@ export default function FinancingPage() {
                   <TrendingUp size={18} className="text-white/70" />
                   <p className="text-sm font-medium text-white/70 uppercase tracking-widest">Estimated Monthly</p>
                 </div>
-                <motion.p
-                  key={Math.round(monthlyPayment)}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-5xl font-bold font-mono text-white mb-2"
-                >
+                <p className="text-5xl font-bold font-mono text-white mb-2">
                   KSh {Math.round(monthlyPayment).toLocaleString()}
-                </motion.p>
+                </p>
                 <p className="text-white/50 text-xs">per month for {loanTerm} months</p>
               </div>
 

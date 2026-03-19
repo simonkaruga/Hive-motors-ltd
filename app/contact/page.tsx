@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, Send, MessageCircle, Instagram, Facebook } from 'lucide-react';
 import { SiTiktok } from 'react-icons/si';
 import RevealOnScroll from '@/components/shared/RevealOnScroll';
@@ -122,11 +121,7 @@ export default function ContactPage() {
               <div className="w-10 h-0.5 bg-red-brand rounded-full mb-6" />
 
               {submitted ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="bg-green-50 border border-green-200 rounded-2xl p-8 text-center"
-                >
+                <div className="bg-green-50 border border-green-200 rounded-2xl p-8 text-center animate-fade-in">
                   <div className="text-4xl mb-3">✅</div>
                   <h3 className="font-bold text-green-700 text-xl mb-2">Message Sent!</h3>
                   <p className="text-green-600">We've received your message and will get back to you within 24 hours.</p>
@@ -136,7 +131,7 @@ export default function ContactPage() {
                   >
                     Send another message
                   </button>
-                </motion.div>
+                </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>

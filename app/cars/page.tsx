@@ -2,7 +2,6 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Bell } from 'lucide-react';
 import CarCard from '@/components/cars/CarCard';
@@ -113,11 +112,7 @@ function CarsContent() {
             ))}
           </div>
         ) : filteredCars.length === 0 ? (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center py-20"
-          >
+          <div className="text-center py-20 animate-fade-in">
             <p className="text-5xl mb-4">🔍</p>
             <p className="text-2xl font-bold text-navy-brand mb-3">No cars match your filters</p>
             <p className="text-mid-grey mb-8 max-w-md mx-auto">
@@ -130,18 +125,13 @@ function CarsContent() {
               <Bell size={18} />
               Request This Car
             </Link>
-          </motion.div>
+          </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredCars.map((car, index) => (
-              <motion.div
-                key={car._id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05, duration: 0.4 }}
-              >
+              <div key={car._id} className="animate-fade-in" style={{ animationDelay: `${index * 50}ms` }}>
                 <CarCard car={car} />
-              </motion.div>
+              </div>
             ))}
           </div>
         )}

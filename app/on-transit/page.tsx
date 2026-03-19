@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { Ship, Calendar, Bell, CheckCircle, Package, Truck, Flag } from 'lucide-react';
 import CarCard from '@/components/cars/CarCard';
 import RevealOnScroll from '@/components/shared/RevealOnScroll';
@@ -110,11 +109,7 @@ export default function OnTransitPage() {
               ))}
             </div>
           ) : cars.length === 0 ? (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center py-24"
-            >
+            <div className="text-center py-24 animate-fade-in">
               <Ship size={56} className="mx-auto text-navy-brand/20 mb-6" />
               <p className="text-2xl font-bold text-navy-brand mb-2">No cars currently in transit</p>
               <p className="text-mid-grey mb-8">New stock is sourced regularly — join our notification list!</p>
@@ -125,7 +120,7 @@ export default function OnTransitPage() {
                 <Bell size={18} />
                 Notify Me
               </Link>
-            </motion.div>
+            </div>
           ) : (
             <>
               <RevealOnScroll>

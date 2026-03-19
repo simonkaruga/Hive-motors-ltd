@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Bell, CheckCircle, Search, Users, Clock } from 'lucide-react';
 import RevealOnScroll from '@/components/shared/RevealOnScroll';
 import { WHATSAPP_NUMBER } from '@/lib/constants';
@@ -43,11 +42,7 @@ export default function NotifyPage() {
   if (submitted) {
     return (
       <main className="bg-white min-h-screen pt-32 pb-24 flex items-center justify-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="text-center max-w-lg px-6"
-        >
+        <div className="text-center max-w-lg px-6 animate-fade-in">
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle size={40} className="text-green-600" />
           </div>
@@ -66,7 +61,7 @@ export default function NotifyPage() {
           >
             Submit another request
           </button>
-        </motion.div>
+        </div>
       </main>
     );
   }

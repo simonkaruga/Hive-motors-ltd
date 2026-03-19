@@ -96,6 +96,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-KE">
+      <head>
+        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
+        <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
+      </head>
       <body className={`${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
         <script
           type="application/ld+json"
