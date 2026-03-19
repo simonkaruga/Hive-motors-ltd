@@ -11,6 +11,9 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   compress: true,
+  experimental: {
+    swcTraceProfiling: false,
+  },
   turbopack: {
     root: process.cwd(),
   },

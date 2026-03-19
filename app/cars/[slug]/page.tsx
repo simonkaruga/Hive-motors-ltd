@@ -104,7 +104,7 @@ export default async function CarDetailPage({ params }: Props) {
             </div>
           </div>
           <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 px-4 py-3 flex gap-3">
-            <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 bg-[#1A8A4A] text-white py-3 rounded-xl font-bold text-sm">
+            <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 bg-[#166638] text-white py-3 rounded-xl font-bold text-sm">
               <MessageCircle size={18} />WhatsApp
             </a>
             <a href={PHONE_HREF} className="flex-1 flex items-center justify-center gap-2 border-2 border-navy-brand text-navy-brand py-3 rounded-xl font-bold text-sm">
@@ -149,7 +149,7 @@ export default async function CarDetailPage({ params }: Props) {
                       ))}
                     </div>
                     <div className="space-y-3">
-                      <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 w-full bg-[#1A8A4A] text-white py-3.5 rounded-xl font-bold hover:bg-[#157a3e] transition-colors">
+                      <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 w-full bg-[#166638] text-white py-3.5 rounded-xl font-bold hover:bg-[#125530] transition-colors">
                         <MessageCircle size={20} />Enquire via WhatsApp
                       </a>
                       <a href={PHONE_HREF} className="flex items-center justify-center gap-2 w-full border-2 border-navy-brand text-navy-brand py-3.5 rounded-xl font-bold hover:bg-navy-brand hover:text-white transition-colors">
@@ -257,7 +257,7 @@ export default async function CarDetailPage({ params }: Props) {
             href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center gap-2 bg-[#1A8A4A] text-white py-3 rounded-xl font-bold text-sm"
+            className="flex-1 flex items-center justify-center gap-2 bg-[#166638] text-white py-3 rounded-xl font-bold text-sm"
           >
             <MessageCircle size={18} />
             WhatsApp
@@ -358,7 +358,7 @@ export default async function CarDetailPage({ params }: Props) {
                       href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 w-full bg-[#1A8A4A] text-white py-3.5 rounded-xl font-bold hover:bg-[#157a3e] transition-colors"
+                      className="flex items-center justify-center gap-2 w-full bg-[#166638] text-white py-3.5 rounded-xl font-bold hover:bg-[#125530] transition-colors"
                     >
                       <MessageCircle size={20} />
                       Enquire via WhatsApp

@@ -12,7 +12,7 @@ export default function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Contact us on WhatsApp"
-      className="fixed bottom-6 right-6 bg-[#1A8A4A] text-white p-4 rounded-full shadow-lg hover:bg-[#157a3e] hover:scale-110 active:scale-95 transition-all z-50 flex items-center justify-center animate-wa-pulse"
+      className="fixed bottom-6 right-6 bg-[#166638] text-white p-4 rounded-full shadow-lg hover:bg-[#125530] hover:scale-110 active:scale-95 transition-all z-50 flex items-center justify-center animate-wa-pulse"
     >
       <MessageCircle size={26} />
     </a>

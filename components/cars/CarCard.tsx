@@ -29,7 +29,7 @@ export default function CarCard({ car, priority = false }: CarCardProps) {
   const message = `Hi, I'm interested in the ${car.title}. Please share more details.`;
 
   const imageUrl = car.images?.[0]
-    ? urlFor(car.images[0]).width(800).height(533).auto('format').quality(75).url()
+    ? urlFor(car.images[0]).width(800).height(533).auto('format').quality(60).url()
     : null;
 
   const statusConfig = {
@@ -133,7 +133,7 @@ export default function CarCard({ car, priority = false }: CarCardProps) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="p-2 bg-[#1A8A4A] text-white rounded-lg hover:bg-[#157a3e] hover:scale-105 active:scale-95 transition-all"
+              className="p-2 bg-[#166638] text-white rounded-lg hover:bg-[#125530] hover:scale-105 active:scale-95 transition-all"
               aria-label={`Enquire about ${car.title} via WhatsApp`}
             >
               <MessageCircle size={16} />
