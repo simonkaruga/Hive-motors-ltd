@@ -139,7 +139,7 @@ export default function CarCard({ car, priority = false }: CarCardProps) {
               onClick={(e) => e.stopPropagation()}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="p-2 bg-[#25D366] text-white rounded-lg hover:bg-[#1ebe5b] transition-colors"
+              className="p-2 bg-[#1A8A4A] text-white rounded-lg hover:bg-[#157a3e] transition-colors"
               aria-label={`Enquire about ${car.title} via WhatsApp`}
             >
               <MessageCircle size={16} />

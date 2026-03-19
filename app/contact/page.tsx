@@ -96,7 +96,7 @@ export default function ContactPage() {
             href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi%20Hive%20Motors!%20I'm%20looking%20for%20a%20car.`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-between bg-[#25D366] text-white rounded-2xl p-6 mb-12 hover:bg-[#1ebe5b] transition-colors group shadow-lg shadow-green-400/20"
+            className="flex items-center justify-between bg-[#1A8A4A] text-white rounded-2xl p-6 mb-12 hover:bg-[#157a3e] transition-colors group shadow-lg shadow-green-400/20"
           >
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center">

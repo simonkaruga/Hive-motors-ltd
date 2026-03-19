@@ -13,7 +13,7 @@ export default function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Contact us on WhatsApp"
-      className="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:bg-[#1ebe5b] transition-colors z-50 flex items-center justify-center"
+      className="fixed bottom-6 right-6 bg-[#1A8A4A] text-white p-4 rounded-full shadow-lg hover:bg-[#157a3e] transition-colors z-50 flex items-center justify-center"
       animate={{
         boxShadow: [
           '0 0 0 0 rgba(37, 211, 102, 0.4)',

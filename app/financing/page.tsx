@@ -209,7 +209,7 @@ export default function FinancingPage() {
                 href={`https://wa.me/254722800436?text=${encodeURIComponent(whatsappMessage)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full bg-[#25D366] text-white py-4 rounded-xl font-bold hover:bg-[#1ebe5b] transition-colors"
+                className="flex items-center justify-center gap-2 w-full bg-[#1A8A4A] text-white py-4 rounded-xl font-bold hover:bg-[#157a3e] transition-colors"
               >
                 <MessageCircle size={20} />
                 Get a Personalised Quote
