@@ -15,7 +15,7 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-const BASE_URL = 'https://hivemotorsltd.com';
+const BASE_URL = 'https://www.hivemotorsltd.com';
 
 // Static car data for non-Sanity slugs
 const STATIC_CAR_DATA: Record<string, { title: string; year: number; price: number; mileage: number; transmission: string; fuelType: string; make: string; images: string[] }> = {

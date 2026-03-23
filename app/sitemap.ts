@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { client } from '@/lib/sanity/client';
 
-const BASE_URL = 'https://hivemotorsltd.com';
+const BASE_URL = 'https://www.hivemotorsltd.com';
 
 const slugsQuery = `{
   "cars": *[_type == "car"] { "slug": slug.current, _updatedAt },

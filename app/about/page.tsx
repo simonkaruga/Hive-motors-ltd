@@ -7,11 +7,11 @@ export const metadata: Metadata = {
   title: 'About Hive Motors Ltd | Quality Car Dealers Nairobi',
   description: "Kenya's trusted car dealership based in Ridgeways, Nairobi. 10+ years experience, 500+ cars sold, sourced globally at honest prices.",
   keywords: ['about Hive Motors', 'car dealer Nairobi', 'car importer Kenya', 'Ridgeways car dealer'],
-  alternates: { canonical: 'https://hivemotorsltd.com/about' },
+  alternates: { canonical: 'https://www.hivemotorsltd.com/about' },
   openGraph: {
     title: 'About Hive Motors Ltd | Nairobi Car Dealer',
     description: "Kenya's trusted car dealership. 10+ years, 500+ cars sold.",
-    url: 'https://hivemotorsltd.com/about',
+    url: 'https://www.hivemotorsltd.com/about',
   },
   twitter: { card: 'summary_large_image', title: 'About Hive Motors Ltd | Nairobi, Kenya' },
 };

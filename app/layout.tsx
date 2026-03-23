@@ -24,7 +24,7 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 });
 
-const BASE_URL = 'https://hivemotorsltd.com';
+const BASE_URL = 'https://www.hivemotorsltd.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),

@@ -32,7 +32,7 @@ export default async function Image({ params }: Props) {
   const transmission = staticData?.transmission ?? sanityData?.transmission ?? null;
   const fuelType     = staticData?.fuelType     ?? sanityData?.fuelType     ?? null;
   const carImageUrl  = staticData?.image
-    ? `https://hivemotorsltd.com${staticData.image}`
+    ? `https://www.hivemotorsltd.com${staticData.image}`
     : sanityData?.images?.[0]?.asset?.url ?? null;
 
   return new ImageResponse(

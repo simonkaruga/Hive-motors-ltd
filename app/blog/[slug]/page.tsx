@@ -21,7 +21,7 @@ export async function generateStaticParams() {
   return slugs.map(({ slug }) => ({ slug }));
 }
 
-const BASE_URL = 'https://hivemotorsltd.com';
+const BASE_URL = 'https://www.hivemotorsltd.com';
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -124,8 +124,8 @@ export default async function BlogPostPage({ params }: Props) {
     datePublished: post.publishedAt,
     dateModified: post.publishedAt,
     author: { '@type': 'Person', name: post.authorName || 'Hive Motors' },
-    publisher: { '@type': 'Organization', name: 'Hive Motors Ltd', url: 'https://hivemotorsltd.com' },
-    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://hivemotorsltd.com/blog/${slug}` },
+    publisher: { '@type': 'Organization', name: 'Hive Motors Ltd', url: 'https://www.hivemotorsltd.com' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://www.hivemotorsltd.com/blog/${slug}` },
     keywords: post.tags?.join(', '),
   };
 
