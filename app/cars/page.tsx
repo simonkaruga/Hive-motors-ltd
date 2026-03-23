@@ -78,9 +78,9 @@ function CarsContent() {
                 {' '}<span className="text-gray-300">›</span>{' '}
                 <span className="text-red-brand">Inventory</span>
               </p>
-              <h1 className="text-4xl md:text-5xl font-display text-navy-brand">Our Inventory</h1>
+              <h1 className="text-4xl md:text-5xl font-display text-navy-brand">Used Cars for Sale in Nairobi</h1>
             </div>
-            <p className="text-mid-grey">Browse our collection of premium imported cars</p>
+            <p className="text-mid-grey">Kenya&apos;s trusted car dealer — imported &amp; locally sourced vehicles at honest prices</p>
           </div>
         </div>
       </section>

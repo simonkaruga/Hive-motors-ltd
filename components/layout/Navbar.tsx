@@ -11,6 +11,7 @@ const links = [
   { href: '/cars', label: 'Inventory' },
   { href: '/on-transit', label: 'On Transit' },
   { href: '/financing', label: 'Financing' },
+  { href: '/import-guide', label: 'Import Guide' },
   { href: '/blog', label: 'Blog' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
