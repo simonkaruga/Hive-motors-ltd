@@ -158,7 +158,8 @@ export default {
       name: 'isFeatured',
       title: 'Featured on Homepage',
       type: 'boolean',
-      initialValue: false,
+      description: 'New cars are featured by default. Uncheck to hide from homepage.',
+      initialValue: true,
     },
     {
       name: 'expectedArrival',
