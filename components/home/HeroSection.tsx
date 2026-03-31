@@ -73,7 +73,7 @@ export default function HeroSection() {
           muted
           loop
           playsInline
-          preload="none"
+          preload="auto"
           className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
           aria-hidden="true"
           onError={(e) => { (e.currentTarget as HTMLVideoElement).style.display = 'none'; }}

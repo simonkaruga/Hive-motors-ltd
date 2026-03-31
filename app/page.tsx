@@ -1,3 +1,5 @@
+export const revalidate = 300; // re-fetch from Sanity every 5 minutes
+
 import Link from 'next/link';
 import { Ship, Shield, Award, Zap, Users, Search, Anchor, Truck, Star, ArrowRight, BookOpen } from 'lucide-react';
 import HeroSection from '@/components/home/HeroSection';
