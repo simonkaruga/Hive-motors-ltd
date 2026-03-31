@@ -4,6 +4,9 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 
+// Grey-soft (#F7F8FA) 1×1 SVG — shows while gallery photos load
+const BLUR_PLACEHOLDER = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB2aWV3Qm94PSIwIDAgMSAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNGN0Y4RkEiLz48L3N2Zz4=';
+
 interface GalleryImage {
   url: string;
   alt?: string;
@@ -41,8 +44,10 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
             alt={images[selectedIndex].alt || title}
             fill
             sizes="(max-width: 1024px) 100vw, 66vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
             priority
+            placeholder="blur"
+            blurDataURL={BLUR_PLACEHOLDER}
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-navy-brand/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
           <div className="absolute bottom-4 right-4 bg-white/90 text-navy-brand p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
@@ -63,7 +68,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
                   selectedIndex === index ? 'border-red-brand shadow-md' : 'border-transparent hover:border-gray-300'
                 }`}
               >
-                <Image src={image.url} alt={image.alt || `${title} photo ${index + 1}`} fill sizes="25vw" className="object-cover" />
+                <Image src={image.url} alt={image.alt || `${title} photo ${index + 1}`} fill sizes="25vw" placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} className="object-cover" />
               </div>
             ))}
           </div>

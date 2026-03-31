@@ -108,10 +108,12 @@ export default function NotifyPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-navy-brand mb-1.5">Full Name *</label>
+                <label htmlFor="notify-name" className="block text-sm font-medium text-navy-brand mb-1.5">Full Name *</label>
                 <input
+                  id="notify-name"
                   type="text"
                   required
+                  autoComplete="name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl text-charcoal focus:border-red-brand focus:ring-1 focus:ring-red-brand outline-none"
@@ -119,10 +121,12 @@ export default function NotifyPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-navy-brand mb-1.5">Phone Number *</label>
+                <label htmlFor="notify-phone" className="block text-sm font-medium text-navy-brand mb-1.5">Phone Number *</label>
                 <input
+                  id="notify-phone"
                   type="tel"
                   required
+                  autoComplete="tel"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl text-charcoal focus:border-red-brand focus:ring-1 focus:ring-red-brand outline-none"
@@ -132,10 +136,12 @@ export default function NotifyPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-navy-brand mb-1.5">Email Address *</label>
+              <label htmlFor="notify-email" className="block text-sm font-medium text-navy-brand mb-1.5">Email Address *</label>
               <input
+                id="notify-email"
                 type="email"
                 required
+                autoComplete="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="w-full px-4 py-3 border border-gray-200 rounded-xl text-charcoal focus:border-red-brand focus:ring-1 focus:ring-red-brand outline-none"
@@ -148,8 +154,9 @@ export default function NotifyPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label className="block text-sm font-medium text-navy-brand mb-1.5">Preferred Make</label>
+                  <label htmlFor="notify-make" className="block text-sm font-medium text-navy-brand mb-1.5">Preferred Make</label>
                   <select
+                    id="notify-make"
                     value={formData.make}
                     onChange={(e) => setFormData({ ...formData, make: e.target.value })}
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl text-charcoal focus:border-red-brand focus:ring-1 focus:ring-red-brand outline-none bg-white"
@@ -160,11 +167,12 @@ export default function NotifyPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-navy-brand mb-1.5">Body Type</label>
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap gap-1.5" role="group" aria-label="Select body type">
                     {BODY_TYPES.map((type) => (
                       <button
                         type="button"
                         key={type}
+                        aria-pressed={formData.bodyType === type}
                         onClick={() => setFormData({ ...formData, bodyType: formData.bodyType === type ? '' : type })}
                         className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
                           formData.bodyType === type
@@ -180,8 +188,9 @@ export default function NotifyPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-navy-brand mb-1.5">Budget Range *</label>
+                <label htmlFor="notify-budget" className="block text-sm font-medium text-navy-brand mb-1.5">Budget Range *</label>
                 <select
+                  id="notify-budget"
                   required
                   value={formData.budget}
                   onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
@@ -194,8 +203,9 @@ export default function NotifyPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-navy-brand mb-1.5">Additional Notes</label>
+              <label htmlFor="notify-notes" className="block text-sm font-medium text-navy-brand mb-1.5">Additional Notes</label>
               <textarea
+                id="notify-notes"
                 rows={4}
                 value={formData.notes}
                 onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
@@ -207,6 +217,7 @@ export default function NotifyPage() {
             <button
               type="submit"
               disabled={loading}
+              aria-busy={loading}
               className="w-full flex items-center justify-center gap-2 bg-red-brand text-white py-4 rounded-xl font-bold text-lg hover:bg-red-dark transition-colors disabled:opacity-70"
             >
               <Bell size={20} />

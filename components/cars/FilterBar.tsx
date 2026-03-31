@@ -107,7 +107,7 @@ export default function FilterBar({ onFilterChange, totalCount, filteredCount, i
 
         <div className="flex items-center gap-3 ml-auto">
           {totalCount !== undefined && (
-            <p className="text-sm text-mid-grey hidden sm:block">
+            <p className="text-sm text-mid-grey hidden sm:block" aria-live="polite" aria-atomic="true">
               <span className="font-semibold text-navy-brand">{filteredCount ?? totalCount}</span>
               {' '}of{' '}
               <span className="font-semibold text-navy-brand">{totalCount}</span> vehicles
@@ -129,7 +129,7 @@ export default function FilterBar({ onFilterChange, totalCount, filteredCount, i
       </div>
 
       {totalCount !== undefined && (
-        <p className="text-sm text-mid-grey mb-3 sm:hidden">
+        <p className="text-sm text-mid-grey mb-3 sm:hidden" aria-live="polite" aria-atomic="true">
           <span className="font-semibold text-navy-brand">{filteredCount ?? totalCount}</span> of{' '}
           <span className="font-semibold text-navy-brand">{totalCount}</span> vehicles
         </p>

@@ -133,12 +133,14 @@ export default function ContactPage() {
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4" aria-describedby={error ? 'contact-error' : undefined}>
                   <div>
-                    <label className="block text-sm font-medium text-navy-brand mb-1.5">Full Name *</label>
+                    <label htmlFor="contact-name" className="block text-sm font-medium text-navy-brand mb-1.5">Full Name *</label>
                     <input
+                      id="contact-name"
                       type="text"
                       required
+                      autoComplete="name"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       className="w-full px-4 py-3 border border-gray-200 rounded-xl text-charcoal focus:border-red-brand focus:ring-1 focus:ring-red-brand outline-none transition-colors bg-white"
@@ -147,10 +149,12 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-navy-brand mb-1.5">Phone Number *</label>
+                    <label htmlFor="contact-phone" className="block text-sm font-medium text-navy-brand mb-1.5">Phone Number *</label>
                     <input
+                      id="contact-phone"
                       type="tel"
                       required
+                      autoComplete="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       className="w-full px-4 py-3 border border-gray-200 rounded-xl text-charcoal focus:border-red-brand focus:ring-1 focus:ring-red-brand outline-none transition-colors bg-white"
@@ -159,10 +163,12 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-navy-brand mb-1.5">Email Address *</label>
+                    <label htmlFor="contact-email" className="block text-sm font-medium text-navy-brand mb-1.5">Email Address *</label>
                     <input
+                      id="contact-email"
                       type="email"
                       required
+                      autoComplete="email"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       className="w-full px-4 py-3 border border-gray-200 rounded-xl text-charcoal focus:border-red-brand focus:ring-1 focus:ring-red-brand outline-none transition-colors bg-white"
@@ -171,8 +177,9 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-navy-brand mb-1.5">Message *</label>
+                    <label htmlFor="contact-message" className="block text-sm font-medium text-navy-brand mb-1.5">Message *</label>
                     <textarea
+                      id="contact-message"
                       required
                       rows={5}
                       value={formData.message}
@@ -185,13 +192,14 @@ export default function ContactPage() {
                   <button
                     type="submit"
                     disabled={loading}
+                    aria-busy={loading}
                     className="w-full flex items-center justify-center gap-2 bg-red-brand text-white py-4 rounded-xl font-bold text-lg hover:bg-red-dark transition-colors disabled:opacity-70"
                   >
                     <Send size={20} />
                     {loading ? 'Sending...' : 'Send Message'}
                   </button>
                   {error && (
-                    <p className="text-red-brand text-sm text-center">{error}</p>
+                    <p id="contact-error" role="alert" className="text-red-brand text-sm text-center">{error}</p>
                   )}
                 </form>
               )}
