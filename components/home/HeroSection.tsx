@@ -62,7 +62,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative pt-32 pb-20 overflow-hidden min-h-[620px]" suppressHydrationWarning>
+    <section className="relative pt-32 pb-20 overflow-hidden min-h-screen" suppressHydrationWarning>
       {/* Navy fallback shown until video loads */}
       <div className="absolute inset-0 bg-navy-brand z-0" />
 
