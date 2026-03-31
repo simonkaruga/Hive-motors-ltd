@@ -82,8 +82,8 @@ export default function HeroSection() {
         </video>
       </div>
 
-      {/* Dark gradient overlay — always visible over video */}
-      <div className="absolute inset-0 bg-gradient-to-b from-navy-brand/75 via-navy-brand/55 to-navy-brand/80 z-0" />
+      {/* Dark gradient overlay — light at top/bottom for text legibility */}
+      <div className="absolute inset-0 bg-gradient-to-b from-navy-brand/40 via-transparent to-navy-brand/50 z-0" />
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
