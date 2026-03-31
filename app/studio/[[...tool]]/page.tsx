@@ -5,11 +5,11 @@
  */
 'use client';
 
-import dynamic from 'next/dynamic';
+import dynamicImport from 'next/dynamic';
 import { Component, ReactNode } from 'react';
 import config from '@/sanity.config';
 
-export const dynamic_export = 'force-dynamic';
+export const dynamic = 'force-dynamic';
 
 class StudioErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
   state = { error: null };
@@ -108,7 +108,7 @@ function StudioLoadingScreen() {
   );
 }
 
-const NextStudio = dynamic(
+const NextStudio = dynamicImport(
   () => import('next-sanity/studio').then(mod => mod.NextStudio),
   { ssr: false, loading: () => <StudioLoadingScreen /> }
 );

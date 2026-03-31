@@ -24,10 +24,20 @@ export default function HeroSection() {
 
   // Count-up animation on mount
   useEffect(() => {
-    // Only load video on fast connections
-    const nav = (navigator as Navigator & { connection?: { effectiveType?: string; saveData?: boolean } }).connection;
-    const isFast = !nav || (!nav.saveData && nav.effectiveType !== 'slow-2g' && nav.effectiveType !== '2g' && nav.effectiveType !== '3g');
-    if (isFast) setShowVideo(true);
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Only load video on fast connections and when motion is allowed
+    if (!prefersReduced) {
+      const nav = (navigator as Navigator & { connection?: { effectiveType?: string; saveData?: boolean } }).connection;
+      const isFast = !nav || (!nav.saveData && nav.effectiveType !== 'slow-2g' && nav.effectiveType !== '2g' && nav.effectiveType !== '3g');
+      if (isFast) setShowVideo(true);
+    }
+
+    // Skip count-up animation when motion is reduced — just show final values
+    if (prefersReduced) {
+      setCounts(STATS.map(s => s.end));
+      return;
+    }
 
     const duration = 2500;
     const fps = 60;

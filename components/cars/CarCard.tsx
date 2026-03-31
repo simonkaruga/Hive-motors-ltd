@@ -23,6 +23,9 @@ interface CarCardProps {
   priority?: boolean;
 }
 
+// Grey-soft (#F7F8FA) 1×1 SVG — shows while the car photo loads
+const BLUR_PLACEHOLDER = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB2aWV3Qm94PSIwIDAgMSAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNGN0Y4RkEiLz48L3N2Zz4=';
+
 export default function CarCard({ car, priority = false }: CarCardProps) {
   const message = `Hi, I'm interested in the ${car.title}. Please share more details.`;
 
@@ -50,6 +53,8 @@ export default function CarCard({ car, priority = false }: CarCardProps) {
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             priority={priority}
+            placeholder="blur"
+            blurDataURL={BLUR_PLACEHOLDER}
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Bell } from 'lucide-react';
@@ -9,6 +9,11 @@ import FilterBar, { FilterState } from '@/components/cars/FilterBar';
 import { client, urlFor } from '@/lib/sanity/client';
 import { carsQuery } from '@/lib/sanity/queries';
 import { Car } from '@/lib/types';
+
+const EMPTY_FILTERS: FilterState = {
+  make: '', bodyType: '', condition: '', transmission: '',
+  fuelType: '', minYear: '', maxYear: '', minPrice: '', maxPrice: '', sortBy: '',
+};
 
 function sortCars(cars: Car[], sortBy: string): Car[] {
   const sorted = [...cars];
@@ -20,6 +25,20 @@ function sortCars(cars: Car[], sortBy: string): Car[] {
     case 'mileage-asc':  return sorted.sort((a, b) => a.mileage - b.mileage);
     default:             return sorted;
   }
+}
+
+function applyFilters(cars: Car[], filters: FilterState): Car[] {
+  let result = [...cars];
+  if (filters.make)         result = result.filter(c => c.make?.toLowerCase() === filters.make.toLowerCase());
+  if (filters.bodyType)     result = result.filter(c => c.bodyType === filters.bodyType);
+  if (filters.condition)    result = result.filter(c => c.condition === filters.condition);
+  if (filters.transmission) result = result.filter(c => c.transmission === filters.transmission);
+  if (filters.fuelType)     result = result.filter(c => c.fuelType === filters.fuelType);
+  if (filters.minYear)      result = result.filter(c => c.year >= parseInt(filters.minYear));
+  if (filters.maxYear)      result = result.filter(c => c.year <= parseInt(filters.maxYear));
+  if (filters.minPrice)     result = result.filter(c => c.price >= parseInt(filters.minPrice));
+  if (filters.maxPrice)     result = result.filter(c => c.price <= parseInt(filters.maxPrice));
+  return sortCars(result, filters.sortBy);
 }
 
 function CarsContent() {
@@ -35,12 +54,17 @@ function CarsContent() {
     bodyType: searchParams.get('bodyType') || '',
   };
 
+  // Track active filters in a ref so the fetch callback can apply them
+  // even if FilterBar fires onFilterChange before cars have loaded
+  const activeFiltersRef = useRef<FilterState>({ ...EMPTY_FILTERS, ...initialFilters });
+
   useEffect(() => {
     async function fetchCars() {
       try {
         const data = await client.fetch(carsQuery);
         setCars(data);
-        setFilteredCars(data);
+        // Apply whatever filters are currently active (from URL params or user interaction)
+        setFilteredCars(applyFilters(data, activeFiltersRef.current));
       } catch (err) {
         console.error('Error fetching cars:', err);
         setError(true);
@@ -52,18 +76,8 @@ function CarsContent() {
   }, []);
 
   const handleFilterChange = (filters: FilterState) => {
-    let result = [...cars];
-    if (filters.make)         result = result.filter(c => c.make?.toLowerCase() === filters.make.toLowerCase());
-    if (filters.bodyType)     result = result.filter(c => c.bodyType === filters.bodyType);
-    if (filters.condition)    result = result.filter(c => c.condition === filters.condition);
-    if (filters.transmission) result = result.filter(c => c.transmission === filters.transmission);
-    if (filters.fuelType)     result = result.filter(c => c.fuelType === filters.fuelType);
-    if (filters.minYear)      result = result.filter(c => c.year >= parseInt(filters.minYear));
-    if (filters.maxYear)      result = result.filter(c => c.year <= parseInt(filters.maxYear));
-    if (filters.minPrice)     result = result.filter(c => c.price >= parseInt(filters.minPrice));
-    if (filters.maxPrice)     result = result.filter(c => c.price <= parseInt(filters.maxPrice));
-    result = sortCars(result, filters.sortBy);
-    setFilteredCars(result);
+    activeFiltersRef.current = filters;
+    setFilteredCars(applyFilters(cars, filters));
   };
 
   return (
