@@ -1,5 +1,3 @@
-import { mediaAssetSource } from 'sanity-plugin-media';
-
 export default {
   name: 'car',
   title: 'Cars',
@@ -53,7 +51,6 @@ export default {
         type: 'image',
         options: {
           hotspot: true,
-          sources: [mediaAssetSource],
         },
         fields: [
           {

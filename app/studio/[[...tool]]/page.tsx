@@ -6,9 +6,32 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { Component, ReactNode } from 'react';
 import config from '@/sanity.config';
 
 export const dynamic_export = 'force-dynamic';
+
+class StudioErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
+  state = { error: null };
+  static getDerivedStateFromError(error: Error) { return { error }; }
+  render() {
+    if (this.state.error) {
+      return (
+        <div style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', minHeight:'100vh', background:'#0A3E66', fontFamily:'Inter,sans-serif', padding:'24px' }}>
+          <div style={{ background:'#DA1D17', borderRadius:'12px', padding:'16px 24px', marginBottom:'24px' }}>
+            <span style={{ color:'#fff', fontWeight:900, fontSize:'20px' }}>HIVE MOTORS — Studio Error</span>
+          </div>
+          <div style={{ background:'rgba(255,255,255,0.08)', borderRadius:'12px', padding:'24px', maxWidth:'600px', width:'100%' }}>
+            <p style={{ color:'#fff', fontWeight:700, marginBottom:'8px' }}>The studio failed to load:</p>
+            <pre style={{ color:'#ff8080', fontSize:'13px', whiteSpace:'pre-wrap', wordBreak:'break-word' }}>{(this.state.error as Error).message}</pre>
+          </div>
+          <p style={{ color:'rgba(255,255,255,0.5)', marginTop:'24px', fontSize:'13px' }}>Check your schema files in <code style={{color:'#DA1D17'}}>sanity/schemas/</code> for syntax errors, then refresh.</p>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 function StudioLoadingScreen() {
   return (
@@ -91,5 +114,9 @@ const NextStudio = dynamic(
 );
 
 export default function StudioPage() {
-  return <NextStudio config={config} />;
+  return (
+    <StudioErrorBoundary>
+      <NextStudio config={config} />
+    </StudioErrorBoundary>
+  );
 }

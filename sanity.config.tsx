@@ -35,7 +35,7 @@ export default defineConfig({
   title: 'Hive Motors Admin',
   basePath: '/studio',
 
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'xo4wf08s',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
 
   studio: {
