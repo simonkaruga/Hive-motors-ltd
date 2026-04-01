@@ -1,7 +1,7 @@
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { media } from 'sanity-plugin-media';
-import { CarIcon, StarIcon, DocumentTextIcon, CogIcon } from '@sanity/icons';
+import { TagIcon, StarIcon, DocumentTextIcon, CogIcon } from '@sanity/icons';
 import { schemaTypes } from './sanity/schemas';
 
 function HiveMotorsLogo() {
@@ -48,18 +48,18 @@ export default defineConfig({
           .items([
             S.listItem()
               .title('Cars for Sale')
-              .icon(CarIcon)
+              .icon(TagIcon)
               .child(
                 S.list()
                   .title('Cars for Sale')
                   .items([
                     S.listItem()
                       .title('All Cars')
-                      .icon(CarIcon)
+                      .icon(TagIcon)
                       .child(S.documentTypeList('car').title('All Cars')),
                     S.listItem()
                       .title('Available')
-                      .icon(CarIcon)
+                      .icon(TagIcon)
                       .child(
                         S.documentTypeList('car')
                           .title('Available Cars')
@@ -67,7 +67,7 @@ export default defineConfig({
                       ),
                     S.listItem()
                       .title('On Transit')
-                      .icon(CarIcon)
+                      .icon(TagIcon)
                       .child(
                         S.documentTypeList('car')
                           .title('On Transit')
@@ -75,7 +75,7 @@ export default defineConfig({
                       ),
                     S.listItem()
                       .title('Sold')
-                      .icon(CarIcon)
+                      .icon(TagIcon)
                       .child(
                         S.documentTypeList('car')
                           .title('Sold Cars')
