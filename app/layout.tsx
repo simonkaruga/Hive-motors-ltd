@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import WhatsAppButton from "@/components/shared/WhatsAppButton";
 import GoogleAnalytics from "@/components/shared/GoogleAnalytics";
 
 const inter = Inter({
@@ -102,19 +99,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
         />
         <GoogleAnalytics />
-        {/* Skip-to-content link — visually hidden until focused by keyboard users */}
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-red-brand focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-semibold focus:text-sm"
-        >
-          Skip to main content
-        </a>
-        <Navbar />
-        <div id="main-content">
-          {children}
-        </div>
-        <Footer />
-        <WhatsAppButton />
+        {children}
       </body>
     </html>
   );

@@ -1,8 +1,3 @@
-/**
- * Hive Motors — Sanity Studio
- * Admin panel available at /studio
- * Protected: only accessible by authorized Sanity users.
- */
 'use client';
 
 import dynamicImport from 'next/dynamic';
@@ -17,15 +12,22 @@ class StudioErrorBoundary extends Component<{ children: ReactNode }, { error: Er
   render() {
     if (this.state.error) {
       return (
-        <div style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', minHeight:'100vh', background:'#0A3E66', fontFamily:'Inter,sans-serif', padding:'24px' }}>
-          <div style={{ background:'#DA1D17', borderRadius:'12px', padding:'16px 24px', marginBottom:'24px' }}>
-            <span style={{ color:'#fff', fontWeight:900, fontSize:'20px' }}>HIVE MOTORS — Studio Error</span>
+        <div style={{
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+          height: '100vh', background: '#0A3E66', fontFamily: 'Inter, system-ui, sans-serif', padding: '24px',
+        }}>
+          <div style={{ background: '#DA1D17', borderRadius: '10px', padding: '14px 24px', marginBottom: '20px' }}>
+            <span style={{ color: '#fff', fontWeight: 900, fontSize: '18px' }}>HIVE MOTORS — Studio Error</span>
           </div>
-          <div style={{ background:'rgba(255,255,255,0.08)', borderRadius:'12px', padding:'24px', maxWidth:'600px', width:'100%' }}>
-            <p style={{ color:'#fff', fontWeight:700, marginBottom:'8px' }}>The studio failed to load:</p>
-            <pre style={{ color:'#ff8080', fontSize:'13px', whiteSpace:'pre-wrap', wordBreak:'break-word' }}>{(this.state.error as Error).message}</pre>
+          <div style={{ background: 'rgba(255,255,255,0.08)', borderRadius: '10px', padding: '24px', maxWidth: '560px', width: '100%' }}>
+            <p style={{ color: '#fff', fontWeight: 700, marginBottom: '8px' }}>The studio failed to load:</p>
+            <pre style={{ color: '#ff8080', fontSize: '13px', whiteSpace: 'pre-wrap', wordBreak: 'break-word', margin: 0 }}>
+              {(this.state.error as Error).message}
+            </pre>
           </div>
-          <p style={{ color:'rgba(255,255,255,0.5)', marginTop:'24px', fontSize:'13px' }}>Check your schema files in <code style={{color:'#DA1D17'}}>sanity/schemas/</code> for syntax errors, then refresh.</p>
+          <p style={{ color: 'rgba(255,255,255,0.45)', marginTop: '20px', fontSize: '12px' }}>
+            Check <code style={{ color: '#DA1D17' }}>sanity/schemas/</code> for errors, then refresh.
+          </p>
         </div>
       );
     }
@@ -36,74 +38,32 @@ class StudioErrorBoundary extends Component<{ children: ReactNode }, { error: Er
 function StudioLoadingScreen() {
   return (
     <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #0A3E66 0%, #062A47 100%)',
+      display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+      height: '100vh', background: 'linear-gradient(135deg, #0A3E66 0%, #062A47 100%)',
       fontFamily: 'Inter, system-ui, sans-serif',
     }}>
-      {/* Logo mark */}
       <div style={{
-        width: '72px',
-        height: '72px',
-        background: '#DA1D17',
-        borderRadius: '18px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: '20px',
-        boxShadow: '0 8px 32px rgba(218, 29, 23, 0.4)',
+        width: '64px', height: '64px', background: '#DA1D17', borderRadius: '16px',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '18px',
+        boxShadow: '0 8px 28px rgba(218,29,23,0.4)',
       }}>
-        <span style={{ color: '#fff', fontWeight: 900, fontSize: '36px', lineHeight: 1 }}>H</span>
+        <span style={{ color: '#fff', fontWeight: 900, fontSize: '32px', lineHeight: 1 }}>H</span>
       </div>
-
-      {/* Brand name */}
-      <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-        <div style={{
-          color: '#ffffff',
-          fontWeight: 800,
-          fontSize: '24px',
-          letterSpacing: '0.12em',
-          textTransform: 'uppercase',
-        }}>
+      <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+        <div style={{ color: '#fff', fontWeight: 800, fontSize: '22px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
           HIVE <span style={{ color: '#DA1D17' }}>MOTORS</span>
         </div>
-        <div style={{
-          color: 'rgba(255,255,255,0.45)',
-          fontSize: '11px',
-          letterSpacing: '0.2em',
-          textTransform: 'uppercase',
-          marginTop: '4px',
-        }}>
-          Admin Panel
+        <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', marginTop: '4px' }}>
+          Loading Admin Panel
         </div>
       </div>
-
-      {/* Loading bar */}
-      <div style={{
-        width: '160px',
-        height: '3px',
-        background: 'rgba(255,255,255,0.12)',
-        borderRadius: '999px',
-        overflow: 'hidden',
-      }}>
+      <div style={{ width: '140px', height: '3px', background: 'rgba(255,255,255,0.1)', borderRadius: '999px', overflow: 'hidden' }}>
         <div style={{
-          height: '100%',
-          background: 'linear-gradient(90deg, #DA1D17, #ff4a44)',
-          borderRadius: '999px',
-          animation: 'loadbar 1.4s ease-in-out infinite',
+          height: '100%', background: 'linear-gradient(90deg, #DA1D17, #ff4a44)',
+          borderRadius: '999px', animation: 'loadbar 1.4s ease-in-out infinite',
         }} />
       </div>
-
-      <style>{`
-        @keyframes loadbar {
-          0%   { width: 0%; margin-left: 0; }
-          50%  { width: 70%; margin-left: 15%; }
-          100% { width: 0%; margin-left: 100%; }
-        }
-      `}</style>
+      <style>{`@keyframes loadbar{0%{width:0%;margin-left:0}50%{width:70%;margin-left:15%}100%{width:0%;margin-left:100%}}`}</style>
     </div>
   );
 }
@@ -115,8 +75,10 @@ const NextStudio = dynamicImport(
 
 export default function StudioPage() {
   return (
-    <StudioErrorBoundary>
-      <NextStudio config={config} />
-    </StudioErrorBoundary>
+    <div style={{ height: '100vh', overflow: 'hidden' }}>
+      <StudioErrorBoundary>
+        <NextStudio config={config} />
+      </StudioErrorBoundary>
+    </div>
   );
 }
