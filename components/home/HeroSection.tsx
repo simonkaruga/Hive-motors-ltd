@@ -56,7 +56,7 @@ export default function HeroSection() {
     <section className="relative pt-32 pb-20 overflow-hidden min-h-screen">
       {/* Hero background image */}
       <Image
-        src="/hero-bg.png"
+        src="/hero-bg.webp"
         alt="Hive Motors — Premium Imported Cars"
         fill
         priority

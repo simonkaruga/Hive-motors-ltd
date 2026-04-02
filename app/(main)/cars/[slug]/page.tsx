@@ -6,6 +6,8 @@ import { MessageCircle, Phone, Calendar, Gauge, Fuel, Settings, Palette, MapPin,
 import { client, urlFor } from '@/lib/sanity/client';
 import { carBySlugQuery } from '@/lib/sanity/queries';
 import { WHATSAPP_NUMBER, PHONE_NUMBER, PHONE_HREF } from '@/lib/constants';
+import { STATIC_CAR_DETAIL } from '@/lib/staticCars';
+import WhatsAppIcon from '@/components/shared/WhatsAppIcon';
 import ImageGallery from '@/components/cars/ImageGallery';
 import { formatPrice, formatMileage } from '@/lib/utils';
 
@@ -17,28 +19,18 @@ interface Props {
 
 const BASE_URL = 'https://www.hivemotorsltd.com';
 
-// Static car data for non-Sanity slugs
-const STATIC_CAR_DATA: Record<string, { title: string; year: number; price: number; mileage: number; transmission: string; fuelType: string; make: string; images: string[] }> = {
-  'prado-static': { title: 'Toyota Land Cruiser Prado TX-L', year: 2018, price: 7250000, mileage: 62000, transmission: 'Automatic', fuelType: 'Diesel', make: 'Toyota', images: ['/cars/prado/prado-01.jpg','/cars/prado/prado-02.jpg','/cars/prado/prado-03.jpg','/cars/prado/prado-04.jpg','/cars/prado/prado-05.jpg'] },
-  'range-rover-static': { title: 'Range Rover Sport HSE', year: 2019, price: 9750000, mileage: 48000, transmission: 'Automatic', fuelType: 'Petrol', make: 'Land Rover', images: ['/cars/range-rover/range-rover-01.jpg','/cars/range-rover/range-rover-02.jpg','/cars/range-rover/range-rover-03.jpg','/cars/range-rover/range-rover-04.jpg','/cars/range-rover/range-rover-05.jpg'] },
-  'gle-static': { title: 'Mercedes-Benz GLE 400d AMG Line', year: 2021, price: 12750000, mileage: 31000, transmission: 'Automatic', fuelType: 'Diesel', make: 'Mercedes-Benz', images: ['/cars/gle/gle-01.jpg','/cars/gle/gle-02.jpg','/cars/gle/gle-03.jpg','/cars/gle/gle-04.jpg','/cars/gle/gle-05.jpg','/cars/gle/gle-06.jpg','/cars/gle/gle-07.jpg','/cars/gle/gle-08.jpg'] },
-  'cx5-static': { title: 'Mazda CX-5 2.5 AWD', year: 2020, price: 3400000, mileage: 41000, transmission: 'Automatic', fuelType: 'Petrol', make: 'Mazda', images: ['/cars/cx5/cx5-01.jpg','/cars/cx5/cx5-02.jpg','/cars/cx5/cx5-03.jpg','/cars/cx5/cx5-04.jpg','/cars/cx5/cx5-05.jpg','/cars/cx5/cx5-06.jpg','/cars/cx5/cx5-07.jpg'] },
-  'polo-static': { title: 'Volkswagen Polo Highline MK7.5', year: 2019, price: 2150000, mileage: 38000, transmission: 'Automatic', fuelType: 'Petrol', make: 'Volkswagen', images: ['/cars/polo/polo-08.jpg','/cars/polo/polo-01.jpg','/cars/polo/polo-02.jpg','/cars/polo/polo-03.jpg','/cars/polo/polo-04.jpg','/cars/polo/polo-05.jpg','/cars/polo/polo-06.jpg','/cars/polo/polo-07.jpg'] },
-  '3008-static': { title: 'Peugeot 3008 Cross City', year: 2020, price: 3350000, mileage: 44000, transmission: 'Automatic', fuelType: 'Petrol', make: 'Peugeot', images: ['/cars/3008/3008-06.jpg','/cars/3008/3008-01.jpg','/cars/3008/3008-02.jpg','/cars/3008/3008-03.jpg','/cars/3008/3008-04.jpg','/cars/3008/3008-05.jpg','/cars/3008/3008-07.jpg','/cars/3008/3008-08.jpg','/cars/3008/3008-09.jpg'] },
-};
-
 export async function generateStaticParams() {
   const slugs = await client.fetch<{ slug: string }[]>(
     `*[_type == "car"]{ "slug": slug.current }`
   );
   const sanityParams = slugs.map(({ slug }) => ({ slug }));
-  const staticParams = Object.keys(STATIC_CAR_DATA).map(slug => ({ slug }));
+  const staticParams = Object.keys(STATIC_CAR_DETAIL).map(slug => ({ slug }));
   return [...sanityParams, ...staticParams];
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const staticCar = STATIC_CAR_DATA[slug];
+  const staticCar = STATIC_CAR_DETAIL[slug];
   if (staticCar) {
     const description = `${staticCar.year} ${staticCar.title} — ${staticCar.mileage.toLocaleString()} km, ${staticCar.transmission}, ${staticCar.fuelType}. Price: KSh ${staticCar.price.toLocaleString()}. Available at Hive Motors Nairobi.`;
     return {
@@ -65,7 +57,7 @@ export default async function CarDetailPage({ params }: Props) {
   const { slug } = await params;
 
   // Handle static cars — render with local images
-  const staticCar = STATIC_CAR_DATA[slug];
+  const staticCar = STATIC_CAR_DETAIL[slug];
   if (staticCar) {
     const whatsappMessage = `Hi Hive Motors! I'm interested in the ${staticCar.title} (${staticCar.year}). Could you share more details?`;
     const breadcrumbJsonLd = {
