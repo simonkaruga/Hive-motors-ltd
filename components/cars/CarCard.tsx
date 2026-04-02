@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { MessageCircle, Gauge, Fuel, Settings } from 'lucide-react';
 import { WHATSAPP_NUMBER } from '@/lib/constants';
 
@@ -28,7 +28,7 @@ const BLUR_PLACEHOLDER = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0
 
 export default function CarCard({ car, priority = false }: CarCardProps) {
   const message = `Hi, I'm interested in the ${car.title}. Please share more details.`;
-
+  const router = useRouter();
   const imageUrl = car.imageUrl ?? null;
 
   const statusConfig = {
@@ -39,10 +39,13 @@ export default function CarCard({ car, priority = false }: CarCardProps) {
   const status = statusConfig[car.status as keyof typeof statusConfig] || statusConfig.available;
 
   return (
-    <Link
-      href={`/cars/${car.slug.current}`}
+    <div
+      role="article"
+      onClick={() => router.push(`/cars/${car.slug.current}`)}
+      onKeyDown={(e) => e.key === 'Enter' && router.push(`/cars/${car.slug.current}`)}
+      tabIndex={0}
       aria-label={`View ${car.title}`}
-      className="block bg-white rounded-2xl border border-gray-200 overflow-hidden hover:-translate-y-1 transition-transform duration-300 group"
+      className="block bg-white rounded-2xl border border-gray-200 overflow-hidden hover:-translate-y-1 transition-transform duration-300 group cursor-pointer"
     >
       {/* Image */}
       <div className="relative h-48 bg-grey-soft overflow-hidden">
@@ -142,6 +145,6 @@ export default function CarCard({ car, priority = false }: CarCardProps) {
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
