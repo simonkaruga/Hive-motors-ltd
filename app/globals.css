@@ -9,21 +9,77 @@
   --color-blue-tint: #EEF3F8;
   --color-charcoal: #1A1A2A;
   --color-mid-grey: #5C6473;
-  
+
+  --font-family-sans: "Inter", system-ui, sans-serif;
   --font-family-display: "DM Serif Display", serif;
   --font-family-mono: "JetBrains Mono", monospace;
 }
 
+/* ── Base ─────────────────────────────────────────────────────── */
 html {
   overflow-x: hidden;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   overflow-x: hidden;
   background-color: #ffffff;
   color: #1A1A2A;
+  font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
+/* ── Text selection ───────────────────────────────────────────── */
+::selection {
+  background-color: #DA1D17;
+  color: #ffffff;
+}
+
+/* ── Focus visible — keyboard nav ring ───────────────────────── */
+:focus-visible {
+  outline: 2px solid #DA1D17;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Custom scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F7F8FA;
+}
+::-webkit-scrollbar-thumb {
+  background: #c5cad4;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #0A3E66;
+}
+
+/* ── Display font defaults ────────────────────────────────────── */
+.font-display {
+  font-family: "DM Serif Display", serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+/* ── Text balance for headings ────────────────────────────────── */
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+/* ── Smooth image rendering ───────────────────────────────────── */
+img {
+  image-rendering: auto;
+}
+
+/* ── WhatsApp pulse animation ─────────────────────────────────── */
 @keyframes wa-pulse {
   0%   { transform: scale(1); opacity: 0.7; }
   70%  { transform: scale(1.6); opacity: 0; }
@@ -44,6 +100,7 @@ body {
   z-index: -1;
 }
 
+/* ── Fade in ──────────────────────────────────────────────────── */
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -53,6 +110,7 @@ body {
   animation: fade-in 0.4s ease-out both;
 }
 
+/* ── Progress bar ─────────────────────────────────────────────── */
 @keyframes progress-bar {
   from { width: 0%; }
   to   { width: 100%; }
@@ -62,7 +120,24 @@ body {
   animation: progress-bar 5s linear both;
 }
 
-/* Respect the OS-level "reduce motion" accessibility setting */
+/* ── Skeleton shimmer ─────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.animate-pulse {
+  background: linear-gradient(
+    90deg,
+    #F7F8FA 25%,
+    #eceef2 50%,
+    #F7F8FA 75%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+/* ── Reduced motion ───────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

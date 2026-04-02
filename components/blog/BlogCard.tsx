@@ -51,6 +51,7 @@ export default function BlogCard({ post }: BlogCardProps) {
               alt={post.coverImage?.alt || post.title}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              loading="lazy"
               className="object-cover"
             />
             {post.isFeatured && (

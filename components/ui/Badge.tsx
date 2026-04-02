@@ -12,7 +12,7 @@ export default function Badge({ children, variant = 'navy' }: BadgeProps) {
   };
 
   return (
-    <span className={`px-12 py-4 rounded-full text-xs font-semibold uppercase tracking-wide ${variants[variant]}`}>
+    <span className={`px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wide ${variants[variant]}`}>
       {children}
     </span>
   );
