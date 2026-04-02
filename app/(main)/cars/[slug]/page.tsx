@@ -4,7 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { MessageCircle, Phone, Calendar, Gauge, Fuel, Settings, Palette, MapPin, ArrowLeft, Car } from 'lucide-react';
 import { client, urlFor } from '@/lib/sanity/client';
-import { carBySlugQuery } from '@/lib/sanity/queries';
+import { carBySlugQuery, similarCarsQuery } from '@/lib/sanity/queries';
+import CarCard from '@/components/cars/CarCard';
 import { WHATSAPP_NUMBER, PHONE_NUMBER, PHONE_HREF } from '@/lib/constants';
 import { STATIC_CAR_DETAIL } from '@/lib/staticCars';
 import WhatsAppIcon from '@/components/shared/WhatsAppIcon';
@@ -171,6 +172,12 @@ export default async function CarDetailPage({ params }: Props) {
   const car = await client.fetch(carBySlugQuery, { slug });
 
   if (!car) notFound();
+
+  const similarCars = await client.fetch(similarCarsQuery, {
+    slug,
+    make: car.make ?? '',
+    bodyType: car.bodyType ?? '',
+  }).catch(() => []);
 
   const whatsappMessage = `Hi Hive Motors! I'm interested in the ${car.title} (${car.year}). Could you share more details?`;
 
@@ -391,6 +398,26 @@ export default async function CarDetailPage({ params }: Props) {
             </div>
           </div>
         </div>
+
+        {/* Similar Cars */}
+        {similarCars.length > 0 && (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-gray-100">
+            <h2 className="text-2xl font-display text-navy-brand mb-6">You Might Also Like</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {similarCars.map((similar: any) => (
+                <CarCard
+                  key={similar._id}
+                  car={{
+                    ...similar,
+                    imageUrl: similar.images?.[0]
+                      ? urlFor(similar.images[0]).width(800).height(533).auto('format').quality(60).url()
+                      : null,
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </main>
     </>
   );

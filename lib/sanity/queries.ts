@@ -136,6 +136,24 @@ export const homepagePostsQuery = `*[_type == "post"] | order(isFeatured desc, p
   readTime
 }`;
 
+export const similarCarsQuery = `*[_type == "car" && slug.current != $slug && status == "available" && (make == $make || bodyType == $bodyType)] | order(_createdAt desc)[0...3] {
+  _id,
+  title,
+  slug,
+  status,
+  condition,
+  ${imageFields},
+  price,
+  year,
+  make,
+  model,
+  bodyType,
+  mileage,
+  transmission,
+  fuelType,
+  _createdAt
+}`;
+
 export const postBySlugQuery = `*[_type == "post" && slug.current == $slug][0] {
   _id,
   title,

@@ -113,7 +113,11 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-white/60 text-sm">
           <p>&copy; {new Date().getFullYear()} Hive Motors Ltd. All rights reserved.</p>
-          <p>Quality Imported Cars · Nairobi, Kenya</p>
+          <div className="flex items-center gap-4">
+            <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+            <span>Quality Imported Cars · Nairobi, Kenya</span>
+          </div>
         </div>
       </div>
     </footer>
