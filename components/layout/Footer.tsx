@@ -31,6 +31,8 @@ export default function Footer() {
                 { href: '/cars', label: 'Inventory' },
                 { href: '/on-transit', label: 'On Transit' },
                 { href: '/financing', label: 'Financing' },
+                { href: '/import-guide', label: 'Import Guide' },
+                { href: '/blog', label: 'Blog' },
                 { href: '/about', label: 'About' },
               ].map((link) => (
                 <Link
@@ -52,7 +54,7 @@ export default function Footer() {
             <div className="flex flex-col gap-2">
               {[
                 { href: '/testimonials', label: 'Testimonials' },
-                { href: '/notify', label: 'Notify Me' },
+                { href: '/notify', label: 'Request a Car' },
                 { href: '/contact', label: 'Contact' },
               ].map((link) => (
                 <Link

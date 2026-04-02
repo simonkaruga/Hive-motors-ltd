@@ -111,9 +111,9 @@ export default async function Home() {
 
         {/* ── Featured Cars ──────────────────────────────────────── */}
         <FadeInSection>
-          <section className="py-20">
+          <section className="py-16">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
-              <div className="text-center mb-12">
+              <div className="text-center mb-10">
                 <h2 className="text-4xl md:text-5xl font-display text-navy-brand mb-4">Featured Cars</h2>
                 <div className="w-16 h-1 bg-red-brand mx-auto mb-4 rounded-full" />
                 <p className="text-lg text-mid-grey">Handpicked premium vehicles from around the world</p>
@@ -149,9 +149,9 @@ export default async function Home() {
 
         {/* ── How It Works ───────────────────────────────────────── */}
         <FadeInSection>
-          <section className="py-20 bg-navy-brand">
+          <section className="py-16 bg-navy-brand">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
-              <div className="text-center mb-14">
+              <div className="text-center mb-10">
                 <h2 className="text-4xl md:text-5xl font-display text-white mb-4">How It Works</h2>
                 <div className="w-16 h-1 bg-red-brand mx-auto mb-4 rounded-full" />
                 <p className="text-lg text-white/70">From source to your driveway in 4 simple steps</p>
@@ -192,9 +192,9 @@ export default async function Home() {
 
         {/* ── Why Choose Us ──────────────────────────────────────── */}
         <FadeInSection>
-          <section className="py-20 bg-grey-soft">
+          <section className="py-16 bg-grey-soft">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
-              <div className="text-center mb-12">
+              <div className="text-center mb-10">
                 <h2 className="text-4xl md:text-5xl font-display text-navy-brand mb-4">Why Choose Hive Motors</h2>
                 <div className="w-16 h-1 bg-red-brand mx-auto mb-4 rounded-full" />
                 <p className="text-lg text-mid-grey">Your trusted partner for quality imported vehicles</p>
@@ -224,9 +224,9 @@ export default async function Home() {
 
         {/* ── Testimonials Carousel ──────────────────────────────── */}
         <FadeInSection>
-          <section className="py-20 bg-white">
+          <section className="py-16 bg-white">
             <div className="max-w-4xl mx-auto px-6 lg:px-8">
-              <div className="text-center mb-12">
+              <div className="text-center mb-10">
                 <h2 className="text-4xl md:text-5xl font-display text-navy-brand mb-4">What Our Clients Say</h2>
                 <div className="w-16 h-1 bg-red-brand mx-auto mb-4 rounded-full" />
                 <div className="flex items-center justify-center gap-1 mb-2" role="img" aria-label="5 out of 5 stars">
@@ -280,9 +280,9 @@ export default async function Home() {
         {/* ── Blog Teaser ────────────────────────────────────────── */}
         {posts.length > 0 && (
           <FadeInSection>
-            <section className="py-20 bg-white">
+            <section className="py-16 bg-white">
               <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                <div className="text-center mb-12">
+                <div className="text-center mb-10">
                   <h2 className="text-4xl md:text-5xl font-display text-navy-brand mb-4">Car Tips & Guides</h2>
                   <div className="w-16 h-1 bg-red-brand mx-auto mb-4 rounded-full" />
                   <p className="text-lg text-mid-grey">Expert advice on buying & owning cars in Kenya</p>
@@ -308,7 +308,7 @@ export default async function Home() {
         )}
 
         {/* ── CTA Banner ─────────────────────────────────────────── */}
-        <section className="py-20 bg-gradient-to-r from-red-brand to-red-dark">
+        <section className="py-16 bg-gradient-to-r from-red-brand to-red-dark">
           <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
             <h2 className="text-4xl md:text-5xl font-display text-white mb-4">Ready to Find Your Dream Car?</h2>
             <p className="text-xl text-white/90 mb-10">

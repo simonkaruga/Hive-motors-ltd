@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Award, Users, Globe, Shield, CheckCircle, Car } from 'lucide-react';
 import RevealOnScroll from '@/components/shared/RevealOnScroll';
 import StatCounter from '@/components/home/StatCounter';
+import { WHATSAPP_NUMBER } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: 'About Hive Motors Ltd | Quality Car Dealers Nairobi',
@@ -112,9 +113,10 @@ export default function AboutPage() {
               { end: 3, suffix: '', label: 'Countries Sourced' },
             ].map((stat, i) => (
               <div key={i} className="text-center">
-                <div className="text-4xl md:text-5xl font-display font-bold text-red-brand font-mono mb-2">
-                  <StatCounter end={stat.end} suffix={stat.suffix} label="" />
+                <div className="text-4xl md:text-5xl font-bold text-red-brand font-mono mb-2">
+                  <StatCounter end={stat.end} suffix={stat.suffix} label={stat.label} />
                 </div>
+                <p className="text-white/70 text-sm mt-1">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -205,7 +207,7 @@ export default function AboutPage() {
                 Browse Inventory
               </a>
               <a
-                href="https://wa.me/254722800436"
+                href={`https://wa.me/${WHATSAPP_NUMBER}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="border-2 border-navy-brand text-navy-brand px-8 py-4 rounded-xl font-semibold hover:bg-navy-brand hover:text-white transition-colors"
