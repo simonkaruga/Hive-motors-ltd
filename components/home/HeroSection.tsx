@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Search } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { WHATSAPP_NUMBER } from '@/lib/constants';
 
@@ -19,21 +20,11 @@ export default function HeroSection() {
   const [counts, setCounts] = useState([0, 0, 0]);
   const [selectedMake, setSelectedMake] = useState('');
   const [selectedBody, setSelectedBody] = useState('');
-  const [showVideo, setShowVideo] = useState(false);
   const router = useRouter();
 
-  // Count-up animation on mount
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Only load video on fast connections and when motion is allowed
-    if (!prefersReduced) {
-      const nav = (navigator as Navigator & { connection?: { effectiveType?: string; saveData?: boolean } }).connection;
-      const isFast = !nav || (!nav.saveData && nav.effectiveType !== 'slow-2g' && nav.effectiveType !== '2g' && nav.effectiveType !== '3g');
-      if (isFast) setShowVideo(true);
-    }
-
-    // Skip count-up animation when motion is reduced — just show final values
     if (prefersReduced) {
       setCounts(STATS.map(s => s.end));
       return;
@@ -62,28 +53,20 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative pt-32 pb-20 overflow-hidden min-h-screen" suppressHydrationWarning>
-      {/* Navy fallback shown until video loads */}
-      <div className="absolute inset-0 bg-navy-brand z-0" />
+    <section className="relative pt-32 pb-20 overflow-hidden min-h-screen">
+      {/* Hero background image */}
+      <Image
+        src="/hero-bg.png"
+        alt="Hive Motors — Premium Imported Cars"
+        fill
+        priority
+        quality={90}
+        className="object-cover object-center z-0"
+        sizes="100vw"
+      />
 
-      {/* Background Video — always rendered to avoid hydration mismatch */}
-      <div suppressHydrationWarning className={showVideo ? undefined : 'hidden'}>
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
-          aria-hidden="true"
-          onError={(e) => { (e.currentTarget as HTMLVideoElement).style.display = 'none'; }}
-        >
-          <source src="/hero-bg.mp4" type="video/mp4" />
-        </video>
-      </div>
-
-      {/* Dark gradient overlay — light at top/bottom for text legibility */}
-      <div className="absolute inset-0 bg-gradient-to-b from-navy-brand/40 via-transparent to-navy-brand/50 z-0" />
+      {/* Dark gradient overlay for text legibility */}
+      <div className="absolute inset-0 bg-gradient-to-b from-navy-brand/60 via-navy-brand/40 to-navy-brand/70 z-0" />
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
