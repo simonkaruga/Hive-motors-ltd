@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     default: "Hive Motors Ltd | Quality Imported Cars in Kenya",
     template: "%s | Hive Motors Ltd",
   },
-  description: "Dream Cars, Real Deals! Kenya's premier car dealership in Nairobi. Quality Toyota, Nissan, Subaru, Honda vehicles with financing available.",
+  description: "Buy & import quality cars in Nairobi, Kenya. Toyota, Nissan, Subaru, Honda, Land Rover, BMW — fresh imports & locally used. Honest prices, financing available. Visit Hive Motors at Ridgeways.",
   keywords: ["imported cars Kenya", "buy car Nairobi", "Toyota import Kenya", "used cars Nairobi", "car import dealer", "Hive Motors", "Nairobi car dealer"],
   alternates: {
     canonical: BASE_URL,
