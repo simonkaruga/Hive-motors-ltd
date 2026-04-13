@@ -43,7 +43,14 @@ function applyFilters(cars: Car[], filters: FilterState): Car[] {
 function getImageUrl(car: Car): string | null {
   if (!car.images?.[0]) return null;
   const img = car.images[0] as any;
-  return img?.asset?._ref
+  
+  // Handle static images (local URLs)
+  if (img?.asset?.url && img.asset.url.startsWith('/')) {
+    return img.asset.url;
+  }
+  
+  // Handle Sanity images
+  return img?.asset?._ref || img?.asset?._id
     ? urlFor(img).width(800).height(533).auto('format').quality(60).url()
     : img?.asset?.url ?? null;
 }

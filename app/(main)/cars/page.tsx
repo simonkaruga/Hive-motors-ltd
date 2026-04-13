@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import { client } from '@/lib/sanity/client';
 import { carsQuery } from '@/lib/sanity/queries';
 import { Car } from '@/lib/types';
+import { STATIC_CARS } from '@/lib/staticCars';
 import CarsFilterClient from '@/components/cars/CarsFilterClient';
 
 export const revalidate = 300; // re-fetch every 5 minutes
@@ -28,13 +29,16 @@ export default async function CarsPage() {
     // renders with empty list — filter client handles it gracefully
   }
 
-  const itemListJsonLd = cars.length > 0 ? {
+  // Use static cars as fallback if no Sanity cars are available
+  const displayCars = cars.length > 0 ? cars : STATIC_CARS;
+
+  const itemListJsonLd = displayCars.length > 0 ? {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: 'Used Cars for Sale in Nairobi | Hive Motors',
     url: 'https://www.hivemotorsltd.com/cars',
-    numberOfItems: cars.length,
-    itemListElement: cars.slice(0, 20).map((car, i) => ({
+    numberOfItems: displayCars.length,
+    itemListElement: displayCars.slice(0, 20).map((car, i) => ({
       '@type': 'ListItem',
       position: i + 1,
       url: `https://www.hivemotorsltd.com/cars/${car.slug.current}`,
@@ -78,7 +82,7 @@ export default async function CarsPage() {
           </div>
         </div>
       }>
-        <CarsFilterClient cars={cars} />
+        <CarsFilterClient cars={displayCars} />
       </Suspense>
     </main>
   );

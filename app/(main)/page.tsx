@@ -126,9 +126,17 @@ export default async function Home() {
                       car={{
                         ...car,
                         imageUrl: car.images?.[0]
-                          ? (car.images[0] as any)?.asset?._ref
-                            ? urlFor(car.images[0]).width(800).height(533).auto('format').quality(60).url()
-                            : (car.images[0] as any)?.asset?.url ?? null
+                          ? (() => {
+                              const img = car.images[0] as any;
+                              // Handle static images (local URLs)
+                              if (img?.asset?.url && img.asset.url.startsWith('/')) {
+                                return img.asset.url;
+                              }
+                              // Handle Sanity images
+                              return img?.asset?._ref || img?.asset?._id
+                                ? urlFor(car.images[0]).width(800).height(533).auto('format').quality(60).url()
+                                : img?.asset?.url ?? null;
+                            })()
                           : null,
                       }}
                       priority={idx < 3}
