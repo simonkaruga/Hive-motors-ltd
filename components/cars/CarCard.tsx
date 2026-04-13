@@ -31,6 +31,13 @@ export default function CarCard({ car, priority = false }: CarCardProps) {
   const router = useRouter();
   const imageUrl = car.imageUrl ?? null;
 
+  const handleCardClick = () => {
+    // Add query param to indicate where user came from
+    const currentPath = window.location.pathname;
+    const fromParam = currentPath === '/' ? '?from=home' : '';
+    router.push(`/cars/${car.slug.current}${fromParam}`);
+  };
+
   const statusConfig = {
     available: { label: 'Available', bg: 'bg-green-100', text: 'text-green-700', dot: 'bg-green-500' },
     'on-transit': { label: 'On Transit', bg: 'bg-amber-100', text: 'text-amber-700', dot: 'bg-amber-500' },
@@ -41,8 +48,8 @@ export default function CarCard({ car, priority = false }: CarCardProps) {
   return (
     <div
       role="article"
-      onClick={() => router.push(`/cars/${car.slug.current}`)}
-      onKeyDown={(e) => e.key === 'Enter' && router.push(`/cars/${car.slug.current}`)}
+      onClick={handleCardClick}
+      onKeyDown={(e) => e.key === 'Enter' && handleCardClick()}
       tabIndex={0}
       aria-label={`View ${car.title}`}
       className="block bg-white rounded-2xl border border-gray-200 overflow-hidden hover:-translate-y-1 transition-transform duration-300 group cursor-pointer"

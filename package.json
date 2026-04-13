@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "fix-car-slugs": "node scripts/fix-car-slugs.mjs",
+    "debug-cars": "echo 'Visit http://localhost:3000/debug-cars to see car status'"
   },
   "browserslist": [
     "Chrome >= 90",

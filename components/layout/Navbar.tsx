@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Phone } from 'lucide-react';
-import { PHONE_HREF } from '@/lib/constants';
+import { PHONE_HREF, PHONE_DISPLAY } from '@/lib/constants';
 
 const links = [
   { href: '/', label: 'Home' },
@@ -56,7 +56,7 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-3">
             <a href={PHONE_HREF} className="flex items-center gap-1.5 text-navy-brand hover:text-red-brand transition-colors text-sm font-medium">
               <Phone size={15} />
-              Call Us
+              {PHONE_DISPLAY}
             </a>
             <Link href="/cars" className="bg-red-brand text-white px-5 py-2.5 rounded-lg font-semibold text-sm hover:bg-red-dark transition-colors">
               View Cars
@@ -96,7 +96,7 @@ export default function Navbar() {
           <div className="pt-3 border-t border-gray-100 space-y-2">
             <a href={PHONE_HREF} className="flex items-center gap-2 px-4 py-3 text-sm font-medium text-navy-brand">
               <Phone size={16} />
-              Call Us
+              {PHONE_DISPLAY}
             </a>
             <Link href="/cars" onClick={() => setMobileOpen(false)} className="block bg-red-brand text-white text-center px-4 py-3 rounded-lg font-semibold text-sm">
               Browse Inventory
