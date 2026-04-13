@@ -9,7 +9,6 @@ import { carBySlugQuery, similarCarsQuery } from '@/lib/sanity/queries';
 import CarCard from '@/components/cars/CarCard';
 import { WHATSAPP_NUMBER, PHONE_HREF } from '@/lib/constants';
 import { STATIC_CAR_DETAIL } from '@/lib/staticCars';
-import WhatsAppIcon from '@/components/shared/WhatsAppIcon';
 import ImageGallery from '@/components/cars/ImageGallery';
 import CarDetailBreadcrumb from '@/components/cars/CarDetailBreadcrumb';
 import { formatPrice, formatMileage } from '@/lib/utils';
@@ -23,50 +22,27 @@ interface Props {
 
 const BASE_URL = 'https://www.hivemotorsltd.com';
 
-// Helper function to fetch car with comprehensive error handling
+// Helper function to fetch car with slug fallback
 async function fetchCarBySlug(slug: string) {
   try {
-    console.log(`[CAR FETCH] Attempting to fetch car with slug: "${slug}"`);
-    
-    // First, let's see what cars exist in Sanity
-    const allCars = await client.fetch(`*[_type == "car"]{
-      title,
-      "slug": slug.current,
-      status,
-      _id
-    }`);
-    
-    console.log(`[CAR FETCH] Found ${allCars.length} total cars in Sanity:`, 
-      allCars.map(c => ({ title: c.title, slug: c.slug, status: c.status }))
-    );
-    
-    // Now try to fetch the specific car
     const car = await client.fetch(carBySlugQuery, { slug });
-    
-    if (car) {
-      console.log(`[CAR FETCH] Successfully found car: ${car.title}`);
-      return car;
-    } else {
-      console.log(`[CAR FETCH] No car found for slug "${slug}"`);
-      
-      // Check if there's a similar slug (case insensitive or with dashes/spaces)
-      const similarSlugs = allCars.filter(c => 
-        c.slug && (
-          c.slug.toLowerCase() === slug.toLowerCase() ||
-          c.slug.replace(/[-_\s]/g, '') === slug.replace(/[-_\s]/g, '') ||
-          c.title.toLowerCase().replace(/\s+/g, '-') === slug.toLowerCase()
-        )
-      );
-      
-      if (similarSlugs.length > 0) {
-        console.log(`[CAR FETCH] Found similar slug, redirecting to: ${similarSlugs[0].slug}`);
-        redirect(`/cars/${similarSlugs[0].slug}`);
-      }
-      
-      return null;
-    }
-  } catch (error) {
-    console.error(`[CAR FETCH] Error fetching car:`, error);
+    if (car) return car;
+
+    // Fallback: find a close slug match (case-insensitive, dash/space tolerance)
+    const allCars = await client.fetch<{ slug: string; title: string }[]>(
+      `*[_type == "car"]{ title, "slug": slug.current }`
+    );
+    const match = allCars.find(c =>
+      c.slug && (
+        c.slug.toLowerCase() === slug.toLowerCase() ||
+        c.slug.replace(/[-_\s]/g, '') === slug.replace(/[-_\s]/g, '') ||
+        c.title.toLowerCase().replace(/\s+/g, '-') === slug.toLowerCase()
+      )
+    );
+    if (match) redirect(`/cars/${match.slug}`);
+
+    return null;
+  } catch {
     return null;
   }
 }
@@ -83,12 +59,8 @@ export async function generateStaticParams() {
     
     const staticParams = Object.keys(STATIC_CAR_DETAIL).map(slug => ({ slug }));
     
-    const allParams = [...sanityParams, ...staticParams];
-    console.log('[STATIC PARAMS] Generated params:', allParams);
-    
-    return allParams;
-  } catch (error) {
-    console.error('[STATIC PARAMS] Error generating static params:', error);
+    return [...sanityParams, ...staticParams];
+  } catch {
     return Object.keys(STATIC_CAR_DETAIL).map(slug => ({ slug }));
   }
 }
@@ -123,48 +95,37 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
   
-  const description = `${car.year} ${car.title} — ${car.mileage?.toLocaleString()} km, ${car.transmission}, ${car.fuelType}. Price: KSh ${car.price?.toLocaleString()}. Available at Hive Motors Nairobi.`;
+  const pageTitle = `${car.year} ${car.title} for Sale in Nairobi`;
+  const description = `${car.year} ${car.title} — ${car.mileage?.toLocaleString()} km, ${car.transmission}, ${car.fuelType}. KSh ${car.price?.toLocaleString()}. Available at Hive Motors Nairobi.`;
   const ogImage = car.images?.[0]
     ? urlFor(car.images[0]).width(1200).height(630).auto('format').quality(80).url()
     : null;
-    
+  const ogAlt = `${car.year} ${car.title} — available at Hive Motors Nairobi`;
+
   return {
-    title: car.title,
+    title: pageTitle,
     description,
     alternates: { canonical: `${BASE_URL}/cars/${slug}` },
     openGraph: {
-      title: `${car.title} | Hive Motors`,
+      title: `${pageTitle} | Hive Motors`,
       description,
       url: `${BASE_URL}/cars/${slug}`,
-      images: ogImage ? [{ url: ogImage, width: 1200, height: 630, alt: car.title }] : [],
+      images: ogImage ? [{ url: ogImage, width: 1200, height: 630, alt: ogAlt }] : [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Hive Motors — Quality Cars Nairobi' }],
     },
-    twitter: { card: 'summary_large_image', title: car.title, description, images: ogImage ? [ogImage] : [] },
+    twitter: { card: 'summary_large_image', title: pageTitle, description, images: ogImage ? [ogImage] : ['/opengraph-image'] },
   };
 }
 
 export default async function CarDetailPage({ params }: Props) {
   const { slug } = await params;
 
-  console.log(`[PAGE] Car detail page requested for slug: "${slug}"`);
-
   // Handle static cars first
   const staticCar = STATIC_CAR_DETAIL[slug];
-  if (staticCar) {
-    console.log(`[PAGE] Rendering static car: ${staticCar.title}`);
-    return renderStaticCar(staticCar, slug);
-  }
+  if (staticCar) return renderStaticCar(staticCar, slug);
 
   // Fetch from Sanity
   const car = await fetchCarBySlug(slug);
-  
-  if (!car) {
-    console.log(`[PAGE] Car not found, showing 404`);
-    notFound();
-  }
-
-  console.log(`[PAGE] Rendering Sanity car: ${car.title}`);
-  console.log(`[PAGE] Car images:`, car.images);
-  console.log(`[PAGE] Car images length:`, car.images?.length || 0);
+  if (!car) notFound();
 
   // Fetch similar cars
   const similarCars = await client.fetch(similarCarsQuery, {
@@ -204,22 +165,38 @@ export default async function CarDetailPage({ params }: Props) {
     ],
   };
 
+  const carImages = car.images?.slice(0, 5).map((img: any) => {
+    try { return urlFor(img).width(1200).height(800).auto('format').quality(80).url(); } catch { return null; }
+  }).filter(Boolean) ?? [];
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Car',
-    name: car.title,
+    name: `${car.year} ${car.title}`,
+    description: `${car.year} ${car.title} — ${car.mileage?.toLocaleString()} km, ${car.transmission}, ${car.fuelType}. Available at Hive Motors Nairobi.`,
+    image: carImages,
     modelDate: car.year?.toString(),
+    vehicleModelDate: car.year?.toString(),
     mileageFromOdometer: { '@type': 'QuantitativeValue', value: car.mileage, unitCode: 'KMT' },
     fuelType: car.fuelType,
     vehicleTransmission: car.transmission,
     driveWheelConfiguration: car.driveType,
     color: car.colour,
+    bodyType: car.bodyType,
+    vehicleEngine: car.engine ? { '@type': 'EngineSpecification', name: car.engine } : undefined,
+    itemCondition: car.condition === 'fresh-import' ? 'https://schema.org/NewCondition' : 'https://schema.org/UsedCondition',
     offers: {
       '@type': 'Offer',
       priceCurrency: 'KES',
       price: car.price,
+      url: `${BASE_URL}/cars/${slug}`,
       availability: car.status === 'available' ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-      seller: { '@type': 'Organization', name: 'Hive Motors Ltd', address: 'Ridgeways, Kiambu Road, Nairobi, Kenya' },
+      seller: {
+        '@type': 'AutoDealer',
+        name: 'Hive Motors Ltd',
+        telephone: '+254722800436',
+        address: { '@type': 'PostalAddress', streetAddress: 'Ridgeways, Kiambu Road', addressLocality: 'Nairobi', addressCountry: 'KE' },
+      },
     },
   };
 
@@ -274,21 +251,13 @@ export default async function CarDetailPage({ params }: Props) {
                 <ImageGallery
                   images={car.images.map((img: any, index: number) => {
                     try {
-                      // Check if image has proper asset reference
-                      if (!img?.asset?._id && !img?.asset?._ref && !img?.asset?.url) {
-                        console.warn(`Image ${index + 1} missing asset reference:`, img);
-                        return null;
-                      }
-                      
-                      const imageUrl = urlFor(img).width(1200).height(800).auto('format').quality(75).url();
-                      console.log(`Image ${index + 1} URL:`, imageUrl);
-                      
+                      if (!img?.asset?._id && !img?.asset?._ref && !img?.asset?.url) return null;
                       return {
-                        url: imageUrl,
+                        url: urlFor(img).width(1200).height(800).auto('format').quality(80).url(),
+                        thumbUrl: urlFor(img).width(320).height(213).auto('format').quality(60).url(),
                         alt: img?.alt || `${car.title} - Image ${index + 1}`,
                       };
-                    } catch (error) {
-                      console.error(`Error processing image ${index + 1}:`, error, img);
+                    } catch {
                       return null;
                     }
                   }).filter(Boolean)}

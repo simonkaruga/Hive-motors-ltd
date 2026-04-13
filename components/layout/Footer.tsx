@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Instagram, Facebook } from 'lucide-react';
 import { SiTiktok } from 'react-icons/si';
+import { GOOGLE_REVIEW_URL } from '@/lib/constants';
 
 export default function Footer() {
   return (
@@ -66,7 +67,7 @@ export default function Footer() {
                 </Link>
               ))}
               <a
-                href="https://g.page/r/CYqpACN3YQUBEAE/review"
+                href={GOOGLE_REVIEW_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white/70 hover:text-red-brand transition-colors text-sm"

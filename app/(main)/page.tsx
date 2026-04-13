@@ -1,4 +1,5 @@
-export const revalidate = 300; // re-fetch from Sanity every 5 minutes
+export const revalidate = 0; // always fresh — new cars appear on homepage immediately
+export const dynamic = 'force-dynamic';
 
 import Link from 'next/link';
 import { Ship, Shield, Award, Zap, Users, Search, Anchor, Truck, Star, ArrowRight, BookOpen } from 'lucide-react';
@@ -15,7 +16,7 @@ import { client } from '@/lib/sanity/client';
 import { featuredCarsQuery, homepageTestimonialsQuery, homepagePostsQuery } from '@/lib/sanity/queries';
 import { urlFor } from '@/lib/sanity/client';
 import { Car } from '@/lib/types';
-import { WHATSAPP_NUMBER } from '@/lib/constants';
+import { WHATSAPP_NUMBER, GOOGLE_REVIEW_URL } from '@/lib/constants';
 import { STATIC_CARS } from '@/lib/staticCars';
 import WhatsAppIcon from '@/components/shared/WhatsAppIcon';
 
@@ -114,9 +115,9 @@ export default async function Home() {
           <section className="py-16">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <div className="text-center mb-10">
-                <h2 className="text-4xl md:text-5xl font-display text-navy-brand mb-4">Featured Cars</h2>
+                <h2 className="text-4xl md:text-5xl font-display text-navy-brand mb-4">Latest Arrivals</h2>
                 <div className="w-16 h-1 bg-red-brand mx-auto mb-4 rounded-full" />
-                <p className="text-lg text-mid-grey">Handpicked premium vehicles from around the world</p>
+                <p className="text-lg text-mid-grey">Our newest stock — fresh imports updated daily</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
@@ -247,11 +248,19 @@ export default async function Home() {
 
               <TestimonialsCarousel testimonials={displayTestimonials} />
 
-              <div className="text-center mt-10">
+              <div className="text-center mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link href="/testimonials" className="inline-flex items-center gap-2 text-navy-brand font-semibold hover:text-red-brand transition-colors border border-navy-brand/20 px-6 py-3 rounded-xl hover:border-red-brand/30">
                   Read All Reviews
                   <ArrowRight size={16} />
                 </Link>
+                <a
+                  href={GOOGLE_REVIEW_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-800 font-semibold px-6 py-3 rounded-xl hover:bg-amber-100 transition-colors"
+                >
+                  ⭐ Leave a Google Review
+                </a>
               </div>
             </div>
           </section>

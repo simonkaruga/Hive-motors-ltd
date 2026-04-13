@@ -7,7 +7,8 @@ import { transitCarsQuery } from '@/lib/sanity/queries';
 import { Car } from '@/lib/types';
 import { formatDate } from '@/lib/utils';
 
-export const revalidate = 300;
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
 
 const SHIPPING_STEPS = [
   { icon: CheckCircle, label: 'Purchased' },

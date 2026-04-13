@@ -6,7 +6,7 @@ import { X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 
 const BLUR_PLACEHOLDER = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB2aWV3Qm94PSIwIDAgMSAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNGN0Y4RkEiLz48L3N2Zz4=';
 
-interface GalleryImage { url: string; alt?: string; }
+interface GalleryImage { url: string; thumbUrl?: string; alt?: string; }
 interface ImageGalleryProps { images: GalleryImage[]; title: string; }
 
 export default function ImageGallery({ images, title }: ImageGalleryProps) {
@@ -86,7 +86,7 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
                   selectedIndex === index ? 'border-red-brand shadow-md' : 'border-transparent hover:border-gray-300'
                 }`}
               >
-                <Image src={image.url} alt={image.alt || `${title} photo ${index + 1}`} fill sizes="25vw" placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} className="object-cover" />
+                <Image src={image.thumbUrl || image.url} alt={image.alt || `${title} photo ${index + 1}`} fill sizes="25vw" placeholder="blur" blurDataURL={BLUR_PLACEHOLDER} className="object-cover" />
               </div>
             ))}
           </div>

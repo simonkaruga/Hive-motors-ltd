@@ -45,7 +45,7 @@ export const carBySlugQuery = `*[_type == "car" && slug.current == $slug][0] {
   _createdAt
 }`;
 
-export const featuredCarsQuery = `*[_type == "car" && isFeatured == true && status == "available"] | order(_createdAt desc)[0...6] {
+export const featuredCarsQuery = `*[_type == "car" && isFeatured == true && status == "available"] | order(_createdAt desc)[0...8] {
   _id,
   title,
   slug,
@@ -88,7 +88,7 @@ export const transitCarsQuery = `*[_type == "car" && status == "on-transit"] | o
   _createdAt
 }`;
 
-export const testimonialsQuery = `*[_type == "testimonial"] | order(date desc) {
+export const testimonialsQuery = `*[_type == "testimonial" && isApproved == true] | order(date desc) {
   _id,
   customerName,
   review,
@@ -114,7 +114,7 @@ export const postsQuery = `*[_type == "post"] | order(isFeatured desc, published
 }`;
 
 // Homepage-limited queries
-export const homepageTestimonialsQuery = `*[_type == "testimonial"] | order(date desc)[0...3] {
+export const homepageTestimonialsQuery = `*[_type == "testimonial" && isApproved == true] | order(date desc)[0...3] {
   _id,
   customerName,
   review,

@@ -1,140 +1,200 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
 import { client } from '@/lib/sanity/client';
+import { ExternalLink, Plus, Eye, CheckCircle, Truck, Tag } from 'lucide-react';
 
-export default async function CarManagementPage() {
-  let cars = [];
-  let error = null;
+export const metadata: Metadata = {
+  title: 'Manage Cars | Hive Motors',
+  robots: { index: false, follow: false },
+};
+
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+
+const STUDIO_URL = 'https://hivemotorsltd.sanity.studio';
+
+export default async function ManageCarsPage() {
+  let stats = { total: 0, available: 0, onTransit: 0, sold: 0, noImages: 0, noSlug: 0 };
 
   try {
-    cars = await client.fetch(`*[_type == "car"] | order(_createdAt desc) {
-      _id,
-      title,
-      "slug": slug.current,
+    const cars = await client.fetch<{
+      status: string;
+      imageCount: number;
+      slug: string | null;
+    }[]>(`*[_type == "car"]{
       status,
-      _createdAt,
-      "imageCount": count(images)
+      "imageCount": count(images),
+      "slug": slug.current
     }`);
-  } catch (e) {
-    error = e instanceof Error ? e.message : 'Unknown error';
+
+    stats = {
+      total: cars.length,
+      available: cars.filter(c => c.status === 'available').length,
+      onTransit: cars.filter(c => c.status === 'on-transit').length,
+      sold: cars.filter(c => c.status === 'sold').length,
+      noImages: cars.filter(c => c.imageCount === 0).length,
+      noSlug: cars.filter(c => !c.slug).length,
+    };
+  } catch {
+    // stats stay at zero — show page anyway
   }
 
+  const statCards = [
+    { label: 'Total Cars', value: stats.total, color: '#0A3E66', icon: Tag },
+    { label: 'Available', value: stats.available, color: '#16a34a', icon: CheckCircle },
+    { label: 'On Transit', value: stats.onTransit, color: '#d97706', icon: Truck },
+    { label: 'Sold', value: stats.sold, color: '#DA1D17', icon: CheckCircle },
+  ];
+
+  const actions = [
+    {
+      label: 'Add a New Car',
+      desc: 'Upload photos, set price, and publish to the website.',
+      href: `${STUDIO_URL}/structure/car;new`,
+      icon: Plus,
+      primary: true,
+    },
+    {
+      label: 'View All Cars in Studio',
+      desc: 'Edit, delete, or change status of any car.',
+      href: `${STUDIO_URL}/structure/car`,
+      icon: ExternalLink,
+      primary: false,
+    },
+    {
+      label: 'View Website Inventory',
+      desc: 'See exactly what your customers see.',
+      href: '/cars',
+      icon: Eye,
+      primary: false,
+      internal: true,
+    },
+  ];
+
   return (
-    <div className="pt-32 pb-16 bg-white min-h-screen">
-      <div className="max-w-6xl mx-auto px-4">
-        <h1 className="text-3xl font-bold mb-8">🚗 Car Management Panel</h1>
-        
-        {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-            <h2 className="text-red-800 font-semibold mb-2">Error:</h2>
-            <p className="text-red-700">{error}</p>
+    <main className="pt-32 pb-20 bg-grey-soft min-h-screen">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+
+        {/* Header */}
+        <div className="mb-10">
+          <h1 className="text-3xl font-bold text-navy-brand mb-1">Car Management</h1>
+          <p className="text-mid-grey">Quick overview and shortcuts for managing your inventory.</p>
+        </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+          {statCards.map(({ label, value, color, icon: Icon }) => (
+            <div key={label} className="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-sm text-mid-grey">{label}</p>
+                <Icon size={16} style={{ color }} />
+              </div>
+              <p className="text-3xl font-bold" style={{ color }}>{value}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Warnings */}
+        {(stats.noImages > 0 || stats.noSlug > 0) && (
+          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 mb-8">
+            <p className="font-semibold text-amber-800 mb-2">⚠️ Action needed</p>
+            <ul className="space-y-1 text-amber-700 text-sm">
+              {stats.noImages > 0 && (
+                <li>
+                  <strong>{stats.noImages} car{stats.noImages > 1 ? 's' : ''}</strong> {stats.noImages > 1 ? 'have' : 'has'} no photos — customers won&apos;t see them properly.{' '}
+                  <a href={`${STUDIO_URL}/structure/car`} target="_blank" rel="noopener noreferrer" className="underline">Fix in Studio →</a>
+                </li>
+              )}
+              {stats.noSlug > 0 && (
+                <li>
+                  <strong>{stats.noSlug} car{stats.noSlug > 1 ? 's' : ''}</strong> {stats.noSlug > 1 ? 'are' : 'is'} missing a URL slug — click Generate in Studio to fix.{' '}
+                  <a href={`${STUDIO_URL}/structure/car`} target="_blank" rel="noopener noreferrer" className="underline">Fix in Studio →</a>
+                </li>
+              )}
+            </ul>
           </div>
         )}
 
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
-          <h2 className="text-blue-800 font-semibold text-xl mb-4">🗑️ Can't Delete Cars in Studio?</h2>
-          <div className="space-y-3 text-blue-700">
-            <p><strong>Quick Fixes:</strong></p>
-            <ol className="list-decimal list-inside space-y-1 text-sm">
-              <li><strong>Refresh Studio:</strong> Press Ctrl+F5 (or Cmd+Shift+R on Mac) in your Studio tab</li>
-              <li><strong>Clear Cache:</strong> Clear browser cache and cookies</li>
-              <li><strong>Re-login:</strong> Log out and back into Sanity Studio</li>
-              <li><strong>Different Browser:</strong> Try Chrome, Firefox, or Safari</li>
-              <li><strong>Check Account:</strong> Make sure you're logged into the correct Sanity account</li>
-            </ol>
-            <div className="mt-4 p-3 bg-blue-100 rounded">
-              <p className="text-sm"><strong>How to Delete in Studio:</strong></p>
-              <ol className="list-decimal list-inside text-xs mt-1 space-y-1">
-                <li>Click on a car to open it</li>
-                <li>Look for three dots (⋯) in top right corner</li>
-                <li>Click "Delete" from dropdown</li>
-                <li>Or right-click the car in list view</li>
+        {/* Quick Actions */}
+        <h2 className="text-lg font-bold text-navy-brand mb-4">Quick Actions</h2>
+        <div className="grid gap-4 sm:grid-cols-3 mb-12">
+          {actions.map(({ label, desc, href, icon: Icon, primary, internal }) => (
+            <div key={label}>
+              {internal ? (
+                <Link
+                  href={href}
+                  className={`flex flex-col gap-2 rounded-2xl border p-5 h-full transition-colors ${
+                    primary
+                      ? 'bg-red-brand border-red-brand text-white hover:bg-red-dark'
+                      : 'bg-white border-gray-200 text-navy-brand hover:border-navy-brand'
+                  }`}
+                >
+                  <Icon size={22} />
+                  <p className="font-bold text-sm">{label}</p>
+                  <p className={`text-xs leading-relaxed ${primary ? 'text-white/80' : 'text-mid-grey'}`}>{desc}</p>
+                </Link>
+              ) : (
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`flex flex-col gap-2 rounded-2xl border p-5 h-full transition-colors ${
+                    primary
+                      ? 'bg-red-brand border-red-brand text-white hover:bg-red-dark'
+                      : 'bg-white border-gray-200 text-navy-brand hover:border-navy-brand'
+                  }`}
+                >
+                  <Icon size={22} />
+                  <p className="font-bold text-sm">{label}</p>
+                  <p className={`text-xs leading-relaxed ${primary ? 'text-white/80' : 'text-mid-grey'}`}>{desc}</p>
+                </a>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* How-to guide */}
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+          <h2 className="font-bold text-navy-brand mb-4">How to manage your cars</h2>
+          <div className="grid sm:grid-cols-2 gap-6 text-sm text-charcoal">
+            <div>
+              <p className="font-semibold text-navy-brand mb-2">✅ Mark a car as Sold</p>
+              <ol className="list-decimal list-inside space-y-1 text-mid-grey">
+                <li>Open the car in Studio</li>
+                <li>Change <strong>Car Status</strong> → 🔴 Sold</li>
+                <li>Click <strong>Publish</strong></li>
+                <li>It disappears from inventory instantly</li>
+              </ol>
+            </div>
+            <div>
+              <p className="font-semibold text-navy-brand mb-2">🗑️ Permanently delete a car</p>
+              <ol className="list-decimal list-inside space-y-1 text-mid-grey">
+                <li>Open the car in Studio</li>
+                <li>Click <strong>⋯</strong> (three dots, top right)</li>
+                <li>Click <strong>Delete</strong> and confirm</li>
+              </ol>
+            </div>
+            <div>
+              <p className="font-semibold text-navy-brand mb-2">🏠 Show a car on homepage</p>
+              <ol className="list-decimal list-inside space-y-1 text-mid-grey">
+                <li>Open the car in Studio</li>
+                <li>Make sure <strong>Show on Homepage?</strong> is ON</li>
+                <li>Car appears in <strong>Latest Arrivals</strong> instantly</li>
+              </ol>
+            </div>
+            <div>
+              <p className="font-semibold text-navy-brand mb-2">🚢 Mark as On Transit</p>
+              <ol className="list-decimal list-inside space-y-1 text-mid-grey">
+                <li>Open the car in Studio</li>
+                <li>Change status → 🚢 On Transit</li>
+                <li>Set the <strong>Expected Arrival Date</strong></li>
+                <li>Car moves to the On Transit page</li>
               </ol>
             </div>
           </div>
         </div>
 
-        <div className="bg-gray-50 rounded-lg p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">📋 All Cars ({cars.length} total)</h2>
-            <a 
-              href="https://hivemotorsltd.sanity.studio/structure/car"
-              target="_blank"
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-            >
-              Open Studio →
-            </a>
-          </div>
-          
-          {cars.length === 0 ? (
-            <p className="text-gray-600">No cars found in Sanity database.</p>
-          ) : (
-            <div className="space-y-3">
-              {cars.map((car: any) => (
-                <div key={car._id} className={`rounded-lg p-4 border ${
-                  !car.slug ? 'bg-red-50 border-red-200' : 'bg-white border-gray-200'
-                }`}>
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-lg">{car.title}</h3>
-                      <div className="flex gap-6 mt-1 text-sm text-gray-600">
-                        <span>
-                          <strong>Slug:</strong> 
-                          <span className={car.slug ? 'text-green-600 ml-1' : 'text-red-600 font-semibold ml-1'}>
-                            {car.slug || 'MISSING!'}
-                          </span>
-                        </span>
-                        <span><strong>Status:</strong> {car.status}</span>
-                        <span><strong>Images:</strong> {car.imageCount}</span>
-                        <span><strong>Created:</strong> {new Date(car._createdAt).toLocaleDateString()}</span>
-                      </div>
-                    </div>
-                    
-                    <div className="flex gap-2">
-                      {car.slug && (
-                        <a 
-                          href={`/cars/${car.slug}`}
-                          className="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition-colors"
-                          target="_blank"
-                        >
-                          View
-                        </a>
-                      )}
-                      <a 
-                        href={`https://hivemotorsltd.sanity.studio/structure/car;${car._id}`}
-                        className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-colors"
-                        target="_blank"
-                      >
-                        Edit
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-        
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-            <h3 className="text-yellow-800 font-semibold mb-2">💡 Studio Delete Steps:</h3>
-            <ol className="list-decimal list-inside space-y-1 text-yellow-700 text-sm">
-              <li>Open Sanity Studio</li>
-              <li>Go to "Cars for Sale" → "All Cars"</li>
-              <li>Click on the car you want to delete</li>
-              <li>Click the three dots (⋯) menu</li>
-              <li>Select "Delete" and confirm</li>
-            </ol>
-          </div>
-          
-          <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-            <h3 className="text-green-800 font-semibold mb-2">✅ Permissions Check:</h3>
-            <p className="text-green-700 text-sm mb-2">Your API token has delete permissions!</p>
-            <p className="text-green-600 text-xs">
-              If Studio delete still doesn't work, it's likely a browser/cache issue. 
-              Try the quick fixes above.
-            </p>
-          </div>
-        </div>
       </div>
-    </div>
+    </main>
   );
 }

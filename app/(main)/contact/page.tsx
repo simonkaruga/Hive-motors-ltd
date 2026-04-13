@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, Send, MessageCircle, Instagram, Facebook } from 'lucide-react';
 import { SiTiktok } from 'react-icons/si';
 import RevealOnScroll from '@/components/shared/RevealOnScroll';
-import { WHATSAPP_NUMBER, PHONE_NUMBER, PHONE_DISPLAY, PHONE_HREF } from '@/lib/constants';
+import { WHATSAPP_NUMBER, PHONE_NUMBER, PHONE_DISPLAY, PHONE_HREF, GOOGLE_REVIEW_URL } from '@/lib/constants';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: '', phone: '', email: '', message: '' });
@@ -259,7 +259,7 @@ export default function ContactPage() {
 
               {/* Google Review CTA */}
               <a
-                href="https://g.page/r/CYqpACN3YQUBEAE/review"
+                href={GOOGLE_REVIEW_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 bg-amber-50 border border-amber-200 rounded-2xl p-4 hover:shadow-md transition-shadow"

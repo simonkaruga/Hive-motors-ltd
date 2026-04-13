@@ -6,11 +6,12 @@ import { Car } from '@/lib/types';
 import { STATIC_CARS } from '@/lib/staticCars';
 import CarsFilterClient from '@/components/cars/CarsFilterClient';
 
-export const revalidate = 300; // re-fetch every 5 minutes
+export const revalidate = 0; // always fetch fresh data so new cars appear immediately
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Used Cars for Sale in Nairobi | Buy Car Kenya | Hive Motors',
-  description: 'Buy quality used & imported cars in Nairobi, Kenya. Toyota, Nissan, Subaru, Honda, Land Rover, BMW & more. Trusted car dealer in Nairobi since 2014. Visit Hive Motors at Ridgeways.',
+  title: 'Used Cars for Sale in Nairobi | Hive Motors Kenya',
+  description: 'Buy quality used & imported cars in Nairobi. Toyota, Nissan, Subaru, Honda, Land Rover, BMW & more. Trusted car dealer since 2014. Visit us at Ridgeways.',
   keywords: ['used cars Nairobi', 'buy car Nairobi', 'car dealer Nairobi', 'imported cars Kenya', 'Toyota for sale Kenya', 'cars for sale Kenya', 'second hand cars Nairobi', 'SUV for sale Nairobi'],
   alternates: { canonical: 'https://www.hivemotorsltd.com/cars' },
   openGraph: {
@@ -46,8 +47,18 @@ export default async function CarsPage() {
     })),
   } : null;
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.hivemotorsltd.com' },
+      { '@type': 'ListItem', position: 2, name: 'Car Inventory', item: 'https://www.hivemotorsltd.com/cars' },
+    ],
+  };
+
   return (
     <main className="bg-white min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       {itemListJsonLd && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }} />
       )}

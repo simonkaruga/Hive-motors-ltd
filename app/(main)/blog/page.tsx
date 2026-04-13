@@ -14,6 +14,15 @@ interface Post {
   readTime: number;
 }
 
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.hivemotorsltd.com' },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.hivemotorsltd.com/blog' },
+  ],
+};
+
 export default async function BlogPage() {
   let posts: Post[] = [];
   try {
@@ -23,6 +32,8 @@ export default async function BlogPage() {
   }
 
   return (
+    <>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
     <main className="bg-white min-h-screen">
       <section className="pt-32 pb-12 bg-gradient-to-br from-grey-soft to-blue-tint border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -48,5 +59,6 @@ export default async function BlogPage() {
         <BlogListClient posts={posts} />
       </div>
     </main>
+    </>
   );
 }

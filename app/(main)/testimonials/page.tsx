@@ -4,6 +4,7 @@ import RevealOnScroll from '@/components/shared/RevealOnScroll';
 import { client } from '@/lib/sanity/client';
 import { testimonialsQuery } from '@/lib/sanity/queries';
 import { Testimonial } from '@/lib/types';
+import { GOOGLE_REVIEW_URL } from '@/lib/constants';
 
 export const revalidate = 3600;
 
@@ -23,7 +24,24 @@ export default async function TestimonialsPage() {
     ? (testimonials.reduce((s, t) => s + t.rating, 0) / testimonials.length).toFixed(1)
     : '5.0';
 
+  const aggregateRatingJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'AutoDealer',
+    name: 'Hive Motors Ltd',
+    url: 'https://www.hivemotorsltd.com',
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: averageRating,
+      bestRating: '5',
+      worstRating: '1',
+      ratingCount: testimonials.length > 0 ? testimonials.length : 450,
+      reviewCount: testimonials.length > 0 ? testimonials.length : 450,
+    },
+  };
+
   return (
+    <>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(aggregateRatingJsonLd) }} />
     <main className="bg-white min-h-screen">
 
       {/* Hero */}
@@ -102,7 +120,7 @@ export default async function TestimonialsPage() {
             <h2 className="text-2xl font-display text-navy-brand mb-3">Leave Us a Review on Google</h2>
             <p className="text-mid-grey mb-6">Your feedback helps other Kenyans find quality cars at honest prices.</p>
             <a
-              href="https://g.page/r/CYqpACN3YQUBEAE/review"
+              href={GOOGLE_REVIEW_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-red-brand text-white px-8 py-4 rounded-xl font-bold hover:bg-red-dark transition-colors"
@@ -114,5 +132,6 @@ export default async function TestimonialsPage() {
         </div>
       </section>
     </main>
+    </>
   );
 }

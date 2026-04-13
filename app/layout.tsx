@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     default: "Hive Motors Ltd | Quality Imported Cars in Kenya",
     template: "%s | Hive Motors Ltd",
   },
-  description: "Buy & import quality cars in Nairobi, Kenya. Toyota, Nissan, Subaru, Honda, Land Rover, BMW — fresh imports & locally used. Honest prices, financing available. Visit Hive Motors at Ridgeways.",
+  description: "Buy & import quality cars in Nairobi, Kenya. Toyota, Nissan, Subaru, Honda, Land Rover, BMW — fresh imports & locally used. Honest prices, financing available.",
   keywords: ["imported cars Kenya", "buy car Nairobi", "Toyota import Kenya", "used cars Nairobi", "car import dealer", "Hive Motors", "Nairobi car dealer"],
   alternates: {
     canonical: BASE_URL,
@@ -102,6 +102,18 @@ const localBusinessJsonLd = {
   paymentAccepted: 'Cash, Bank Transfer, Mobile Money',
 };
 
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Hive Motors Ltd',
+  url: BASE_URL,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: { '@type': 'EntryPoint', urlTemplate: `${BASE_URL}/cars?search={search_term_string}` },
+    'query-input': 'required name=search_term_string',
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -111,12 +123,12 @@ export default function RootLayout({
     <html lang="en-KE">
       <head>
         <meta name="theme-color" content="#0A3E66" />
+        <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
       </head>
       <body className={`${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} />
         <GoogleAnalytics />
         {children}
       </body>
