@@ -7,7 +7,16 @@ export default async function DebugCarsPage() {
   let error = null;
 
   try {
-    cars = await getAllCarsDebugInfo();
+    cars = await client.fetch(`*[_type == "car"] {
+      _id,
+      title,
+      "slug": slug.current,
+      status,
+      _createdAt,
+      "hasImages": defined(images) && count(images) > 0,
+      "imageCount": count(images),
+      "images": images[]{..., asset->}
+    }`);
     validation = await validateCarSlugs();
   } catch (e) {
     error = e instanceof Error ? e.message : 'Unknown error';
@@ -116,6 +125,14 @@ export default async function DebugCarsPage() {
                         </div>
                         <div>
                           <span className="font-medium">Images:</span> {car.imageCount}
+                          {car.images && car.images.length > 0 && (
+                            <details className="mt-1">
+                              <summary className="text-xs text-blue-600 cursor-pointer">View image data</summary>
+                              <pre className="text-xs bg-gray-100 p-2 rounded mt-1 overflow-auto max-h-32">
+                                {JSON.stringify(car.images[0], null, 2)}
+                              </pre>
+                            </details>
+                          )}
                         </div>
                         <div>
                           <span className="font-medium">Created:</span> {new Date(car._createdAt).toLocaleDateString()}

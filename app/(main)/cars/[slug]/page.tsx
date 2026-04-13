@@ -163,6 +163,8 @@ export default async function CarDetailPage({ params }: Props) {
   }
 
   console.log(`[PAGE] Rendering Sanity car: ${car.title}`);
+  console.log(`[PAGE] Car images:`, car.images);
+  console.log(`[PAGE] Car images length:`, car.images?.length || 0);
 
   // Fetch similar cars
   const similarCars = await client.fetch(similarCarsQuery, {
@@ -268,13 +270,38 @@ export default async function CarDetailPage({ params }: Props) {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             {/* Left: Images + Details */}
             <div className="lg:col-span-2 space-y-8">
-              <ImageGallery
-                images={(car.images || []).map((img: any) => ({
-                  url: urlFor(img).width(1200).height(800).auto('format').quality(75).url(),
-                  alt: img?.alt || car.title,
-                }))}
-                title={car.title}
-              />
+              {car.images && car.images.length > 0 ? (
+                <ImageGallery
+                  images={car.images.map((img: any, index: number) => {
+                    try {
+                      // Check if image has proper asset reference
+                      if (!img?.asset?._id && !img?.asset?._ref && !img?.asset?.url) {
+                        console.warn(`Image ${index + 1} missing asset reference:`, img);
+                        return null;
+                      }
+                      
+                      const imageUrl = urlFor(img).width(1200).height(800).auto('format').quality(75).url();
+                      console.log(`Image ${index + 1} URL:`, imageUrl);
+                      
+                      return {
+                        url: imageUrl,
+                        alt: img?.alt || `${car.title} - Image ${index + 1}`,
+                      };
+                    } catch (error) {
+                      console.error(`Error processing image ${index + 1}:`, error, img);
+                      return null;
+                    }
+                  }).filter(Boolean)}
+                  title={car.title}
+                />
+              ) : (
+                <div className="h-96 bg-grey-soft rounded-2xl flex items-center justify-center text-mid-grey border border-gray-200">
+                  <div className="text-center">
+                    <p className="text-lg font-medium mb-2">No Images Available</p>
+                    <p className="text-sm">Images will be added soon</p>
+                  </div>
+                </div>
+              )}
 
               {/* Description */}
               {car.description && (
