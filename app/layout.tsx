@@ -41,9 +41,11 @@ export const metadata: Metadata = {
     siteName: "Hive Motors Ltd",
     title: "Hive Motors Ltd | Quality Imported Cars in Kenya",
     description: "Dream Cars, Real Deals! Browse hundreds of quality imported vehicles. Nairobi's most trusted import dealer.",
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Hive Motors Ltd — Dream Cars, Real Deals!' }],
   },
   twitter: {
     card: "summary_large_image",
+    site: "@hivemotors",
     title: "Hive Motors Ltd | Imported Cars Kenya",
     description: "Dream Cars, Real Deals! Kenya's premier car dealership.",
   },
@@ -83,8 +85,7 @@ const localBusinessJsonLd = {
     'https://www.instagram.com/hivemotors',
     'https://www.facebook.com/share/1NEPJ6VvYC',
     'https://www.tiktok.com/@hivemotors',
-    // Add your Google Business profile URL here once verified:
-    // 'https://g.page/hivemotorsltd',
+    'https://www.google.com/maps/place/HIVE+MOTORS/@-1.229793,36.83916,17z/data=!3m1!4b1!4m6!3m5!1s0x182f17381c9efb5b:0x10561772300a98a!8m2!3d-1.2297984!4d36.8417349!16s%2Fg%2F11sh47xxpg',
   ],
   priceRange: 'KSh 500,000 – KSh 10,000,000',
   areaServed: { '@type': 'Country', name: 'Kenya' },
@@ -99,6 +100,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-KE">
+      <head>
+        <meta name="theme-color" content="#0A3E66" />
+      </head>
       <body className={`${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
         <script
           type="application/ld+json"

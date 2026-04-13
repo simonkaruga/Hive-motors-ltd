@@ -102,7 +102,7 @@ export default async function TestimonialsPage() {
             <h2 className="text-2xl font-display text-navy-brand mb-3">Leave Us a Review on Google</h2>
             <p className="text-mid-grey mb-6">Your feedback helps other Kenyans find quality cars at honest prices.</p>
             <a
-              href="https://g.page/r/hivemotorsltd/review"
+              href="https://g.page/r/CYqpACN3YQUBEAE/review"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-red-brand text-white px-8 py-4 rounded-xl font-bold hover:bg-red-dark transition-colors"

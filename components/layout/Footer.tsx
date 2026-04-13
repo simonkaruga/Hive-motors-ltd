@@ -65,6 +65,14 @@ export default function Footer() {
                   {link.label}
                 </Link>
               ))}
+              <a
+                href="https://g.page/r/CYqpACN3YQUBEAE/review"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/70 hover:text-red-brand transition-colors text-sm"
+              >
+                ⭐ Review Us
+              </a>
             </div>
           </div>
 

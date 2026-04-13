@@ -123,7 +123,7 @@ export default async function BlogPostPage({ params }: Props) {
     description: post.excerpt,
     image: coverImageUrl,
     datePublished: post.publishedAt,
-    dateModified: post.publishedAt,
+    dateModified: post._updatedAt || post.publishedAt,
     author: { '@type': 'Person', name: post.authorName || 'Hive Motors' },
     publisher: { '@type': 'Organization', name: 'Hive Motors Ltd', url: 'https://www.hivemotorsltd.com' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `https://www.hivemotorsltd.com/blog/${slug}` },

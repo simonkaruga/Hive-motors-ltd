@@ -45,12 +45,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const car = await client.fetch(carBySlugQuery, { slug });
   if (!car) return { title: 'Car Not Found' };
   const description = `${car.year} ${car.title} — ${car.mileage?.toLocaleString()} km, ${car.transmission}, ${car.fuelType}. Price: KSh ${car.price?.toLocaleString()}. Available at Hive Motors Nairobi.`;
+  const ogImage = car.images?.[0]
+    ? urlFor(car.images[0]).width(1200).height(630).auto('format').quality(80).url()
+    : null;
   return {
     title: car.title,
     description,
     alternates: { canonical: `${BASE_URL}/cars/${slug}` },
-    openGraph: { title: `${car.title} | Hive Motors`, description, url: `${BASE_URL}/cars/${slug}` },
-    twitter: { card: 'summary_large_image', title: car.title, description },
+    openGraph: {
+      title: `${car.title} | Hive Motors`,
+      description,
+      url: `${BASE_URL}/cars/${slug}`,
+      images: ogImage ? [{ url: ogImage, width: 1200, height: 630, alt: car.title }] : [],
+    },
+    twitter: { card: 'summary_large_image', title: car.title, description, images: ogImage ? [ogImage] : [] },
   };
 }
 

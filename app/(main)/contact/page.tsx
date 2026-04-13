@@ -257,6 +257,20 @@ export default function ContactPage() {
                 </div>
               </div>
 
+              {/* Google Review CTA */}
+              <a
+                href="https://g.page/r/CYqpACN3YQUBEAE/review"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-amber-50 border border-amber-200 rounded-2xl p-4 hover:shadow-md transition-shadow"
+              >
+                <span className="text-2xl">⭐</span>
+                <div>
+                  <p className="font-semibold text-navy-brand text-sm">Enjoyed our service?</p>
+                  <p className="text-mid-grey text-xs">Leave us a Google review — it means a lot!</p>
+                </div>
+              </a>
+
               {/* Google Maps */}
               <div className="rounded-2xl overflow-hidden border border-gray-200 shadow-sm" style={{ height: '260px' }}>
                 <iframe

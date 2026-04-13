@@ -28,8 +28,25 @@ export default async function CarsPage() {
     // renders with empty list — filter client handles it gracefully
   }
 
+  const itemListJsonLd = cars.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Used Cars for Sale in Nairobi | Hive Motors',
+    url: 'https://www.hivemotorsltd.com/cars',
+    numberOfItems: cars.length,
+    itemListElement: cars.slice(0, 20).map((car, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: `https://www.hivemotorsltd.com/cars/${car.slug.current}`,
+      name: car.title,
+    })),
+  } : null;
+
   return (
     <main className="bg-white min-h-screen">
+      {itemListJsonLd && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }} />
+      )}
       {/* Page Header — server rendered, instantly visible, fully SEO indexed */}
       <section className="pt-32 pb-12 bg-gradient-to-br from-grey-soft to-blue-tint border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

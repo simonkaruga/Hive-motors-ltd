@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Ship, Calendar, Bell, CheckCircle, Package, Truck, Flag } from 'lucide-react';
 import CarCard from '@/components/cars/CarCard';
@@ -9,12 +8,6 @@ import { Car } from '@/lib/types';
 import { formatDate } from '@/lib/utils';
 
 export const revalidate = 300;
-
-export const metadata: Metadata = {
-  title: 'Cars On Transit | Arriving Soon | Hive Motors Kenya',
-  description: 'See cars currently on their way to Nairobi from Japan. Reserve yours before they arrive. Fresh imports arriving soon at Hive Motors.',
-  alternates: { canonical: 'https://www.hivemotorsltd.com/on-transit' },
-};
 
 const SHIPPING_STEPS = [
   { icon: CheckCircle, label: 'Purchased' },
