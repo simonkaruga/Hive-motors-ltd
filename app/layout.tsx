@@ -61,17 +61,20 @@ const localBusinessJsonLd = {
   '@context': 'https://schema.org',
   '@type': ['AutoDealer', 'LocalBusiness'],
   name: 'Hive Motors Ltd',
-  description: "Kenya's premier car dealership in Nairobi.",
+  description: "Kenya's premier car dealership in Nairobi. Quality imported cars — Toyota, Nissan, Subaru, Honda, Land Rover, BMW and more.",
   url: BASE_URL,
   telephone: '+254722800436',
   email: 'hivemotorsltd@gmail.com',
+  image: `${BASE_URL}/logo.jpg`,
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Ridgeways, Kiambu Road',
     addressLocality: 'Nairobi',
+    addressRegion: 'Nairobi County',
     addressCountry: 'KE',
   },
   geo: { '@type': 'GeoCoordinates', latitude: -1.2039, longitude: 36.8432 },
+  hasMap: 'https://maps.google.com/?q=Ridgeways+Kiambu+Road+Nairobi',
   openingHoursSpecification: [
     { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday'], opens: '08:00', closes: '18:00' },
     { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Saturday', opens: '09:00', closes: '16:00' },
@@ -80,10 +83,13 @@ const localBusinessJsonLd = {
     'https://www.instagram.com/hivemotors',
     'https://www.facebook.com/share/1NEPJ6VvYC',
     'https://www.tiktok.com/@hivemotors',
+    // Add your Google Business profile URL here once verified:
+    // 'https://g.page/hivemotorsltd',
   ],
   priceRange: 'KSh 500,000 – KSh 10,000,000',
   areaServed: { '@type': 'Country', name: 'Kenya' },
   currenciesAccepted: 'KES',
+  paymentAccepted: 'Cash, Bank Transfer, Mobile Money',
 };
 
 export default function RootLayout({
