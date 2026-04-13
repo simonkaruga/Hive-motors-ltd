@@ -10,6 +10,7 @@
     "fix-car-slugs": "node scripts/fix-car-slugs.mjs",
     "test-images": "node scripts/test-sanity-images.mjs",
     "test-delete": "node scripts/test-sanity-delete.mjs",
+    "test-audi": "node scripts/test-audi-q8.mjs",
     "debug-cars": "echo 'Visit http://localhost:3000/debug-cars to see car status'"
   },
   "browserslist": [
