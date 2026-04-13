@@ -57,9 +57,10 @@ export default function HeroSection() {
       {/* Hero background image */}
       <Image
         src="/hero-bg.webp"
-        alt="Hive Motors — Premium Imported Cars"
+        alt="Hive Motors — Premium Imported Cars Nairobi Kenya"
         fill
         priority
+        fetchPriority="high"
         quality={90}
         className="object-cover object-center z-0"
         sizes="100vw"
