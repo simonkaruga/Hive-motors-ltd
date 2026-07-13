@@ -6,8 +6,7 @@ import { Car } from '@/lib/types';
 import { STATIC_CARS } from '@/lib/staticCars';
 import CarsFilterClient from '@/components/cars/CarsFilterClient';
 
-export const revalidate = 0; // always fetch fresh data so new cars appear immediately
-export const dynamic = 'force-dynamic';
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: 'Used Cars for Sale in Nairobi | Hive Motors Kenya',

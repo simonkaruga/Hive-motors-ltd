@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { Star, Quote, ExternalLink } from 'lucide-react';
+import { Star, Quote, ExternalLink, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 import RevealOnScroll from '@/components/shared/RevealOnScroll';
 import { client } from '@/lib/sanity/client';
 import { testimonialsQuery } from '@/lib/sanity/queries';
@@ -129,6 +130,27 @@ export default async function TestimonialsPage() {
               Write a Google Review
             </a>
           </RevealOnScroll>
+        </div>
+      </section>
+
+      {/* Internal Links */}
+      <section className="py-10 bg-white border-t border-gray-200">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-sm font-semibold text-mid-grey uppercase tracking-wider mb-4">Explore More</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <Link href="/cars" className="bg-grey-soft rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all group">
+              <p className="font-semibold text-navy-brand group-hover:text-red-brand transition-colors text-sm">Browse Cars <ArrowRight size={14} className="inline" /></p>
+              <p className="text-xs text-mid-grey mt-1">See our current inventory</p>
+            </Link>
+            <Link href="/import-guide" className="bg-grey-soft rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all group">
+              <p className="font-semibold text-navy-brand group-hover:text-red-brand transition-colors text-sm">Import Guide <ArrowRight size={14} className="inline" /></p>
+              <p className="text-xs text-mid-grey mt-1">How we import your car</p>
+            </Link>
+            <Link href="/contact" className="bg-grey-soft rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all group">
+              <p className="font-semibold text-navy-brand group-hover:text-red-brand transition-colors text-sm">Contact Us <ArrowRight size={14} className="inline" /></p>
+              <p className="text-xs text-mid-grey mt-1">Get in touch with our team</p>
+            </Link>
+          </div>
         </div>
       </section>
     </main>

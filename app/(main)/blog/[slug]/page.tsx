@@ -2,10 +2,10 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Clock, Calendar, ArrowLeft, Tag } from 'lucide-react';
+import { Clock, Calendar, ArrowLeft, Tag, ArrowRight } from 'lucide-react';
 import { PortableText } from '@portabletext/react';
 import { client, urlFor } from '@/lib/sanity/client';
-import { postBySlugQuery } from '@/lib/sanity/queries';
+import { postBySlugQuery, relatedPostsQuery } from '@/lib/sanity/queries';
 import { formatDate } from '@/lib/utils';
 import { WHATSAPP_NUMBER } from '@/lib/constants';
 
@@ -101,6 +101,12 @@ export default async function BlogPostPage({ params }: Props) {
   const post = await client.fetch(postBySlugQuery, { slug });
 
   if (!post) notFound();
+
+  const relatedPosts = await client.fetch(relatedPostsQuery, {
+    slug,
+    category: post.category ?? '',
+    tags: post.tags ?? [],
+  }).catch(() => []);
 
   const coverImageUrl = post.coverImage
     ? urlFor(post.coverImage).width(1200).height(630).auto('format').url()
@@ -222,8 +228,52 @@ export default async function BlogPostPage({ params }: Props) {
           )}
         </div>
 
+        {/* Internal links — Cars CTA */}
+        <div className="mt-12 bg-blue-tint rounded-2xl p-6 border border-navy-brand/10">
+          <p className="font-semibold text-navy-brand mb-1">Looking for a car in Kenya?</p>
+          <p className="text-sm text-mid-grey mb-4">Browse our current inventory of quality imported vehicles — fresh imports updated daily.</p>
+          <div className="flex flex-wrap gap-3">
+            <Link href="/cars" className="inline-flex items-center gap-1.5 bg-red-brand text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-red-dark transition-colors">
+              Browse Inventory <ArrowRight size={14} />
+            </Link>
+            <Link href="/import-guide" className="inline-flex items-center gap-1.5 border border-navy-brand text-navy-brand px-4 py-2 rounded-lg text-sm font-semibold hover:bg-navy-brand hover:text-white transition-colors">
+              Import Guide
+            </Link>
+            <Link href="/financing" className="inline-flex items-center gap-1.5 border border-navy-brand/30 text-navy-brand px-4 py-2 rounded-lg text-sm font-semibold hover:border-navy-brand transition-colors">
+              Financing Options
+            </Link>
+          </div>
+        </div>
+
+        {/* Related Posts */}
+        {relatedPosts.length > 0 && (
+          <div className="mt-12">
+            <h2 className="text-xl font-display text-navy-brand mb-6">Related Articles</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {relatedPosts.map((related: any) => (
+                <Link key={related._id} href={`/blog/${related.slug.current}`} className="group block bg-grey-soft rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all">
+                  {related.coverImage?.asset && (
+                    <div className="relative h-32 rounded-lg overflow-hidden mb-3">
+                      <Image
+                        src={urlFor(related.coverImage).width(400).height(200).auto('format').url()}
+                        alt={related.title}
+                        fill
+                        sizes="(max-width: 640px) 100vw, 33vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  )}
+                  <p className="text-xs text-red-brand font-semibold uppercase tracking-wide mb-1">{categoryLabels[related.category] || related.category}</p>
+                  <p className="text-sm font-semibold text-navy-brand group-hover:text-red-brand transition-colors line-clamp-2">{related.title}</p>
+                  <p className="text-xs text-mid-grey mt-1">{related.readTime} min read</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Footer Nav */}
-        <div className="mt-16 pt-8 border-t border-gray-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="mt-12 pt-8 border-t border-gray-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <Link
             href="/blog"
             className="inline-flex items-center gap-2 text-navy-brand font-semibold hover:text-red-brand transition-colors"

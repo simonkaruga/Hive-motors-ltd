@@ -3,6 +3,8 @@ import { client } from '@/lib/sanity/client';
 import { postsQuery } from '@/lib/sanity/queries';
 import BlogListClient from './BlogListClient';
 
+export const revalidate = 300;
+
 interface Post {
   _id: string;
   title: string;

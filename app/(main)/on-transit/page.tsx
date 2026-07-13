@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Ship, Calendar, Bell, CheckCircle, Package, Truck, Flag } from 'lucide-react';
+import { Ship, Calendar, Bell, CheckCircle, Package, Truck, Flag, ArrowRight } from 'lucide-react';
 import CarCard from '@/components/cars/CarCard';
 import RevealOnScroll from '@/components/shared/RevealOnScroll';
 import { client, urlFor } from '@/lib/sanity/client';
@@ -7,8 +7,7 @@ import { transitCarsQuery } from '@/lib/sanity/queries';
 import { Car } from '@/lib/types';
 import { formatDate } from '@/lib/utils';
 
-export const revalidate = 0;
-export const dynamic = 'force-dynamic';
+export const revalidate = 300;
 
 const SHIPPING_STEPS = [
   { icon: CheckCircle, label: 'Purchased' },
@@ -18,14 +17,42 @@ const SHIPPING_STEPS = [
   { icon: Flag, label: 'Ready' },
 ];
 
+const FAQS = [
+  { q: 'How long does shipping take?', a: 'Typically 4–8 weeks depending on the source country, including sea shipping and customs clearance in Nairobi.' },
+  { q: 'Can I reserve a transit car?', a: 'Yes! Contact us via WhatsApp or phone to place a reservation. A deposit secures the car for you.' },
+  { q: 'What are the clearance costs?', a: 'Import duty, excise, and VAT depend on engine size and year. We can give you a full cost breakdown — just ask!' },
+  { q: 'Are transit cars inspected before shipping?', a: 'Absolutely. Every car is inspected at the source before purchase and again upon arrival in Kenya.' },
+];
+
 export default async function OnTransitPage() {
   let cars: Car[] = [];
   try {
     cars = await client.fetch(transitCarsQuery);
   } catch {}
 
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: FAQS.map(f => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.hivemotorsltd.com' },
+      { '@type': 'ListItem', position: 2, name: 'Cars On Transit', item: 'https://www.hivemotorsltd.com/on-transit' },
+    ],
+  };
+
   return (
     <main className="bg-white min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
       {/* Hero */}
       <section className="pt-32 pb-12 bg-gradient-to-br from-blue-tint to-grey-soft border-b border-gray-200">
@@ -144,12 +171,7 @@ export default async function OnTransitPage() {
           <RevealOnScroll>
             <h2 className="text-3xl font-display text-navy-brand mb-8 text-center">Common Questions</h2>
           </RevealOnScroll>
-          {[
-            { q: 'How long does shipping take?', a: 'Typically 4–8 weeks depending on the source country, including sea shipping and customs clearance in Nairobi.' },
-            { q: 'Can I reserve a transit car?', a: 'Yes! Contact us via WhatsApp or phone to place a reservation. A deposit secures the car for you.' },
-            { q: 'What are the clearance costs?', a: 'Import duty, excise, and VAT depend on engine size and year. We can give you a full cost breakdown — just ask!' },
-            { q: 'Are transit cars inspected before shipping?', a: 'Absolutely. Every car is inspected at the source before purchase and again upon arrival in Kenya.' },
-          ].map((faq, i) => (
+          {FAQS.map((faq, i) => (
             <RevealOnScroll key={i} delay={i * 0.07}>
               <div className="mb-4 bg-grey-soft rounded-2xl p-5 border border-gray-200">
                 <h3 className="font-bold text-navy-brand mb-2">{faq.q}</h3>
@@ -157,6 +179,27 @@ export default async function OnTransitPage() {
               </div>
             </RevealOnScroll>
           ))}
+        </div>
+      </section>
+
+      {/* Internal Links */}
+      <section className="py-10 bg-grey-soft border-t border-gray-200">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-sm font-semibold text-mid-grey uppercase tracking-wider mb-4">Explore More</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <Link href="/cars" className="bg-white rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all group">
+              <p className="font-semibold text-navy-brand group-hover:text-red-brand transition-colors text-sm">Browse Available Cars <ArrowRight size={14} className="inline" /></p>
+              <p className="text-xs text-mid-grey mt-1">Cars ready to drive away today</p>
+            </Link>
+            <Link href="/import-guide" className="bg-white rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all group">
+              <p className="font-semibold text-navy-brand group-hover:text-red-brand transition-colors text-sm">Import Guide <ArrowRight size={14} className="inline" /></p>
+              <p className="text-xs text-mid-grey mt-1">How the import process works</p>
+            </Link>
+            <Link href="/notify" className="bg-white rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all group">
+              <p className="font-semibold text-navy-brand group-hover:text-red-brand transition-colors text-sm">Request a Car <ArrowRight size={14} className="inline" /></p>
+              <p className="text-xs text-mid-grey mt-1">Can&apos;t find what you want? We&apos;ll source it</p>
+            </Link>
+          </div>
         </div>
       </section>
     </main>

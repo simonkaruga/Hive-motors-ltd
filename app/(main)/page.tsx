@@ -1,5 +1,4 @@
-export const revalidate = 0; // always fresh — new cars appear on homepage immediately
-export const dynamic = 'force-dynamic';
+export const revalidate = 300; // ISR — revalidate every 5 minutes, cacheable by Google
 
 import Link from 'next/link';
 import { Ship, Shield, Award, Zap, Users, Search, Anchor, Truck, Star, ArrowRight, BookOpen } from 'lucide-react';
@@ -230,6 +229,43 @@ export default async function Home() {
             </div>
           </section>
         </FadeInSection>
+
+        {/* ── SEO Copy Block ─────────────────────────────────────── */}
+        <section className="py-14 bg-white border-t border-gray-100">
+          <div className="max-w-3xl mx-auto px-6 lg:px-8">
+            <h2 className="text-2xl font-display text-navy-brand mb-4">Why Buy Imported Cars in Nairobi from Hive Motors</h2>
+            <div className="prose prose-slate max-w-none text-mid-grey space-y-4 text-base leading-relaxed">
+              <p>
+                Finding quality imported cars in Nairobi shouldn&apos;t mean gambling on condition, paperwork, or price.
+                Hive Motors has built its reputation as one of Nairobi&apos;s most trusted car import dealers by handling
+                every step in-house — from sourcing trusted vehicles in Japan to clearing them through customs right
+                here in Mombasa and Nairobi.
+              </p>
+              <p>
+                Whether you&apos;re looking for a fuel-efficient Toyota, a rugged Land Rover, or a premium Mercedes-Benz,
+                our team sources directly from vetted dealers and auctions abroad, so every car that reaches our
+                Ridgeways, Kiambu Road showroom has been inspected for quality before it&apos;s listed. We stock both
+                fresh imports and locally used vehicles, giving buyers across Nairobi and greater Kenya more choice
+                at every budget — from sub-2-million saloons to high-end SUVs.
+              </p>
+              <p>
+                Importing a car in Kenya involves KRA duty, VAT, IDF and Railway Development Levy calculations that
+                catch many first-time buyers off guard. Our team walks you through the full cost breakdown before you
+                commit, so there are no surprises at clearance. If you&apos;d rather not import blind, browse our{' '}
+                <Link href="/on-transit" className="text-navy-brand underline hover:text-red-brand transition-colors">on-transit inventory</Link>{' '}
+                or read our{' '}
+                <Link href="/import-guide" className="text-navy-brand underline hover:text-red-brand transition-colors">import guide</Link>{' '}
+                for a full walkthrough of the process.
+              </p>
+              <p>
+                Ready to find your next car?{' '}
+                <Link href="/cars" className="text-navy-brand underline hover:text-red-brand transition-colors">Browse our current inventory</Link>{' '}
+                or message us directly on WhatsApp — our team responds fast and can source a specific make, model,
+                or budget on request.
+              </p>
+            </div>
+          </div>
+        </section>
 
         {/* ── Testimonials Carousel ──────────────────────────────── */}
         <FadeInSection>

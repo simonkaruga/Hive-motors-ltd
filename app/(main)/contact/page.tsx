@@ -1,10 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { MapPin, Phone, Mail, Clock, Send, MessageCircle, Instagram, Facebook } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, MessageCircle, Instagram, Facebook, ArrowRight } from 'lucide-react';
 import { SiTiktok } from 'react-icons/si';
+import Link from 'next/link';
 import RevealOnScroll from '@/components/shared/RevealOnScroll';
-import { WHATSAPP_NUMBER, PHONE_NUMBER, PHONE_DISPLAY, PHONE_HREF, GOOGLE_REVIEW_URL } from '@/lib/constants';
+import { WHATSAPP_NUMBER, PHONE_DISPLAY, PHONE_HREF, GOOGLE_REVIEW_URL } from '@/lib/constants';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: '', phone: '', email: '', message: '' });
@@ -286,6 +287,24 @@ export default function ContactPage() {
               </div>
             </div>
           </RevealOnScroll>
+        </div>
+        {/* Internal Links */}
+        <div className="mt-16 pt-10 border-t border-gray-100">
+          <p className="text-sm font-semibold text-mid-grey uppercase tracking-wider mb-4">Explore More</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <Link href="/cars" className="bg-grey-soft rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all group">
+              <p className="font-semibold text-navy-brand group-hover:text-red-brand transition-colors text-sm">Browse Cars <ArrowRight size={14} className="inline" /></p>
+              <p className="text-xs text-mid-grey mt-1">See our full inventory</p>
+            </Link>
+            <Link href="/import-guide" className="bg-grey-soft rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all group">
+              <p className="font-semibold text-navy-brand group-hover:text-red-brand transition-colors text-sm">Import Guide <ArrowRight size={14} className="inline" /></p>
+              <p className="text-xs text-mid-grey mt-1">How the import process works</p>
+            </Link>
+            <Link href="/financing" className="bg-grey-soft rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all group">
+              <p className="font-semibold text-navy-brand group-hover:text-red-brand transition-colors text-sm">Financing <ArrowRight size={14} className="inline" /></p>
+              <p className="text-xs text-mid-grey mt-1">Calculate your repayments</p>
+            </Link>
+          </div>
         </div>
       </div>
     </main>

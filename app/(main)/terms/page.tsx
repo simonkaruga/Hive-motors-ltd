@@ -83,6 +83,12 @@ export default function TermsPage() {
             </div>
           ))}
         </div>
+        <div className="mt-12 pt-8 border-t border-gray-200 flex flex-wrap gap-4 text-sm">
+          <a href="/" className="text-navy-brand hover:text-red-brand transition-colors">← Home</a>
+          <a href="/cars" className="text-navy-brand hover:text-red-brand transition-colors">Browse Cars</a>
+          <a href="/contact" className="text-navy-brand hover:text-red-brand transition-colors">Contact Us</a>
+          <a href="/privacy" className="text-navy-brand hover:text-red-brand transition-colors">Privacy Policy</a>
+        </div>
       </div>
     </main>
   );

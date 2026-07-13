@@ -1,11 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import { Calculator, TrendingUp, MessageCircle } from 'lucide-react';
+import { Calculator, TrendingUp, MessageCircle, ArrowRight } from 'lucide-react';
 import RevealOnScroll from '@/components/shared/RevealOnScroll';
 import Link from 'next/link';
 
 const LOAN_TERMS = [12, 24, 36, 48, 60];
+
+const FAQS = [
+  { q: 'What is the minimum deposit for car financing in Kenya?', a: 'Most lenders require a minimum deposit of 10–20% of the car value. At Hive Motors we can help you find options starting from 10% down.' },
+  { q: 'How long does financing approval take?', a: 'Pre-approval typically takes 24–48 hours. Once approved, funds are disbursed within 3–5 business days.' },
+  { q: 'Can I finance an imported car?', a: 'Yes. Both fresh imports and locally used vehicles are eligible for financing. The car must be 8 years old or newer per KRA regulations.' },
+  { q: 'What documents do I need for a car loan in Kenya?', a: 'You typically need: National ID, KRA PIN, 3 months bank statements, 3 months payslips (or business financials if self-employed), and a logbook valuation.' },
+  { q: 'What interest rates should I expect?', a: 'Car loan rates in Kenya typically range from 13–18% per annum depending on your bank and credit profile. We work with multiple lenders to find you the best rate.' },
+];
 
 export default function FinancingPage() {
   const [carPrice, setCarPrice] = useState(2000000);
@@ -226,6 +234,42 @@ export default function FinancingPage() {
               </div>
             </RevealOnScroll>
           ))}
+        </div>
+        {/* FAQ Section */}
+        <div className="mt-16">
+          <RevealOnScroll>
+            <h2 className="text-2xl font-display text-navy-brand mb-6">Financing FAQs</h2>
+            <div className="w-10 h-0.5 bg-red-brand rounded-full mb-8" />
+          </RevealOnScroll>
+          <div className="space-y-4">
+            {FAQS.map((faq, i) => (
+              <RevealOnScroll key={i} delay={i * 0.05}>
+                <div className="bg-grey-soft rounded-2xl p-5 border border-gray-200">
+                  <h3 className="font-bold text-navy-brand mb-2 text-sm">{faq.q}</h3>
+                  <p className="text-mid-grey text-sm leading-relaxed">{faq.a}</p>
+                </div>
+              </RevealOnScroll>
+            ))}
+          </div>
+        </div>
+
+        {/* Internal Links */}
+        <div className="mt-12 pt-10 border-t border-gray-100">
+          <p className="text-sm font-semibold text-mid-grey uppercase tracking-wider mb-4">Explore More</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <Link href="/cars" className="bg-grey-soft rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all group">
+              <p className="font-semibold text-navy-brand group-hover:text-red-brand transition-colors text-sm">Browse Cars <ArrowRight size={14} className="inline" /></p>
+              <p className="text-xs text-mid-grey mt-1">Find a car within your budget</p>
+            </Link>
+            <Link href="/import-guide" className="bg-grey-soft rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all group">
+              <p className="font-semibold text-navy-brand group-hover:text-red-brand transition-colors text-sm">Import Guide <ArrowRight size={14} className="inline" /></p>
+              <p className="text-xs text-mid-grey mt-1">Understand import costs & duties</p>
+            </Link>
+            <Link href="/notify" className="bg-grey-soft rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all group">
+              <p className="font-semibold text-navy-brand group-hover:text-red-brand transition-colors text-sm">Request a Car <ArrowRight size={14} className="inline" /></p>
+              <p className="text-xs text-mid-grey mt-1">We&apos;ll source your dream car</p>
+            </Link>
+          </div>
         </div>
       </div>
     </main>

@@ -76,6 +76,13 @@ export default function PrivacyPage() {
             </div>
           ))}
         </div>
+
+        <div className="mt-12 pt-8 border-t border-gray-200 flex flex-wrap gap-4 text-sm">
+          <a href="/" className="text-navy-brand hover:text-red-brand transition-colors">← Home</a>
+          <a href="/cars" className="text-navy-brand hover:text-red-brand transition-colors">Browse Cars</a>
+          <a href="/contact" className="text-navy-brand hover:text-red-brand transition-colors">Contact Us</a>
+          <a href="/terms" className="text-navy-brand hover:text-red-brand transition-colors">Terms of Service</a>
+        </div>
       </div>
     </main>
   );

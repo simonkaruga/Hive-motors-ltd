@@ -98,9 +98,24 @@ export default function ImportGuidePage() {
     })),
   };
 
+  const howToJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'How to Import a Car from Japan to Kenya',
+    description: 'Step-by-step guide to importing a car from Japan to Kenya, including costs, import duty, and customs clearance.',
+    totalTime: 'P12W',
+    step: STEPS.map((s, i) => ({
+      '@type': 'HowToStep',
+      position: i + 1,
+      name: s.title,
+      text: s.desc,
+    })),
+  };
+
   return (
     <main className="bg-white min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }} />
 
       {/* Hero */}
       <section className="pt-32 pb-16 bg-gradient-to-br from-grey-soft to-blue-tint border-b border-gray-200">
@@ -323,6 +338,27 @@ export default function ImportGuidePage() {
                 </div>
               </RevealOnScroll>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Internal Links */}
+      <section className="py-10 bg-grey-soft border-t border-gray-200">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-sm font-semibold text-mid-grey uppercase tracking-wider mb-4">Explore More</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <Link href="/cars" className="bg-white rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all group">
+              <p className="font-semibold text-navy-brand group-hover:text-red-brand transition-colors text-sm">Browse Available Cars →</p>
+              <p className="text-xs text-mid-grey mt-1">Fresh imports updated daily</p>
+            </Link>
+            <Link href="/on-transit" className="bg-white rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all group">
+              <p className="font-semibold text-navy-brand group-hover:text-red-brand transition-colors text-sm">Cars On Transit →</p>
+              <p className="text-xs text-mid-grey mt-1">See what&apos;s arriving soon</p>
+            </Link>
+            <Link href="/financing" className="bg-white rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all group">
+              <p className="font-semibold text-navy-brand group-hover:text-red-brand transition-colors text-sm">Financing Options →</p>
+              <p className="text-xs text-mid-grey mt-1">Calculate your monthly repayments</p>
+            </Link>
           </div>
         </div>
       </section>

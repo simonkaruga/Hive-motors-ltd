@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { Award, Users, Globe, Shield, CheckCircle, Car } from 'lucide-react';
+import { Award, Users, Globe, Shield, CheckCircle, Car, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 import RevealOnScroll from '@/components/shared/RevealOnScroll';
 import StatCounter from '@/components/home/StatCounter';
 import { WHATSAPP_NUMBER } from '@/lib/constants';
@@ -32,9 +33,19 @@ const milestones = [
   { year: '2024', event: 'Digital Platform Launch', desc: 'Launched our world-class website to serve you 24/7.' },
 ];
 
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.hivemotorsltd.com' },
+    { '@type': 'ListItem', position: 2, name: 'About', item: 'https://www.hivemotorsltd.com/about' },
+  ],
+};
+
 export default function AboutPage() {
   return (
     <main className="bg-white min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
       {/* Hero */}
       <section className="pt-32 pb-20 bg-gradient-to-br from-grey-soft to-blue-tint">
@@ -200,12 +211,12 @@ export default function AboutPage() {
               Browse our current inventory or contact us to source your perfect car from anywhere in the world.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
+              <Link
                 href="/cars"
                 className="bg-red-brand text-white px-8 py-4 rounded-xl font-semibold hover:bg-red-dark transition-colors"
               >
                 Browse Inventory
-              </a>
+              </Link>
               <a
                 href={`https://wa.me/${WHATSAPP_NUMBER}`}
                 target="_blank"
@@ -216,6 +227,26 @@ export default function AboutPage() {
               </a>
             </div>
           </RevealOnScroll>
+        </div>
+      </section>
+
+      {/* Internal Links */}
+      <section className="py-10 bg-grey-soft border-t border-gray-200">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-sm font-semibold text-mid-grey uppercase tracking-wider mb-4">Explore More</p>
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+            {[
+              { href: '/cars', label: 'Browse Cars', sub: 'Our full inventory' },
+              { href: '/import-guide', label: 'Import Guide', sub: 'How we import cars' },
+              { href: '/financing', label: 'Financing', sub: 'Calculate repayments' },
+              { href: '/blog', label: 'Car Tips & Guides', sub: 'Expert advice' },
+            ].map(({ href, label, sub }) => (
+              <Link key={href} href={href} className="bg-white rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all group">
+                <p className="font-semibold text-navy-brand group-hover:text-red-brand transition-colors text-sm">{label} <ArrowRight size={14} className="inline" /></p>
+                <p className="text-xs text-mid-grey mt-1">{sub}</p>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
     </main>

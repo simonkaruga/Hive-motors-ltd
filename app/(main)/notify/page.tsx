@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Bell, CheckCircle, Search, Users, Clock } from 'lucide-react';
+import { Bell, CheckCircle, Search, Users, Clock, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 import RevealOnScroll from '@/components/shared/RevealOnScroll';
 import { WHATSAPP_NUMBER } from '@/lib/constants';
 
@@ -225,6 +226,25 @@ export default function NotifyPage() {
             </button>
           </form>
         </RevealOnScroll>
+
+        {/* Internal Links */}
+        <div className="mt-10 pt-8 border-t border-gray-100">
+          <p className="text-sm font-semibold text-mid-grey uppercase tracking-wider mb-4">While you wait</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <Link href="/cars" className="bg-grey-soft rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all group">
+              <p className="font-semibold text-navy-brand group-hover:text-red-brand transition-colors text-sm">Browse Available Cars <ArrowRight size={14} className="inline" /></p>
+              <p className="text-xs text-mid-grey mt-1">Something might already be in stock</p>
+            </Link>
+            <Link href="/on-transit" className="bg-grey-soft rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all group">
+              <p className="font-semibold text-navy-brand group-hover:text-red-brand transition-colors text-sm">Cars On Transit <ArrowRight size={14} className="inline" /></p>
+              <p className="text-xs text-mid-grey mt-1">See what&apos;s arriving soon</p>
+            </Link>
+            <Link href="/import-guide" className="bg-grey-soft rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all group">
+              <p className="font-semibold text-navy-brand group-hover:text-red-brand transition-colors text-sm">Import Guide <ArrowRight size={14} className="inline" /></p>
+              <p className="text-xs text-mid-grey mt-1">Understand the import process</p>
+            </Link>
+          </div>
+        </div>
       </div>
     </main>
   );

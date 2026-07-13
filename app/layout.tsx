@@ -26,7 +26,7 @@ const BASE_URL = 'https://www.hivemotorsltd.com';
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Hive Motors Ltd | Quality Imported Cars in Kenya",
+    default: "Hive Motors Ltd | Buy Imported Cars in Nairobi, Kenya — Toyota, Land Rover, BMW & More",
     template: "%s | Hive Motors Ltd",
   },
   description: "Buy & import quality cars in Nairobi, Kenya. Toyota, Nissan, Subaru, Honda, Land Rover, BMW — fresh imports & locally used. Honest prices, financing available.",

@@ -3,7 +3,7 @@ import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Suspense } from 'react';
-import { MessageCircle, Phone, Calendar, Gauge, Fuel, Settings, Palette, MapPin, Car } from 'lucide-react';
+import { MessageCircle, Phone, Calendar, Gauge, Fuel, Settings, Palette, MapPin, Car, BookOpen } from 'lucide-react';
 import { client, urlFor } from '@/lib/sanity/client';
 import { carBySlugQuery, similarCarsQuery } from '@/lib/sanity/queries';
 import CarCard from '@/components/cars/CarCard';
@@ -128,11 +128,16 @@ export default async function CarDetailPage({ params }: Props) {
   if (!car) notFound();
 
   // Fetch similar cars
-  const similarCars = await client.fetch(similarCarsQuery, {
-    slug,
-    make: car.make ?? '',
-    bodyType: car.bodyType ?? '',
-  }).catch(() => []);
+  const [similarCars, relatedPosts] = await Promise.all([
+    client.fetch(similarCarsQuery, {
+      slug,
+      make: car.make ?? '',
+      bodyType: car.bodyType ?? '',
+    }).catch(() => []),
+    client.fetch(
+      `*[_type == "post"] | order(publishedAt desc)[0...3] { _id, title, slug, category, excerpt, readTime, "coverImage": coverImage{..., asset->} }`
+    ).catch(() => []),
+  ]);
 
   const whatsappMessage = `Hi Hive Motors! I'm interested in the ${car.title} (${car.year}). Could you share more details?`;
 
@@ -406,12 +411,38 @@ export default async function CarDetailPage({ params }: Props) {
             </div>
           </div>
         )}
+        {/* Related Blog Posts */}
+        {relatedPosts.length > 0 && (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-gray-100">
+            <div className="flex items-center gap-2 mb-6">
+              <BookOpen size={20} className="text-red-brand" />
+              <h2 className="text-2xl font-display text-navy-brand">Helpful Guides</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {relatedPosts.map((post: any) => (
+                <Link key={post._id} href={`/blog/${post.slug.current}`} className="group block bg-grey-soft rounded-xl p-4 border border-gray-200 hover:border-red-brand/30 hover:shadow-md transition-all">
+                  {post.coverImage?.asset && (
+                    <div className="relative h-28 rounded-lg overflow-hidden mb-3">
+                      <Image
+                        src={urlFor(post.coverImage).width(400).height(200).auto('format').url()}
+                        alt={post.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  )}
+                  <p className="text-sm font-semibold text-navy-brand group-hover:text-red-brand transition-colors line-clamp-2">{post.title}</p>
+                  <p className="text-xs text-mid-grey mt-1">{post.readTime} min read</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </main>
     </>
   );
 }
-
-// Helper function to render static cars
 function renderStaticCar(staticCar: any, slug: string) {
   const whatsappMessage = `Hi Hive Motors! I'm interested in the ${staticCar.title} (${staticCar.year}). Could you share more details?`;
   

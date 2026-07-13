@@ -154,6 +154,17 @@ export const similarCarsQuery = `*[_type == "car" && slug.current != $slug && st
   _createdAt
 }`;
 
+export const relatedPostsQuery = `*[_type == "post" && slug.current != $slug && (category == $category || count((tags)[@ in $tags]) > 0)] | order(publishedAt desc)[0...3] {
+  _id,
+  title,
+  slug,
+  category,
+  excerpt,
+  publishedAt,
+  readTime,
+  "coverImage": coverImage{..., asset->}
+}`;
+
 export const postBySlugQuery = `*[_type == "post" && slug.current == $slug][0] {
   _id,
   title,
