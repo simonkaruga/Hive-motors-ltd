@@ -1,8 +1,8 @@
-# 🐝 Hive Motors Ltd - Official Website
+# Hive Motors Ltd - Official Website
 
 Premium Japanese Import Car Dealership Website built with Next.js 14, Tailwind CSS, and Sanity CMS.
 
-## 🚀 Tech Stack
+## Tech Stack
 
 - **Framework**: Next.js 14 (App Router)
 - **Styling**: Tailwind CSS
@@ -12,7 +12,7 @@ Premium Japanese Import Car Dealership Website built with Next.js 14, Tailwind C
 - **Fonts**: Inter, Playfair Display, JetBrains Mono
 - **Hosting**: Vercel
 
-## 📦 Installation
+## Installation
 
 ```bash
 # Install dependencies
@@ -27,7 +27,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-## 🎨 Design System
+## Design System
 
 ### Colors
 - **Midnight Black**: `#1A1A2E` - Primary background
@@ -43,7 +43,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 ### Spacing
 All spacing follows a 4px base grid: 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96, 128px
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 hive-motors-ltd/
@@ -61,7 +61,7 @@ hive-motors-ltd/
 └── public/                # Static assets
 ```
 
-## 🔧 Sanity CMS Setup
+## Sanity CMS Setup
 
 1. Create a Sanity project at [sanity.io](https://www.sanity.io/)
 2. Install Sanity CLI: `npm install -g @sanity/cli`
@@ -69,19 +69,19 @@ hive-motors-ltd/
 4. Add your project ID to `.env.local`
 5. Deploy studio: `sanity deploy`
 
-## 🎯 Phase 1 Completed ✅
+## Phase 1 Completed
 
-- ✅ Next.js 14 project setup
-- ✅ Tailwind CSS with custom design system
-- ✅ Sanity CMS schemas (Car, Testimonial, Settings)
-- ✅ Core components (Navbar, Footer, Button, Badge)
-- ✅ CarCard with hover animations
-- ✅ Hero section with motion
-- ✅ Animated stat counters
-- ✅ Floating WhatsApp button
-- ✅ Responsive mobile-first design
+- [x] Next.js 14 project setup
+- [x] Tailwind CSS with custom design system
+- [x] Sanity CMS schemas (Car, Testimonial, Settings)
+- [x] Core components (Navbar, Footer, Button, Badge)
+- [x] CarCard with hover animations
+- [x] Hero section with motion
+- [x] Animated stat counters
+- [x] Floating WhatsApp button
+- [x] Responsive mobile-first design
 
-## 📋 Next Steps (Phase 2)
+## Phase 2 - In Progress
 
 - [ ] Create inventory listing page with filters
 - [ ] Build single car detail page with gallery
@@ -89,7 +89,7 @@ hive-motors-ltd/
 - [ ] Add image optimization with next/image
 - [ ] Implement search and filter functionality
 
-## 🌐 Deployment
+## Deployment
 
 ```bash
 # Build for production
@@ -99,10 +99,10 @@ npm run build
 vercel --prod
 ```
 
-## 📞 Contact
+## Contact
 
 For questions or support, contact Hive Motors Ltd.
 
 ---
 
-**Built with ❤️ for Hive Motors Ltd**
+Built for Hive Motors Ltd
