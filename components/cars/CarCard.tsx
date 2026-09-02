@@ -38,11 +38,13 @@ export default function CarCard({ car, priority = false }: CarCardProps) {
   const status = statusConfig[car.status as keyof typeof statusConfig] || statusConfig.available;
 
   return (
-    <Link
-      href={`/cars/${car.slug.current}`}
-      className="block bg-white rounded-2xl border border-gray-200 overflow-hidden hover:-translate-y-1 transition-transform duration-300 group"
-      aria-label={`View ${car.title}`}
-    >
+    <div className="relative bg-white rounded-2xl border border-gray-200 overflow-hidden hover:-translate-y-1 transition-transform duration-300 group">
+      <Link
+        href={`/cars/${car.slug.current}`}
+        className="absolute inset-0 z-10"
+        aria-label={`View ${car.title}`}
+      />
+
       {/* Image */}
       <div className="relative h-48 bg-grey-soft overflow-hidden">
         {imageUrl ? (
@@ -132,8 +134,7 @@ export default function CarCard({ car, priority = false }: CarCardProps) {
               href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="p-2 bg-[#166638] text-white rounded-lg hover:bg-[#125530] hover:scale-105 active:scale-95 transition-all"
+              className="relative z-20 p-2 bg-[#166638] text-white rounded-lg hover:bg-[#125530] hover:scale-105 active:scale-95 transition-all"
               aria-label={`Enquire about ${car.title} via WhatsApp`}
             >
               <MessageCircle size={16} />
@@ -141,6 +142,6 @@ export default function CarCard({ car, priority = false }: CarCardProps) {
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }

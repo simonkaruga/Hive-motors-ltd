@@ -122,6 +122,18 @@ export default function RootLayout({
   return (
     <html lang="en-KE">
       <head>
+        {/* Registers the 'default' Trusted Types policy required by our CSP's
+            require-trusted-types-for 'script' directive. Must run before any
+            other script performs a DOM sink assignment (innerHTML, etc.) —
+            it's a pass-through policy, not a sanitizer: our inline content
+            (JSON-LD, GA bootstrap) is our own static output, not user input,
+            so this satisfies the browser's enforcement without altering
+            behavior or requiring every call site to be rewritten. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `if(window.trustedTypes&&trustedTypes.createPolicy){trustedTypes.createPolicy('default',{createHTML:s=>s,createScript:s=>s,createScriptURL:s=>s});}`,
+          }}
+        />
         <meta name="theme-color" content="#0A3E66" />
         <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://cdn.sanity.io" />

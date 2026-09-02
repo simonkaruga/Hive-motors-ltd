@@ -112,11 +112,12 @@ img {
 
 /* ── Progress bar ─────────────────────────────────────────────── */
 @keyframes progress-bar {
-  from { width: 0%; }
-  to   { width: 100%; }
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
 }
 
 .animate-progress-bar {
+  transform-origin: left;
   animation: progress-bar 5s linear both;
 }
 
@@ -126,7 +127,7 @@ img {
   100% { background-position: 400px 0; }
 }
 
-.animate-pulse {
+.animate-shimmer {
   background: linear-gradient(
     90deg,
     #F7F8FA 25%,
