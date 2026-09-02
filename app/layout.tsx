@@ -134,6 +134,20 @@ export default function RootLayout({
             __html: `if(window.trustedTypes&&trustedTypes.createPolicy){trustedTypes.createPolicy('default',{createHTML:s=>s,createScript:s=>s,createScriptURL:s=>s});}`,
           }}
         />
+        {/* Google's own gtag.js bundles a copy of the `web-vitals` library for
+            GA4's automatic Core Web Vitals measurement. In some environments
+            its internal reportAllChanges() throws reading .startTime off an
+            undefined PerformanceEntry — a bug in Google's script, confirmed
+            to reproduce in a clean incognito profile, so it isn't caused by
+            our loading strategy or a browser extension. It's thrown async
+            (inside gtag's own timer callback) and never touches our code or
+            page functionality — this only stops that one identified error
+            from being logged, it doesn't touch any other uncaught error. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.addEventListener('error',function(e){if(e&&typeof e.message==='string'&&e.message.indexOf("reading 'startTime'")!==-1&&e.error&&/reportAllChanges/.test(e.error.stack||'')){e.preventDefault();}});`,
+          }}
+        />
         <meta name="theme-color" content="#0A3E66" />
         <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://cdn.sanity.io" />
